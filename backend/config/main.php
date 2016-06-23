@@ -12,7 +12,11 @@ return [
     'language' => 'ru-RU',
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'news' => [
+            'class' => 'backend\modules\news\News',
+        ],
+    ],
     'components' => [
         /*'user' => [
             'identityClass' => 'common\models\User',
@@ -37,7 +41,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-
+                'news' => 'news/news',
             ]
         ],
         'mailer' => [
