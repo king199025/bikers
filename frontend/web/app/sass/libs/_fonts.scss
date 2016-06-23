@@ -1,0 +1,22 @@
+$gill: 'GillSans';
+$fow: 'Fowviel';
+
+@font-face {
+  font-family: 'Fowviel';
+  src: url('../fonts/Fowviel/Fowviel.eot?#iefix') format('embedded-opentype'),  
+  url('../fonts/Fowviel/Fowviel.woff') format('woff'), 
+  url('../fonts/Fowviel/Fowviel.ttf')  format('truetype'), 
+  url('../fonts/Fowviel/Fowviel.svg#Fowviel') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('../fonts/GillSans/GillSans.eot?#iefix') format('embedded-opentype'),  
+  url('../fonts/GillSans/GillSans.woff') format('woff'), 
+  url('../fonts/GillSans/GillSans.ttf')  format('truetype'), 
+  url('../fonts/GillSans/GillSans.svg#GillSans') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

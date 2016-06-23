@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'username') ?>
-
+                <?= $form->field($model, 'road_nickname') ?>
                 <?php if ($module->enableGeneratingPassword == false): ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
                 <?php endif ?>

@@ -1,0 +1,97 @@
+.button {
+	display: inline-block;
+	position: relative;
+	min-width: 100px;
+	@include border-radius(10px);
+	color: #fff;
+	font-size: 16px;
+	@include text-shadow(0 1px 1px rgba(0,0,0,.35));
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	padding: 10px 15px;
+	text-align: center;
+	margin: 15px 5px;
+	@include transition(.3s);
+	&_orange {
+		background-color: $o;
+		&:hover {
+			background-color: darken($o,10%);
+		}
+	}
+	&_dark {
+		background-color: $dark;
+		&:hover {
+			background-color: darken($dark,10%);
+		}
+	}
+	&_gray {
+		background-color: #9B9898;
+		&:hover {
+			background-color: darken(#9B9898,10%);
+		}
+	}
+}
+
+.icon {
+	&_eye {
+		display: block;
+		float: right;
+		width: 29px;
+		height: 15px;
+		background-color: #787878;
+		mask-image: url('../img/eye.svg');
+		background-repeat: no-repeat;
+		background-position: 50% 100%;
+		@include transition(.3s);
+		-webkit-background-size: contain;
+		     -o-background-size: contain;
+		        background-size: contain;
+	}
+	&_road {
+		display: inline-block;
+		width: 27px;
+		height: 32px;
+		background-image: url('../img/distance-to-travel-between-two-points.png');
+		background-repeat: no-repeat;
+		-webkit-background-size: contain;
+		     -o-background-size: contain;
+		        background-size: contain;
+		margin-right: 10px;
+		vertical-align: middle;
+	}
+	&_marker {
+		display: inline-block;
+		width: 19px;
+		height: 23px;		
+		-webkit-background-size: contain;
+		     -o-background-size: contain;
+		        background-size: contain;
+		margin-right: 5px;
+		vertical-align: middle;
+		&-blue {
+			background-image: url('../img/marker_blue.png');
+		}
+		&-red {
+			background-image: url('../img/marker_red.png');
+		}
+	}
+	&_correct {
+		display: inline-block;	
+		vertical-align: middle;	
+		svg {
+			size: 12px 9px;
+			fill: #08BC2E;		
+			@include transition(.3s);
+		}
+	}
+	&_discorrect {
+		display: inline-block;	
+		vertical-align: middle;	
+		svg {
+			size: 12px 9px;
+			fill: red;		
+			@include transition(.3s);
+		}
+	}
+}

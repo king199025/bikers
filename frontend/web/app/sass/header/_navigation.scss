@@ -1,0 +1,53 @@
+.navigation {
+	float: left;
+	width: 100%;
+	background-color: #191919;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	&__menu {
+		float: left;
+		padding: 0; 
+		margin: 0;
+		li {
+			float: left;
+			border-left: 1px solid #252424;
+			a {
+				display: block;
+				padding: 35px 15px;
+				color: #FFF;
+				&:hover {
+					background-color: #252424;
+				}
+			}	
+		}
+	}
+	&__search {
+		float: right;
+		width: 228px;
+		height: 35px;
+		margin: 27px 0;
+		@include border-radius(5px);
+		-webkit-box-sizing: border-box;
+		   -moz-box-sizing: border-box;
+		        box-sizing: border-box;
+		background-color: #fff;
+		padding: 0 10px 0 15px;
+		&_icon {			
+			padding: 10px 0;
+			svg {
+				size: 14px;
+				fill: #c7c7cc;
+			}
+		}
+		&_box {
+			border: none;
+			outline: none;
+			font-size: 14px;
+			height: 33px;
+			-webkit-box-sizing: border-box;
+			   -moz-box-sizing: border-box;
+			        box-sizing: border-box;
+		}
+	}
+}

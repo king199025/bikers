@@ -24,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
+<?php// \common\classes\Debug::prn($model);?>
+
 <div class="row">
     <div class="col-md-3">
         <?= $this->render('_menu') ?>
@@ -44,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableAjaxValidation'   => true,
                     'enableClientValidation' => false,
                 ]); ?>
-
+                <?= $form->field($model, 'road_nickname')->textInput() ?>
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'username') ?>

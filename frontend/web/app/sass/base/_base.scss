@@ -1,0 +1,61 @@
+$o: #ff6000;
+$dark: #282828;
+
+body {
+  font-family: $gill;
+}
+
+%clearfix {
+  *zoom: 1;
+  &:after {
+    content: '';
+    display: table;
+    line-height: 0;
+    clear: both;
+  }
+}
+
+a {
+	text-decoration: none;
+	&:hover, &:focus, &:active{
+		outline: none;
+	}
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: $fow;
+  color: $dark;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.container {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+
+.container {
+  @extend %clearfix;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 766px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 990px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}

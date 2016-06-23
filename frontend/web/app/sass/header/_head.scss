@@ -1,0 +1,17 @@
+.header {
+	float: left;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	padding: 20px 0;
+	&__logo {
+		float: left;
+		width: 50%;
+	}
+	&__controls {
+		float: left;
+		width: 50%;
+		text-align: right;
+	}
+}

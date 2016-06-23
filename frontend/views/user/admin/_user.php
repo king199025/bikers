@@ -14,7 +14,11 @@
  * @var dektrium\user\models\User 	$user
  */
 ?>
-
+<?php
+    \common\classes\Debug::prn($user);
+?>
+1233
 <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'username')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'password')->passwordInput() ?>
+<?= $form->field($user, 'road_nickname')->textInput() ?>

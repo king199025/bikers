@@ -16,6 +16,21 @@ use Yii;
 
 class RegUserForm extends RegistrationForm
 {
+    /**
+     * @var string
+     */
+    public $road_nickname;
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules['road_nicknameRequired'] = ['road_nickname', 'required'];
+        $rules['road_nicknameLength']   = ['road_nickname', 'string', 'max' => 10];
+        return $rules;
+    }
+
     public function register()
     {
         if (!$this->validate()) {

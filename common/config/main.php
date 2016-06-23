@@ -46,6 +46,7 @@ return [
                 'RecoveryForm' => '\frontend\models\user\RecoveryForm',
                 'ResendForm' => '\frontend\models\user\ResendForm',
                 'User' => '\frontend\models\user\UserDec',
+                'SettingsForm' => '\frontend\models\user\SettingsForm',
             ],
             'enableUnconfirmedLogin' => true,
             'enableGeneratingPassword' => true,
