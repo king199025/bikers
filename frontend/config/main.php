@@ -40,6 +40,10 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'mainpage/default',
+                'news' => 'news/default',
+                'news/<slug>' => '/news/default/views',
+
+                'garage' => 'garage/garage',
             ]
         ],
         'mailer' => [
@@ -51,6 +55,12 @@ return [
     'modules' => [
         'mainpage' => [
             'class' => 'frontend\modules\mainpage\Mainpage',
+        ],
+        'news' => [
+            'class' => 'frontend\modules\news\News',
+        ],
+        'garage' => [
+            'class' => 'frontend\modules\garage\Garage',
         ],
     ],
     'params' => $params,

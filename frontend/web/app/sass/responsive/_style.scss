@@ -1,9 +1,148 @@
 @media only screen and (max-width: 1024px) {
-	
+	.header__logo {
+		width: 30%;
+	}
+	.header__controls {
+		width: 70%;
+	}
+	.navigation__menu li a {
+		padding: 30px 10px;
+	}
+	.navigation__search {
+		width: 200px;
+		&_box {
+			width: 85%;
+		}
+	}
+	.howitworks__item {
+		-webkit-flex-basis: 240px;
+		        flex-basis: 240px;
+		padding: 10px 15px;
+	}
+	.news__expected_head h4 {
+		font-size: 18px;
+	}
+	.news__expected {
+		-webkit-flex-basis: 40%;
+		        flex-basis: 40%;
+	}
+	.news__box {
+		-webkit-flex-basis: 60%;
+		        flex-basis: 60%;
+	}
+	.route__text {
+		width: 46%;
+	}
+	.route__destination {
+		width: 27%;
+	}
+	.route__go {
+		width: 27%;
+		padding-left: 30px;
+		a.button {
+			font-size: 12px;
+			float: right;
+			margin-right: 0;
+			margin-left: 0;
+			-webkit-align-self: flex-end;
+			        align-self: flex-end;
+			.icon_road {
+				width: 23px;
+				height: 27px;
+		    }
+		}
+	}
+	.events__add {
+		padding: 0 25px;
+	}
+	.motocalendar__list_nav_btn {
+		font-size: 12px;
+	}
+	.motocalendar__event_thumb {
+		height: 250px;
+	}
+	.footer__site-map ul {
+		column-count: 2;
+	}
 }
 
 @media only screen and (max-width: 980px) {
-	
+	.button {
+		font-size: 12px;
+	}
+	.howitworks__flex {
+		-webkit-justify-content: flex-start;
+		        justify-content: flex-start;
+	}
+	.news__flex {
+		-webkit-flex-wrap: wrap;
+		    -ms-flex-wrap: wrap;
+		        flex-wrap: wrap;
+	}
+	.events__box {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	}
+	.events__add {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	}
+	.news__box {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	    padding-right: 0;
+	}
+	.news__expected {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+		padding-left: 0;
+	}
+	.route__text {
+		width: 100%;
+		margin-bottom: 25px;
+	}
+	.route__wrap {
+		height: auto;
+		background: none;
+	}
+	.route__destination {
+		width: 50%;
+		padding: 0;
+		-webkit-justify-content: flex-start;
+		        justify-content: flex-start;
+	}
+	.route__go {
+		width: 50%;
+	}
+	.route__destination_box {
+		margin: 25px auto;
+	}
+	.route__go a.button {
+		margin-top: 65px;
+		-webkit-align-self: center;
+		        align-self: center;
+	}
+	.events__item {
+		margin: 0 15px 25px;
+	}
+	.motocalendar__event_info {
+		width: 100%;
+		margin-bottom: 15px;
+	}
+	.motocalendar__event_thumb {
+		float: left;
+		width: 40%;
+	}
+	.statistics__box {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	}
+	.footer__site-map ul li a {
+		font-size: 14px;
+	}
+	.footer__rules ul li a {
+		font-size: 12px;
+	}
 }
 
 @media only screen and (max-width: 770px) {
@@ -11,7 +150,204 @@
 }
 
 @media only screen and (max-width: 736px) {
-	
+	.header__logo {
+		width: 100%;
+	}
+	.header__controls {
+		width: 100%;
+	}
+	.motocalendar__content {
+		-webkit-flex-wrap: wrap;
+		    -ms-flex-wrap: wrap;
+		        flex-wrap: wrap;
+	}
+	.events__box {
+		-webkit-justify-content: center;
+		        justify-content: center;
+	}
+	.howitworks__flex {
+		-webkit-justify-content: center;
+		        justify-content: center;
+	}
+	.news__item {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	}
+	.news__box {
+		-webkit-justify-content: center;
+		        justify-content: center;
+	}
+	.route__destination {
+		width: 100%;
+	}
+	.route__go {
+		width: 100%;
+		padding-left: 0;
+		a.button {
+			margin-top: 15px;
+		}
+	}
+	.motocalendar__event_thumb {
+		width: 100%;
+	}
+	.events__item {
+		margin: 0 10px 25px;
+	}
+	.motocalendar__list {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	    -webkit-box-shadow: 0 0 10px 0px rgba(0,0,0,.3);
+	            box-shadow: 0 0 10px 0px rgba(0,0,0,.3);
+	}
+	.motocalendar__event {
+		-webkit-flex-basis: 100%;
+		        flex-basis: 100%;
+	    &_nav {
+	    	height: auto;
+	    }
+	}
+	.news__expected_item {
+		padding: 10px 20px;
+	}
+	.news__expected_item {
+		-webkit-flex-wrap: wrap;
+		    -ms-flex-wrap: wrap;
+		        flex-wrap: wrap;
+	    &_thumb {
+	    	-webkit-flex-basis: 100%;
+	    	        flex-basis: 100%;
+	    }
+	    &_desc {
+	    	-webkit-flex-basis: 80%;
+	    	        flex-basis: 80%;
+	    }
+	}
+	.motocalendar__event_info_line-title {
+		padding-right: 10px;
+	}
+	.motocalendar__event_nav a {
+		-webkit-box-sizing: border-box;
+		   -moz-box-sizing: border-box;
+		        box-sizing: border-box;
+		float: left;
+		margin: 0;
+		padding: 0 10px;
+		width: 100%;
+		text-align: center;
+	}
+	.header {
+		&__controls {	
+			text-align: center;
+			.button {
+				display: block;
+				float: left;
+			}
+			&_signin {
+				font-size: 0;
+				min-width: 0;
+				padding: 10px;
+				height: 36px;
+				width: 36px;
+				&:after {
+					content: "";
+					position: absolute 50%;
+					-webkit-transform: translate(-50%, -50%);
+					   -moz-transform: translate(-50%, -50%);
+					    -ms-transform: translate(-50%, -50%);
+					     -o-transform: translate(-50%, -50%);
+					        transform: translate(-50%, -50%);
+					background-image: url('../img/sign-in.png');
+					size: 20px;
+					display: block;
+					-webkit-background-size: contain;
+					     -o-background-size: contain;
+					        background-size: contain;
+				}
+			}
+			&_signup {
+				font-size: 0;
+				min-width: 0;
+				padding: 10px;
+				height: 36px;
+				width: 36px;
+				&:after {
+					content: "";
+					position: absolute 50%;
+					-webkit-transform: translate(-50%, -50%);
+					   -moz-transform: translate(-50%, -50%);
+					    -ms-transform: translate(-50%, -50%);
+					     -o-transform: translate(-50%, -50%);
+					        transform: translate(-50%, -50%);
+					background-image: url('../img/add-people-interface-symbol-of-black-person-close-up-with-plus-sign-in-small-circle.png');
+					size: 20px;
+					display: block;
+					-webkit-background-size: contain;
+					     -o-background-size: contain;
+					        background-size: contain;
+					background-position: 50%;
+				}
+			}
+		}
+	}
+	.footer {
+		&__logo {
+			width: 100%;
+		}
+		&__site-map {
+			width: 100%;
+		}
+		&__rules {
+			ul {
+				li {
+					display: block;
+					float: left;
+					width: 100%;
+					margin-right: 0;
+				}
+				
+			}
+		}
+	}
+	.navigation__menu {
+		float: right;
+	}
+	.navigation__search {
+		float: left;
+	}
+	.navigation__btn {
+		display: block;
+	}
+	.navigation__menu {
+		float: left;
+		width: 100%;
+		li {
+			float: left;
+			width: 100%;
+			border-left: none;
+			border-bottom: 1px solid;
+			a {
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+		}
+	}
+	.navigation__search {
+		position: absolute;
+		top: 0;
+		margin: 15px 0;
+	} 
+	.navigation__menu {
+		display: none;
+	}
+	.footer__site-map ul {
+		column-count: 1;
+	}
+	.footer__logo {
+		margin-top: 0;
+	}
+	.club__item {
+		width: 1 / 3 * 100%;
+	}
 }
 
 @media only screen and (max-width: 500px) {
