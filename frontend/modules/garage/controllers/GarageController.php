@@ -5,6 +5,7 @@ namespace frontend\modules\garage\controllers;
 use common\classes\Debug;
 use common\models\db\CarMark;
 use common\models\db\CarModel;
+use common\models\db\ImgMoto;
 use Yii;
 use frontend\modules\garage\models\Garage;
 use frontend\modules\garage\models\GarageSearch;
@@ -88,6 +89,9 @@ class GarageController extends Controller
             'js' => []
         ];
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            ImgMoto::updateAll(['garage_id' => $model->id], ['garage_id' => 99999, 'user_id' => Yii::$app->user->id]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
 
@@ -109,12 +113,22 @@ class GarageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        /*\Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];*/
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            ImgMoto::updateAll(['garage_id' => $model->id], ['garage_id' => 99999, 'user_id' => Yii::$app->user->id]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $mark = CarMark::find()->where(['id_car_type' => 20])->orderBy('name')->all();
+            $carmodel = CarModel::find()->where(['id_car_mark' => $model->mark_id])->all();
+            $img = ImgMoto::find()->where(['garage_id' => $id])->all();
             return $this->render('update', [
                 'model' => $model,
+                'mark' => $mark,
+                'carmodel' => $carmodel,
+                'img' => $img,
             ]);
         }
     }
@@ -153,5 +167,40 @@ class GarageController extends Controller
         $model = CarModel::find()->where(['id_car_mark' => $_POST['id']])->orderBy('name')->all();
         $model = ArrayHelper::map($model, 'id_car_model', 'name');
         echo $city = json_encode($model, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function actionUpload_file(){
+
+        //Debug::prn($_FILES);
+        if (!file_exists('media/users/' . Yii::$app->user->id)) {
+            mkdir('media/users/' . Yii::$app->user->id . '/');
+        }
+        if (!file_exists('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'))) {
+            mkdir('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'));
+        }
+        $dir = 'media/users/' . Yii::$app->user->id . '/' . date('Y-m-d') . '/';
+        $i = 0;
+
+        if (!empty($_FILES['file']['name'][0])) {
+            ImgMoto::deleteAll(['garage_id' => 99999, 'user_id' => Yii::$app->user->id]);
+            foreach ($_FILES['file']['name'] as $file) {
+
+                move_uploaded_file($_FILES['file']['tmp_name'][$i], $dir . $file);
+                $img = new ImgMoto();
+                $img->garage_id = 99999;
+                $img->img = $dir . $file;
+
+                $img->user_id = Yii::$app->user->id;
+                $img->save();
+
+                $i++;
+            }
+        }
+        echo 1;
+    }
+
+    public function actionDelete_file(){
+        ImgMoto::deleteAll(['id' => $_GET['id']]);
+        echo 1;
     }
 }

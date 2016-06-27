@@ -24,7 +24,6 @@ class m160624_072805_create_table_img_moto extends Migration
             'img' => Schema::TYPE_STRING . '(255) NOT NULL',
         ], $tableOptions);
 
-        $this->addForeignKey('img_garage_fk', 'img_moto', 'garage_id', 'garage', 'id', 'RESTRICT', 'CASCADE');
     }
 
     /**
@@ -32,7 +31,6 @@ class m160624_072805_create_table_img_moto extends Migration
      */
     public function down()
     {
-        $this->dropForeignKey('img_garage_fk', 'img_moto');
 
         $this->dropTable('img_moto');
     }

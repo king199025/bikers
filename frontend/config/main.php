@@ -44,6 +44,8 @@ return [
                 'news/<slug>' => '/news/default/views',
 
                 'garage' => 'garage/garage',
+
+                'bikers' => 'bikers/default',
             ]
         ],
         'mailer' => [
@@ -61,6 +63,9 @@ return [
         ],
         'garage' => [
             'class' => 'frontend\modules\garage\Garage',
+        ],
+        'bikers' => [
+            'class' => 'frontend\modules\bikers\Bikers',
         ],
     ],
     'params' => $params,

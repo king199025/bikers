@@ -10,8 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $garage_id
  * @property string $img
- *
- * @property Garage $garage
+ * @property integer $user_id
  */
 class ImgMoto extends \yii\db\ActiveRecord
 {
@@ -29,10 +28,9 @@ class ImgMoto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['garage_id', 'img'], 'required'],
-            [['garage_id'], 'integer'],
+            [['garage_id', 'img', 'user_id'], 'required'],
+            [['garage_id', 'user_id'], 'integer'],
             [['img'], 'string', 'max' => 255],
-            [['garage_id'], 'exist', 'skipOnError' => true, 'targetClass' => Garage::className(), 'targetAttribute' => ['garage_id' => 'id']],
         ];
     }
 
@@ -45,14 +43,7 @@ class ImgMoto extends \yii\db\ActiveRecord
             'id' => 'ID',
             'garage_id' => 'Garage ID',
             'img' => 'Img',
+            'user_id' => 'User ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGarage()
-    {
-        return $this->hasOne(Garage::className(), ['id' => 'garage_id']);
     }
 }

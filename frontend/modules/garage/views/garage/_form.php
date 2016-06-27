@@ -1,7 +1,9 @@
 <?php
 
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -12,7 +14,7 @@ use yii\widgets\ActiveForm;
 
 <div class="garage-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 
@@ -64,8 +66,13 @@ use yii\widgets\ActiveForm;
 
     <?/*= $form->field($model, 'model_id')->dropDownList([], ['prompt' => 'Выберите модель мотоцикла']) */?>
 
+
+
+
+
+
     <?= $form->field($model, 'model_id')->widget(Select2::classname(), [
-        'data' => [],
+        'data' => !$model->isNewRecord ? \yii\helpers\ArrayHelper::map($carmodel, 'id_car_model', 'name') : [],
         'language' => 'ru',
         'theme' => Select2::THEME_DEFAULT,
         'options' => [
@@ -86,10 +93,47 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'volume')->textInput() ?>
 
+    <?php
+    if(!$model->isNewRecord){
+        foreach($img as $i){
+            $preview[] = "<img src='/$i->img' class='file-preview-image'>";
+            $previewConfig[] = [
+                'caption' => '',
+                'url' => '/garage/garage/delete_file?id=' . $i->id
+            ];
+        }
+    }
+
+    echo '<label class="control-label">Добавить фото</label>';
+    echo FileInput::widget([
+        'name' => 'file[]',
+        'id' => 'input-5',
+        'attribute' => 'attachment_1',
+        'value' => '/media/img/1.png',
+        'options' => [
+            'multiple' => true,
+            'showCaption' => false,
+            'showUpload' => false,
+            'uploadAsync'=> false,
+        ],
+        'pluginOptions' => [
+            'uploadUrl' => Url::to(['/garage/garage/upload_file']),
+            'language' => "ru",
+            'previewClass' => 'hasEdit',
+            'uploadAsync'=> false,
+            'showUpload' => false,
+            'dropZoneEnabled' => false,
+            /*'initialPreviewShowDelete' => true,*/
+            'overwriteInitial' => false,
+            'initialPreview' => $preview,
+            'initialPreviewConfig' => $previewConfig
+        ],
+    ]);
+    ?>
     <?= $form->field($model, 'used')->radioList(['0' => 'Бывший мотоцикл', '1' => 'Действующий мотоцикл']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'saveInfo']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
