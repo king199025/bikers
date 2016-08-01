@@ -23,12 +23,12 @@ class AppAsset extends AssetBundle
         'css/style.min.css',
     ];
     public $js = [
-        /*'js/jquery-2.1.3.min.js',*/
+        'js/jquery-2.1.3.min.js',
         'js/script.min.js',
         'js/script.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+       /* 'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',*/
     ];
 }

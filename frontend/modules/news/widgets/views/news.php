@@ -8,7 +8,7 @@
 <section class="news">
     <!-- open .container -->
     <div class="container">
-        <h3>Новости</h3>
+        <a href="<?= \yii\helpers\Url::to(['/news'])?>"><h3>Новости</h3></a>
         <!-- open .news__flex -->
         <div class="news__flex">
             <!-- open .news__box -->

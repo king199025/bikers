@@ -1,16 +1,17 @@
+<!-- open .header -->
 <header class="header">
     <!-- open .container -->
     <div class="container">
         <!-- open .header__logo -->
         <div class="header__logo">
-            <a href="#">
-                <img src="/img/logo.png" alt="" />
+            <a href="/">
+                <img src="img/logo.png" alt="" />
             </a>
         </div>
         <!-- close .header__logo -->
         <!-- open .header__controls -->
         <div class="header__controls">
-            <a href="/user/security/login" class="button button_gray header__controls_signin">Вход</a>
+            <a href="<?= \yii\helpers\Url::to('login'); ?>" class="myBtn button button_gray header__controls_signin">Вход</a>
             <a href="#" class="button button_dark header__controls_signup">Зарегистрироваться</a>
             <a href="#" class="button button_orange header__controls_add">+ Добавить мероприятие</a>
         </div>
@@ -29,12 +30,12 @@
         <!-- close .navigation__btn -->
         <!-- open .navigation__menu -->
         <ul class="navigation__menu">
-            <li><a href="#">Главная</a></li>
+            <li><a href="/">Главная</a></li>
             <li><a href="#">Мотокалендарь</a></li>
             <li><a href="#">Байкеры</a></li>
             <li><a href="#">Мотоклубы</a></li>
             <li><a href="#">Путешествия</a></li>
-            <li><a href="#">О сообществе</a></li>
+            <li><a href="#">О нас</a></li>
             <li><a href="#">Обратная связь</a></li>
         </ul>
         <!-- close .navigation__menu -->

@@ -40,6 +40,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'mainpage/default',
+                'login' => '/user/security/login',
                 'news' => 'news/default',
                 'news/<slug>' => '/news/default/views',
 
