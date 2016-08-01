@@ -54,10 +54,10 @@ class DefaultController extends Controller
 
         return $this->renderPartial('ajaxNews',
             [
-                'blog' => $news,
+                'news' => $news,
                 'blogCount' => $newsCount,
                 'page' => $_POST['page'],
-                'limit' => $this->limit,
+                'limit' => 1,
             ]);
     }
 
