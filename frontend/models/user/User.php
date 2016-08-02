@@ -18,6 +18,13 @@ class User extends \dektrium\user\models\User
         $scenarios['create'][]   = 'road_nickname';
         $scenarios['update'][]   = 'road_nickname';
         $scenarios['register'][] = 'road_nickname';
+
+        $scenarios['create'][]   = 'floor';
+        $scenarios['update'][]   = 'floor';
+        $scenarios['register'][] = 'floor';
+
+
+
         return $scenarios;
     }
 
@@ -27,6 +34,7 @@ class User extends \dektrium\user\models\User
         // add some rules
         /*$rules['road_nicknameRequired'] = ['road_nickname', 'required'];*/
         $rules['road_nicknameLength']   = ['road_nickname', 'string'];
+        $rules['floor']   = ['floor', 'integer'];
 
         return $rules;
     }

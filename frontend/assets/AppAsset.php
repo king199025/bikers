@@ -23,12 +23,20 @@ class AppAsset extends AssetBundle
         'css/style.min.css',
     ];
     public $js = [
-        'js/jquery-2.1.3.min.js',
+        /*'js/jquery-2.1.3.min.js',*/
+        'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+
+        'js/moment.js',
+        'js/jquery.datetimepicker.full.min.js',
+        'js/jquery.fancybox.js',
+        'js/jquery.fancybox.pack.js',
         'js/script.min.js',
-        'js/script.js'
+        'js/script.js',
+        'js/general.js',
+
     ];
     public $depends = [
-       /* 'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',*/
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

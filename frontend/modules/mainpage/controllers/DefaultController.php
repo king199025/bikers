@@ -15,6 +15,10 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
         return $this->render('index');
     }
 }

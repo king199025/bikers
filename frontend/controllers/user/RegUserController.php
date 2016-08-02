@@ -27,7 +27,10 @@ class RegUserController extends RegistrationController
      * @throws \yii\web\HttpException
      */
     public function actionRegister()
-    {
+    {\Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+        'css' => [],
+        'js' => []
+    ];
         if (!$this->module->enableRegistration) {
             throw new NotFoundHttpException();
         }
@@ -41,6 +44,20 @@ class RegUserController extends RegistrationController
         $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
+
+            \common\classes\Debug::prn($model);
+
+            if(!empty($_POST['day']) && !empty($_POST['month']) && !empty($_POST['year'])){
+                $data = $_POST['day'].'.'.$_POST['month'].'.'.$_POST['year'];
+                $data = strtotime($data);
+                $model->birthday = $data;
+                $model->register();
+            }
+
+
+
+
+
 
             $this->trigger(self::EVENT_AFTER_REGISTER, $event);
 

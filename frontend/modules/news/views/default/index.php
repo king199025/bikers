@@ -1,3 +1,8 @@
+<?php
+$this->title = 'Новости';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+
 <!-- open .news__all -->
 <section class="news__all">
     <!-- open .container -->

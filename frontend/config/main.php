@@ -41,6 +41,9 @@ return [
             'rules' => [
                 '' => 'mainpage/default',
                 'login' => '/user/security/login',
+                'register'=> 'user/registration/register',
+                'forgot' => '/user/recovery/request',
+
                 'news' => 'news/default',
                 'news/<slug>' => '/news/default/views',
 

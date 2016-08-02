@@ -10,7 +10,7 @@ namespace frontend\models\user;
 
 
 
-use dektrium\user\models\RegistrationForm;
+use dektrium\user\models\RegistrationForm;;
 use dektrium\user\models\User;
 use Yii;
 
@@ -20,6 +20,8 @@ class RegUserForm extends RegistrationForm
      * @var string
      */
     public $road_nickname;
+    public $floor;
+    public $birthday;
     /**
      * @inheritdoc
      */
@@ -28,6 +30,11 @@ class RegUserForm extends RegistrationForm
         $rules = parent::rules();
         $rules['road_nicknameRequired'] = ['road_nickname', 'required'];
         $rules['road_nicknameLength']   = ['road_nickname', 'string', 'max' => 10];
+
+        $rules['floorRequired'] = ['floor', 'required'];
+        $rules['floorLength']   = ['floor', 'integer'];
+
+        $rules['birthdayLength']   = ['birthday', 'integer'];
         return $rules;
     }
 

@@ -5,7 +5,7 @@
         <!-- open .footer__logo -->
         <div class="footer__logo">
             <a href="/">
-                <img src="img/logo-footer.png" alt="" />
+                <img src="/img/logo-footer.png" alt="" />
             </a>
 
         </div>
@@ -34,14 +34,8 @@
 </footer>
 <div class="myModal modal">
     <!-- Modal content -->
-    <form action="" class="modal_form" novalidate  method="post">
-        <input class="form_line__email" type="text" name="name" placeholder="Введите ваш email-адрес">
-        <input class="form_line__password" type="tel" name="tel" placeholder="Пароль">
-        <a href="" class="regist">Регистрация</a>
-        <a href="" class="forgot_your_pass">Забыли пароль</a>
+    <?= \frontend\widgets\Login::widget(); ?>
 
-        <button class="js_headerAuto modal_button close">Войти</button>
-    </form>
 </div>
 <!-- open .footer__rules -->
 <nav class="footer__rules">

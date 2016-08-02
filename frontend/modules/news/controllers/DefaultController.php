@@ -17,12 +17,16 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
         $query = News::find();
 
         $newsCount = $query->count();
 
         $news = $query
-            ->limit(1)
+            ->limit(10)
             ->orderBy('dt_add')
             ->all();
 
@@ -34,7 +38,7 @@ class DefaultController extends Controller
                 'news' => $news,
                 'blogCount' => $newsCount,
                 'page' => $page,
-                'limit' => 1,
+                'limit' => 10,
             ]);
 
 
@@ -47,8 +51,8 @@ class DefaultController extends Controller
         $newsCount = $query->count();
 
         $news = $query
-            ->offset($_POST['page'] * 1)
-            ->limit(1)
+            ->offset($_POST['page'] * 10)
+            ->limit(10)
             ->orderBy('dt_add')
             ->all();
 
@@ -57,13 +61,16 @@ class DefaultController extends Controller
                 'news' => $news,
                 'blogCount' => $newsCount,
                 'page' => $_POST['page'],
-                'limit' => 1,
+                'limit' => 10,
             ]);
     }
 
 
     public function actionViews(){
-
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
         $news = News::findOne(['slug' => $_GET['slug']]);
         return $this->render('views', ['news' => $news]);
     }

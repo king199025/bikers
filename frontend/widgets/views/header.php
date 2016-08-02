@@ -5,13 +5,13 @@
         <!-- open .header__logo -->
         <div class="header__logo">
             <a href="/">
-                <img src="img/logo.png" alt="" />
+                <img src="/img/logo.png" alt="" />
             </a>
         </div>
         <!-- close .header__logo -->
         <!-- open .header__controls -->
         <div class="header__controls">
-            <a href="<?= \yii\helpers\Url::to('login'); ?>" class="myBtn button button_gray header__controls_signin">Вход</a>
+            <a href="#" class="myBtn button button_gray header__controls_signin">Вход</a>
             <a href="#" class="button button_dark header__controls_signup">Зарегистрироваться</a>
             <a href="#" class="button button_orange header__controls_add">+ Добавить мероприятие</a>
         </div>

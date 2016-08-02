@@ -28,13 +28,24 @@ AppAsset::register($this);
 <?= \frontend\widgets\ShowHeader::widget(); ?>
 
 <!-- @@block  =  content-->
-<main>
-    <?= Breadcrumbs::widget([
+<!-- open .breadcrubs -->
+<article class="breadcrumbs">
+    <!-- open .container -->
+    <div class="container">
+        <!-- open .bread -->
+        <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'options' => ['class' => 'breadcrumbs__list']
         ]) ?>
+        <!-- close .bread -->
+    </div>
+    <!-- close .container -->
+</article>
+<!-- close .breadcrubs -->
+
     <?= Alert::widget() ?>
     <?= $content ?>
-</main>
+
 
 
 <?= \frontend\widgets\ShowFooter::widget(); ?>
