@@ -34,7 +34,7 @@ class User extends \dektrium\user\models\User
         // add some rules
         /*$rules['road_nicknameRequired'] = ['road_nickname', 'required'];*/
         $rules['road_nicknameLength']   = ['road_nickname', 'string'];
-        $rules['floor']   = ['floor', 'integer'];
+        $rules['floorLength']   = ['floor', 'integer'];
 
         return $rules;
     }

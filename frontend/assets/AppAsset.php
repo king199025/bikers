@@ -19,8 +19,10 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
+        'css/jquery.datetimepicker.css',
         'css/libs.min.css',
         'css/style.min.css',
+        'css/style.css',
     ];
     public $js = [
         /*'js/jquery-2.1.3.min.js',*/

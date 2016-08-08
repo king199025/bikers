@@ -50,6 +50,8 @@ return [
                 'garage' => 'garage/garage',
 
                 'bikers' => 'bikers/default',
+
+                'travels' => 'travels/default'
             ]
         ],
         'mailer' => [
@@ -70,6 +72,9 @@ return [
         ],
         'bikers' => [
             'class' => 'frontend\modules\bikers\Bikers',
+        ],
+        'travels' => [
+            'class' => 'frontend\modules\travels\Travels',
         ],
     ],
     'params' => $params,

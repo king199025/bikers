@@ -32,7 +32,7 @@ class RegUserForm extends RegistrationForm
         $rules['road_nicknameLength']   = ['road_nickname', 'string', 'max' => 10];
 
         $rules['floorRequired'] = ['floor', 'required'];
-        $rules['floorLength']   = ['floor', 'integer'];
+        $rules['floor']   = ['floor', 'boolean'];
 
         $rules['birthdayLength']   = ['birthday', 'integer'];
         return $rules;
