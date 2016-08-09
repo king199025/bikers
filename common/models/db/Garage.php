@@ -19,21 +19,19 @@ use Yii;
  * @property User $user
  * @property ImgMoto[] $imgMotos
  */
-class Garage extends \yii\db\ActiveRecord
-{
+class Garage extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'garage';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['user_id', 'mark_id', 'model_id', 'year', 'volume', 'used'], 'required'],
             [['user_id', 'mark_id', 'model_id', 'year', 'volume', 'used'], 'integer'],
@@ -46,8 +44,7 @@ class Garage extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
@@ -62,16 +59,26 @@ class Garage extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImgMotos()
-    {
+    public function getImgMotos() {
         return $this->hasMany(ImgMoto::className(), ['garage_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery 
+     */
+    public function getcar_mark(){
+        return $this->hasOne(CarMark::className(), ['id_car_mark' => 'mark_id']);
+    }
+    
+    public function getcar_model(){
+        return $this->hasOne(CarModel::className(), ['id_car_model' => 'model_id']);
+    }
+
 }

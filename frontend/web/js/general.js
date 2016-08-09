@@ -140,9 +140,14 @@ jQuery(document).ready(function($){
     });
 
     $(document).on('click', '.selectMoto', function(){
-        $('.selectUserMoto').show();
+        $('.selectUserMoto').toggle();
     });
-
+    $(document).on('click', '.saveMotoId', function(){
+        var data = $('.events-category:checked').attr('id');
+        console.log(data);
+        $('#travel-moto_id').val(data);
+        $('.selectUserMoto').hide();
+    });
 
 });
 

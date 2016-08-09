@@ -94,6 +94,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'volume')->textInput() ?>
 
     <?php
+    $preview = [];
+    $previewConfig = [];
     if(!$model->isNewRecord){
         foreach($img as $i){
             $preview[] = "<img src='/$i->img' class='file-preview-image'>";
@@ -103,6 +105,7 @@ use yii\widgets\ActiveForm;
             ];
         }
     }
+        
 
     echo '<label class="control-label">Добавить фото</label>';
     echo FileInput::widget([

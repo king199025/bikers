@@ -5,6 +5,7 @@ namespace frontend\modules\travels\controllers;
 use common\classes\Debug;
 use common\models\db\City;
 use common\models\db\Travel;
+use common\models\db\TravelRoutes;
 use kartik\select2\Select2;
 use Yii;
 use yii\db\Query;
@@ -67,11 +68,17 @@ class DefaultController extends Controller
 
         $model = new Travel();
 
-        if ($model->load(Yii::$app->request->post()) /*&& $model->save()*/) {
+        if ($model->load(Yii::$app->request->post()) /*&& $model->save(false)*/) {
+            $model->user_id = Yii::$app->user->id;
+            $date = new \DateTime();
+            $model->dt_add = $date->format('d.m.Y');
+            $model->dt_update = $date->format('d.m.Y');
+            
+            $routes = [];
+            
+            Debug::prn($model);
 
-            Debug::prn($_POST);
-
-            //return $this->redirect(['view', 'id' => $model->id]);
+            //return $this->redirect(['index'/*, 'id' => $model->id*/]);
         } else {
             $cityList = City::find()->select([ 'name as label','id as value'])
                 ->asArray()

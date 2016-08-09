@@ -8,6 +8,7 @@ $url = \yii\helpers\Url::to(['citylist']);
 use common\models\db\City;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
+use frontend\modules\garage\widgets\UserActiveMoto;
 //use kartik\widgets\Select2; // or kartik\select2\Select2
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
@@ -19,16 +20,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Путешествия', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 
 
-
 // Get the initial city description
 //$cityDesc = empty($model->city) ? '' : City::findOne($model->city)->description;
 ?>
 
 <section class="travels">
 	<div class="container">
-		<div class="travels__left-column">
             <?php $form = ActiveForm::begin(['options' => ['class' => 'travels__form']]); ?>
-
+		<div class="travels__left-column">
 					<span class="travels__form_row">
 						<!--<label for="datapicker">Дата выезда</label>
 						<input type="text" id="datapicker" class="travels__form_datepicker datepicker-inner" >-->
@@ -88,9 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 		<div class="travels__right-column">
 			<div id="travels__map"></div>
-			<form action="" class="you-road">
 				<div class="select-moto">
-					<a href="" class="select-moto-link selectMoto button button_gray">Выбрать мотоцикл на котором Вы поедете</a>
+					<div class="select-moto-link selectMoto button button_gray">Выбрать мотоцикл на котором Вы поедете</div>
 
 					<?= $form->field($model, 'moto_id')->hiddenInput()->label(false); ?>
 
@@ -121,12 +119,19 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>-->
 				</div>
 				<div class="road-name">
-					<label class="road-name-label" for="">Название дальняка</label>
-					<input class="road-name-input" type="text" name="name" value="">
+					<!--label class="road-name-label" for="">Название дальняка</label-->
+					<!--input class="road-name-input" type="text" name="name" value=""-->
+                                        <?= $form->field($model, 'name')->textInput(['class'=>'road-name-input'])->label('Название дальняка',['class'=>'road-name-label']); ?>
 				</div>
 				<div class="knopka-otpravit">
-					<button class="button button_orange save-dannie">Сохранить дальняк</button>
+                                        <?=  \yii\bootstrap\Html::submitButton('Сохранить дальняк',['class'=>'button button_orange save-dannie']) ?>
+					<!--button class="button button_orange save-dannie">Сохранить дальняк</button-->
 				</div>
+                            <div class="selectUserMoto modal">
+
+                                <?php UserActiveMoto::begin(); ?>
+                                <?php UserActiveMoto::end(); ?>
+                            </div>
                 <?php ActiveForm::end(); ?>
 			</div>
 
@@ -134,7 +139,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </section>
 
-<div class="selectUserMoto modal">
-
-123123
-</div>
