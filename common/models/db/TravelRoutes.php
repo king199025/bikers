@@ -28,8 +28,8 @@ class TravelRoutes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['travel_id', 'from_city_id', 'to_city_id'], 'required'],
-            [['travel_id', 'from_city_id', 'to_city_id'], 'integer'],
+            [['travel_id', 'city_id'], 'required'],
+            [['travel_id', 'city_id'], 'integer'],
         ];
     }
 
@@ -41,8 +41,7 @@ class TravelRoutes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'travel_id' => 'Travel ID',
-            'from_city_id' => 'From City ID',
-            'to_city_id' => 'To City ID',
+            'city_id' => 'City ID',
         ];
     }
 }

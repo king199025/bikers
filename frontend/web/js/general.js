@@ -40,7 +40,23 @@ jQuery(document).ready(function($){
     }*/
 
 
-
+    $(document).on('click','.travelName',function(){
+        $.ajax({
+            type: 'POST',
+            url: "/travels/default/ajax_get_travel/",
+            data: 'id=' + $(this).attr('id'),
+            success: function (data) {
+                //console.log(data);
+                $( "#travels__travel" ).html( data  );
+                routTravel();
+            },
+            error: function (data) {
+                console.log(data);
+                //$( "#travels__travel" ).append( data  );
+            }
+        });
+        
+    });
 
 
     $('#saveInfo').on('click', function(e){
@@ -127,11 +143,31 @@ jQuery(document).ready(function($){
         routTravel();
     });
 
-    $(document).on('change', '#travel-city_start', function(){
+    $(document).on('change', '#auto_complete_city_name_start', function(){
         routTravel();
     });
+    
+    $(document).change('#autocomplete_city_name_start', function(){
+        $.ajax({
+            type: 'POST',
+            url: "/travels/default/ajax_find_travels/",
+            data: {'city_start':$('#travel-citystart').val(),
+                    'city_end' : $('#travel-cityend').val(),
+                    'date' : $('#datapicker').val()},
+            success: function (data) {
+                //console.log(data);
+                $( ".travels__road" ).html( data  );
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    })
+    $(document).change('#autocomplete_city_name_end', function(){
+        
+    })
 
-    $(document).on('change', '#travel-city_end', function(){
+    $(document).on('change', '#auto_complete_city_name_end', function(){
         routTravel();
     });
 
@@ -150,7 +186,6 @@ jQuery(document).ready(function($){
     });
 
 });
-
 //Получение точек маршрута путишествия
 function routTravel(){
     var idstart = $('#travel-city_start').val();
@@ -172,7 +207,7 @@ function routTravel(){
             //console.log(JSON.parse(data));
             //console.log(data.results[0].lat);
 //console.log(data);
-
+        
             var res = [];
             for (var i in data.results) {
                 //console.log(data.results[0][0]['lat']);
@@ -187,7 +222,6 @@ function routTravel(){
 
 
             }
-
             //console.log(res);
 
             ymaps.ready(routinitTravel(res));

@@ -50,7 +50,17 @@ class DefaultController extends Controller
     {
 
         //Debug::prn($model);
-        return $this->render('index');
+        $travels = Travel::find()->where("user_id = ".Yii::$app->user->id)
+                ->asArray()
+                ->all();
+        $cityList = City::find()->select([ 'name as label','id as value'])
+                ->asArray()
+                ->all();
+        
+        return $this->render('index', [
+                'travels'=>$travels,
+                'cityList' => $cityList,
+                ]);
     }
 
     /**
@@ -60,6 +70,9 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
+        $cityList = City::find()->select([ 'name as label','id as value'])
+                ->asArray()
+                ->all();
 
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
@@ -68,26 +81,80 @@ class DefaultController extends Controller
 
         $model = new Travel();
 
-        if ($model->load(Yii::$app->request->post()) /*&& $model->save(false)*/) {
+        if ($model->load(Yii::$app->request->post()) ) {
             $model->user_id = Yii::$app->user->id;
-            $date = new \DateTime();
-            $model->dt_add = $date->format('d.m.Y');
-            $model->dt_update = $date->format('d.m.Y');
+            $date = time();
+            $model->dt_add = $date;
+            $model->dt_update = $date;
             
-            $routes = [];
             
-            Debug::prn($model);
-
-            //return $this->redirect(['index'/*, 'id' => $model->id*/]);
-        } else {
-            $cityList = City::find()->select([ 'name as label','id as value'])
-                ->asArray()
-                ->all();
+            if(isset($_POST['dotCity'])&& $model->save(false))
+            {
+                foreach ($_POST['dotCityId'] as $item)
+                {
+                    $temp = new TravelRoutes(['travel_id'=>$model->id,'city_id'=>$item]);
+                    if(!$temp->save())
+                        Debug::prn($temp);
+                }
+            }
+            else
+                Debug::prn($model->save(false));
+            
+            
+            //echo 'OK';
+            $travels = Travel::find()->where("user_id = ".Yii::$app->user->id)
+                    ->asArray()
+                    ->all();
+            
+            
+            
+            return $this->render('index', [
+                'travels'=>$travels,
+                'cityList' => $cityList,
+                ]);
+        } 
+        else {
             return $this->render('create', [
                 'model' => $model,
                 'cityList' => $cityList,
             ]);
         }
+    }
+    
+    public function actionAjax_find_travels()
+    {   
+        $q = ['user_id'=>Yii::$app->user->id];
+        if(isset($_POST['date']) && !empty($_POST['date']))
+        {
+            $q['dt_start']=$_POST['date'];
+        }
+        if(isset($_POST['city_start']) && !empty($_POST['city_start']))
+        {
+            $q['city_start']=$_POST['city_start'];
+        }
+        if(isset($_POST['city_end']) && !empty($_POST['city_end']))
+        {
+            $q['city_end']=$_POST['city_end'];
+        }
+        //return var_dump($q);
+        $travels = Travel::find()->where($q)
+                ->asArray()
+                ->all();
+        $cityList = City::find()->select([ 'name as label','id as value'])
+                ->asArray()
+                ->all();
+        
+        if(empty($travels))
+        {
+            $travels = Travel::find()->where("user_id = ".Yii::$app->user->id)
+                    ->asArray()
+                    ->all();
+        }
+        
+        return $this->renderAjax('travels_list', [
+                'travels'=>$travels,
+                'cityList' => $cityList,
+                ]);
     }
 
     public function actionCitylist($q = null, $id = null) {
@@ -127,7 +194,7 @@ class DefaultController extends Controller
         if(!empty($idstart)){
             $query = new Query;
             $query->select('lon, lat')
-                ->from('city')
+                ->from('City')
                 ->where(['id' => $idstart]);
 
             $command = $query->createCommand();
@@ -145,7 +212,7 @@ class DefaultController extends Controller
             foreach ($waypoints as $item) {
                 $query = new Query;
                 $query->select('lon, lat')
-                    ->from('city')
+                    ->from('City')
                     ->where(['id' => $item]);
                 $command = $query->createCommand();
                 $data = $command->queryAll();
@@ -161,7 +228,7 @@ class DefaultController extends Controller
         if(!empty($idend)){
             $query = new Query;
             $query->select('lon, lat')
-                ->from('city')
+                ->from('City')
                 ->where(['id' => $idend]);
             $command = $query->createCommand();
             $data = $command->queryAll();
@@ -170,7 +237,6 @@ class DefaultController extends Controller
         }
         //Debug::prn($out);
         return $out;
-
     }
 
 
@@ -188,7 +254,44 @@ class DefaultController extends Controller
 
         return $this->renderAjax('fields-city',['listdata' => $listdata]);
     }
-
+    
+    public function actionAjax_get_travel()
+    {
+        //return $_POST['id'];
+        if(isset($_POST['id']))
+        {
+            $id = $_POST['id'];
+            $travel = Travel::find()->where('id = '.$id)
+                    ->one();
+            $cityStart = City::find()
+                    ->select('Name')
+                    ->where('ID = '.$travel->city_start)
+                    ->one();
+            $cityEnd = City::find()
+                    ->select('Name')
+                    ->where('ID = '.$travel->city_end)
+                    ->one();
+            $moto = \frontend\modules\garage\models\Garage::find()
+                    ->leftJoin('car_mark','`garage`.`mark_id` = `car_mark`.`id_car_mark`')
+                    ->leftJoin('car_model','`garage`.`model_id` = `car_model`.`id_car_model`')
+                    ->where(['`garage`.`id`'=>$travel->moto_id])
+                    ->one();
+            $route = City::find()
+                    ->leftJoin('travel_routes','`travel_routes`.`city_id` = `City`.`ID`')
+                    ->where(['travel_id'=>$id])
+                    ->all();
+            return /*$route->createCommand()->rawSql;*/$this->renderAjax('travel',
+                    [
+                        'travel'=>$travel,
+                        'moto'=>$moto,
+                        'route'=>$route,
+                        'cityStart'=>$cityStart,
+                        'cityEnd'=>$cityEnd
+                    ]);
+        }
+        else
+            return null;
+    }
 
     public function actionGetcity($term=null)
     {

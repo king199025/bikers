@@ -9,7 +9,7 @@ use yii\web\JsExpression;
 $number = rand();
 ?>
 <div class="addCityDot select-where">
-    <label for="city-".<?= $number; ?>>Промежуточный город</label>
+    <label for="city-<?= $number; ?>">Промежуточный город</label>
 <?php
 
 
