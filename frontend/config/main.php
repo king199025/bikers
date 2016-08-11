@@ -51,7 +51,11 @@ return [
 
                 'bikers' => 'bikers/default',
 
-                'travels' => 'travels/default'
+                'travels' => 'travels/default',
+                
+                'clubs' => 'clubs/default',
+                
+                'events' => 'events/default'
             ]
         ],
         'mailer' => [
@@ -76,6 +80,12 @@ return [
         'travels' => [
             'class' => 'frontend\modules\travels\Travels',
         ],
+        'clubs' => [
+            'class' => 'frontend\modules\clubs\Clubs'
+        ],
+        'events' => [
+            'class' => 'frontend\modules\events\Events'
+        ]
     ],
     'params' => $params,
 ];
