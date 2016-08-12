@@ -72,73 +72,73 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="motoclub-content-promo">
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
         <div class="motoclub-content-promo-item">
           <a href="" class="motoclub-content-promo-pic">
-            <img src="img/motoclub-promo.png" alt="">
+            <img src="/frontend/web/img/motoclub-promo.png" alt="">
           </a>
           <a href="#" class="button button_orange events-conrent__item_price">Екатеринбург, 66RUS</a>
         </div>
