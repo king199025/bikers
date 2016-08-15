@@ -12,7 +12,7 @@ class m160812_120323_add_promo_column_to_clubs_table extends Migration
      */
     public function up()
     {
-        $this->addColumn('clubs', 'promo', $this->string(32));
+        $this->addColumn('clubs', 'promo', $this->string(64));
     }
 
     /**

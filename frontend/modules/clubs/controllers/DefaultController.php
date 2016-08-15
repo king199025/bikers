@@ -18,11 +18,80 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+        $query = Clubs::find();
+
+        $clubsCount = $query->count();
+
+        $clubs = $query
+            ->limit(12)
+            ->all();
+
+        $page = 1;
+        
+        $clubTypes = ClubTypes::find()->all();
+
+
+        return $this->render('index',
+            [
+                'clubs' => $clubs,
+                'clubsCount' => $clubsCount,
+                'page' => $page,
+                'limit' => 12,
+                'clubTypes' => $clubTypes
+            ]);
+        //return $this->render('index');
     }
     public function actionView()
     {
-        return $this->render('view');
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+        setlocale(LC_TIME, 'ru_RU');
+        $club = Clubs::findOne(['id' => $_GET['id']]);
+        $club['city'] = City::findOne(['ID' => $club['city']])->Name;
+        $club['created'] = strftime("%d %B %Y",$club['created']);
+        return $this->render('view', ['club' => $club]);
+    }
+    
+    public function actionAjax_find_clubs()
+    {
+        $type = $_POST['type'];
+        $clubs = Clubs::find()
+                ->where(['type' => $type]);
+        $clubsCount = $clubs->count();
+        $clubs = $clubs->limit(12)->all();
+        return $this->renderAjax('ajaxClubs',
+                [
+                'clubs' => $clubs,
+                'clubsCount' => $clubsCount,
+                'page' => 1,
+                'limit' => 12,
+            ]);
+    }
+    
+    public function actionAjax_get_clubs()
+    {
+        $query = Clubs::find();
+
+        $clubsCount = $query->count();
+
+        $clubs = $query
+            ->offset($_POST['page'] * 12)
+            ->limit(12)
+            ->all();
+
+        return $this->renderPartial('ajaxClubs',
+            [
+                'clubs' => $clubs,
+                'clubsCount' => $clubsCount,
+                'page' => $_POST['page'],
+                'limit' => 12,
+            ]);
     }
     public function actionCreate()
     {

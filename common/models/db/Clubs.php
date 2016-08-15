@@ -23,6 +23,7 @@ use Yii;
  * @property string $about
  * @property integer $type
  * @property string $promo
+ * @property integer $created
  */
 class Clubs extends \yii\db\ActiveRecord
 {
@@ -41,10 +42,10 @@ class Clubs extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'city'], 'required'],
-            [['city', 'phone', 'photos','type'], 'integer'],
+            [['city', 'phone', 'photos','type','created'], 'integer'],
             [['lon', 'lat'], 'number'],
-            [['name'], 'string', 'max' => 64],
-            [['email', 'skype', 'site_url', 'vk_url', 'fb_url', 'ok_url','promo'], 'string', 'max' => 32],
+            [['name','promo'], 'string', 'max' => 64],
+            [['email', 'skype', 'site_url', 'vk_url', 'fb_url', 'ok_url'], 'string', 'max' => 32],
             [['about'], 'string', 'max' => 1024],
         ];
     }
@@ -70,7 +71,8 @@ class Clubs extends \yii\db\ActiveRecord
             'lat' => 'Lat',
             'about' => 'About',
             'type' => 'Type',
-            'promo' => 'Promo'
+            'promo' => 'Promo',
+            'created' => 'Created'
         ];
     }
 }
