@@ -42,87 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="events-category">
 	<!-- open .container -->
 	<div class="container">
-		<!-- open .events-category__item -->
+            <?php foreach($types as $type):?>
 		<div class="events-category__item">
-			<input type="checkbox" name="events-category_1" id="events-category_1" />
-			<label for="events-category_1">
-				<span class="events-category__item_title"><em>МотоСлеты</em></span>
+                    <input type="checkbox" name="events-category_<?=$type->id?>" id="events-category_<?=$type->id?>" />
+			<label for="events-category_<?=$type->id?>">
+				<span class="events-category__item_title"><em><?=$type->name?></em></span>
 				<span class="events-category__item_marker"></span>
 			</label>
 		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_2" id="events-category_2" />
-			<label for="events-category_2">
-			<span class="events-category__item_title"><em>Открытие/закрытие сезона</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_3" id="events-category_3" />
-			<label for="events-category_3">
-			<span class="events-category__item_title"><em>Треффен</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_4" id="events-category_4" />
-			<label for="events-category_4">
-			<span class="events-category__item_title"><em>Праздники</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_5" id="events-category_5" />
-			<label for="events-category_5">
-			<span class="events-category__item_title"><em>Мото Пробег</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_6" id="events-category_6" />
-			<label for="events-category_6">
-			<span class="events-category__item_title"><em>Соревнования</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_7" id="events-category_7" />
-			<label for="events-category_7">
-			<span class="events-category__item_title"><em>Мотовыставки</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_8" id="events-category_8" />
-			<label for="events-category_8">
-			<span class="events-category__item_title"><em>Рок фестиваль</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
-		<!-- open .events-category__item -->
-		<div class="events-category__item">
-			<input type="checkbox" name="events-category_9" id="events-category_9" />
-			<label for="events-category_9">
-			<span class="events-category__item_title"><em>Зимний мотослет</em></span>
-				<span class="events-category__item_marker"></span>
-			</label>
-		</div>
-		<!-- close .events-category__item -->
+            <?php endforeach;?>
 	</div>
 	<!-- close .container -->
 

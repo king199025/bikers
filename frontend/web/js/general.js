@@ -92,6 +92,19 @@ jQuery(document).ready(function ($) {
         return false;
     });
     
+    $('#dt_start_event').change(function(){
+        var myDate = $(this).val();
+        myDate = myDate.split(".");
+        var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
+        $('#event_start').val(new Date(newDate).getTime());
+    });
+    $('#dt_end_event').change(function(){
+        var myDate = $(this).val();
+        myDate = myDate.split(".");
+        var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
+        $('#event_end').val(new Date(newDate).getTime());
+    });
+    
     $(document).on('change','.events-category',function(){
         $(".motoclub-content-promo").html('');
         $('.events-category:checked').each(function(){

@@ -5,6 +5,7 @@ namespace frontend\modules\events\controllers;
 use yii\web\Controller;
 use \common\models\db\Events;
 use \common\models\db\EventTypes;
+use common\models\db\City;
 use Yii;
 /**
  * Default controller for the `events` module
@@ -17,18 +18,27 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $events = Events::find()->all();
+        $types = EventTypes::find()->all();
+        return $this->render('index',[
+            'events' => $events,
+            'types' => $types
+        ]);
     }
     
     public function actionCreate()
     {
         $model = new Events();
+        $cityList = City::find()->select([ 'name as label','id as value'])
+                ->asArray()
+                ->all();
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())&& $model->save(false)) {
 
+            //return "<pre>".var_dump($model->save())."</pre>";
             return $this->redirect(['index']);
         } 
         else 
@@ -36,7 +46,8 @@ class DefaultController extends Controller
             $typesList = EventTypes::find()->asArray()->all();
             return $this->render('create', [
                 'model' => $model,
-                'typesList' => $typesList
+                'typesList' => $typesList,
+                'cityList' => $cityList
             ]);
         }
     }

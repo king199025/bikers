@@ -3,6 +3,7 @@
 namespace common\models\db;
 
 use Yii;
+use sjaakp\taggable\TaggableBehavior;
 
 /**
  * This is the model class for table "events".
@@ -36,6 +37,17 @@ class Events extends \yii\db\ActiveRecord
     {
         return 'events';
     }
+    
+    
+    public function behaviors() {
+        return [
+            'taggable' => [
+                'class' => TaggableBehavior::className(),
+                'tagClass' => Tags::className(),
+                'junctionTable' => 'events_tags'
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -49,6 +61,7 @@ class Events extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 256],
             [['site_url', 'vk_url', 'ok_url', 'fb_url', 'other_link1', 'other_link2', 'other_link3'], 'string', 'max' => 64],
             [['afisha'], 'string', 'max' => 512],
+            [['editorTags'], 'safe'],
         ];
     }
 
