@@ -18,7 +18,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $events = Events::find()->all();
+        $events = Events::find()
+                ->leftJoin('City','`City`.`ID` = `events`.`city`')
+                ->with('city')
+                ->asArray()
+                ->all();
         $types = EventTypes::find()->all();
         return $this->render('index',[
             'events' => $events,
@@ -37,7 +41,7 @@ class DefaultController extends Controller
             'js' => []
         ];
         if ($model->load(Yii::$app->request->post())&& $model->save(false)) {
-
+            //\Yii::trace('model saved');
             //return "<pre>".var_dump($model->save())."</pre>";
             return $this->redirect(['index']);
         } 
@@ -54,7 +58,52 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Events::findOne(['id'=>$id]),
         ]);
+    }
+    
+    public function actionAjax_get_events()
+    {
+        $query = Events::find();
+
+        $eventsCount = $query->count();
+
+        $events = $query
+            ->offset($_POST['page'] * 12)
+            ->limit(12)
+            ->all();
+
+        return $this->renderPartial('ajaxEvents',
+            [
+                'events' => $events,
+                'eventsCount' => $eventsCount,
+                'page' => $_POST['page'],
+                'limit' => 12,
+            ]);
+    }
+    
+    public function actionAjax_find_event_by_word()
+    {
+        $word = $_POST['word'];
+        $city = City::find()->where(['Name'=>$word]);
+        $event = Events::find()->where(['name'=>$word]);
+        $club = Clubs::find()->where(['name'=>$word]);
+        //TODO: todo
+    }
+    
+    public function actionAjax_find_events()
+    {
+        $type = $_POST['type'];
+        $events = Events::find()
+                ->where(['type' => $type]);
+        $eventsCount = $events->count();
+        $events = $events->limit(8)->all();
+        return $this->renderAjax('ajaxEvents',
+                [
+                'events' => $events,
+                'eventsCount' => $eventsCount,
+                'page' => 1,
+                'limit' => 8,
+            ]);
     }
 }

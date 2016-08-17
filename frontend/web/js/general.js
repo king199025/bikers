@@ -105,7 +105,7 @@ jQuery(document).ready(function ($) {
         $('#event_end').val(new Date(newDate).getTime());
     });
     
-    $(document).on('change','.events-category',function(){
+    $(document).on('change','.clubs-category',function(){
         $(".motoclub-content-promo").html('');
         $('.events-category:checked').each(function(){
             var id = $(this).attr('name').slice(-1);
@@ -123,6 +123,35 @@ jQuery(document).ready(function ($) {
         //var id = $(this).attr('name').slice(-1);
         //var checked = $(this).is(':checked');
         //console.log(id);
+    });
+    
+    $(document).on('click','#reset_event_search',function(){
+        $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_get_events/",
+            data: 'page=' + 1,
+            success: function (data) {
+
+                $(".events-conrent__box").html(data);
+            }
+        });
+    });
+    
+    $(document).on('change','.events-category_input',function(){
+        $(".events-conrent__box").html('');
+        $('.events-category_input:checked').each(function(){
+            var id = $(this).attr('name').slice(-1);
+            console.log(id);
+            $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_find_events/",
+            data: 'type=' + id,
+            success: function (data) {
+
+                $(".events-conrent__box").append(data);
+            }
+        });
+        });
     });
     
     $(document).on('click', '#more-clubs', function () {

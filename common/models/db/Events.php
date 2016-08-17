@@ -92,4 +92,9 @@ class Events extends \yii\db\ActiveRecord
             'tags' => 'Tags',
         ];
     }
+    
+    public function getCity()
+    {
+        return $this->hasMany(City::className(), ['ID' => 'city']);
+    }
 }

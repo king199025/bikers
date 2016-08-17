@@ -1,6 +1,8 @@
 <?php
 $this->title = 'Мероприятия';
 $this->params['breadcrumbs'][] = $this->title;
+
+//\common\classes\Debug::prn($events);
 ?>
 
 <section class="events-calendar">
@@ -44,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="container">
             <?php foreach($types as $type):?>
 		<div class="events-category__item">
-                    <input type="checkbox" name="events-category_<?=$type->id?>" id="events-category_<?=$type->id?>" />
+                    <input class="events-category_input" type="checkbox" name="events-category_<?=$type->id?>" id="events-category_<?=$type->id?>" />
 			<label for="events-category_<?=$type->id?>">
 				<span class="events-category__item_title"><em><?=$type->name?></em></span>
 				<span class="events-category__item_marker"></span>
@@ -70,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="events-conrent__sidebar__box">
 					<!-- open .events-conrent__sidebar_control -->
 					<div class="events-conrent__sidebar_control">
-						<a href="#">Сбросить поиск</a>
+						<a id="reset_event_search" href="#">Сбросить поиск</a>
 						<a href="#">Добавить слет</a>
 					</div>
 					<!-- close .events-conrent__sidebar_control -->
@@ -86,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_sm" placeholder="Регион"/>
 					</form>
 					<!-- close .events-conrent__form -->
-					<small class="events-conrent__sidebar_date">08.07.2016</small>
+					<small class="events-conrent__sidebar_date"> <?=date('j.m.Y')?></small>
 				</div>
 				<!-- close .events-conrent__sidebar__box -->
 				<!-- open .events-conrent__sidebar__box -->
@@ -135,61 +137,22 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- close .events-conrent__sidebar -->
 			<!-- open .events-conrent__box -->
 			<section class="events-conrent__box">
+                                <?php foreach($events as $item):?>
 				<!-- open .events-conrent__item -->
 				<div class="events-conrent__item">
 					<!-- open .events-conrent__item_thumb -->
 					<a href="#" class="events-conrent__item_thumb">
-						<img src="img/placeholder.png" alt="" />
+                                            <img src="/frontend/web/img/placeholder.png" alt="" />
 						<span class="events-conrent__item_distance"><strong>2800</strong>км</span>
 					</a>
 					<!-- close .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_title">Фестиваль “Rock on The Water”</a>
-					<span class="events-conrent__item_date">16 июля 20:00</span>
-					<a href="#" class="button button_orange events-conrent__item_price">Жостово, 50RUS</a>
+					<a href="#" class="events-conrent__item_title"><?=$item['name']?></a>
+					<span class="events-conrent__item_date"><?=date('j F',$item['dt_start'])?></span>
+                                        <a href="#" class="button button_orange events-conrent__item_price"><?=$item['city'][0]['Name']?>, 50RUS</a>
 				</div>
 				<!-- close .events-conrent__item -->
+                                <?php endforeach;?>
 
-				<!-- open .events-conrent__item -->
-				<div class="events-conrent__item">
-					<!-- open .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_thumb">
-						<img src="img/placeholder.png" alt="" />
-						<span class="events-conrent__item_distance"><strong>28</strong>км</span>
-					</a>
-					<!-- close .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_title">Фестиваль “Rock on The Water”</a>
-					<span class="events-conrent__item_date">16 июля 20:00</span>
-					<a href="#" class="button button_orange events-conrent__item_price">Жостово, 50RUS</a>
-				</div>
-				<!-- close .events-conrent__item -->
-
-				<!-- open .events-conrent__item -->
-				<div class="events-conrent__item">
-					<!-- open .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_thumb">
-						<img src="img/placeholder.png" alt="" />
-						<span class="events-conrent__item_distance"><strong>28</strong>км</span>
-					</a>
-					<!-- close .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_title">Фестиваль “Rock on The Water”</a>
-					<span class="events-conrent__item_date">16 июля 20:00</span>
-					<a href="#" class="button button_orange events-conrent__item_price">Жостово, 50RUS</a>
-				</div>
-				<!-- close .events-conrent__item -->
-
-				<!-- open .events-conrent__item -->
-				<div class="events-conrent__item">
-					<!-- open .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_thumb">
-						<img src="img/placeholder.png" alt="" />
-						<span class="events-conrent__item_distance"><strong>28</strong>км</span>
-					</a>
-					<!-- close .events-conrent__item_thumb -->
-					<a href="#" class="events-conrent__item_title">Фестиваль “Rock on The Water”</a>
-					<span class="events-conrent__item_date">16 июля 20:00</span>
-					<a href="#" class="button button_orange events-conrent__item_price">Жостово, 50RUS</a>
-				</div>
-				<!-- close .events-conrent__item -->
 			</section>
 			<!-- close .events-conrent__box -->
 		</div>

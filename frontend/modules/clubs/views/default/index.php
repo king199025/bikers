@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php foreach($clubTypes as $type): ?>
         <div class="events-category__item">
-            <input class="events-category" type="checkbox" name="events-category_<?=$type->id?>" id="events-category_<?=$type->id?>">
+            <input class="clubs-category" type="checkbox" name="events-category_<?=$type->id?>" id="events-category_<?=$type->id?>">
                 <label for="events-category_<?=$type->id?>">
                     <span class="events-category__item_title"><em><?=$type->name?></em></span>
                     <span class="events-category__item_marker"></span>
