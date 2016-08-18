@@ -79,9 +79,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					<!-- open .events-conrent__form -->
 					<form class="events-conrent__form">
-						<input type="text" class="events-conrent__form_inp  events-conrent__form_inp_lg" placeholder="Город, мероприятие, организатор ..."/>
-						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_md datepicker-inner" placeholder="Дата (от)"/>
-						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_md datepicker-inner" placeholder="Дата (до)"/>
+						<input id="event_search_city" type="text" class="events-conrent__form_inp  events-conrent__form_inp_lg" placeholder="Город, мероприятие, организатор ..."/>
+						<input id="date_search_event_from" type="text" class="events-conrent__form_inp events-conrent__form_inp_md datepicker-inner" placeholder="Дата (от)"/>
+						<input id="date_search_event_to" type="text"type="text" class="events-conrent__form_inp events-conrent__form_inp_md datepicker-inner" placeholder="Дата (до)"/>
 						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_lg" placeholder="Построение маршрута"/>
 						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_sm" placeholder="Ближайшие"/>
 						<input type="text" class="events-conrent__form_inp events-conrent__form_inp_sm" placeholder="Радиус поиска"/>

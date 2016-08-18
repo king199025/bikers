@@ -65,6 +65,21 @@ jQuery(document).ready(function ($) {
         $('#club_created').val(new Date(newDate).getTime());
     });
 
+    $(document).on('change','#event_search_city',function(){
+        $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_find_event_by_word/",
+            data: 'word=' + $(this).val(),
+            success: function (data) {
+                //console.log(data);
+                $(".events-conrent__box").html(data);
+            },
+            error: function (data) {
+                console.log(data);
+                //$( "#travels__travel" ).append( data  );
+            }
+        });
+    });
 
     $('#saveInfo').on('click', function (e) {
 
@@ -144,13 +159,27 @@ jQuery(document).ready(function ($) {
             console.log(id);
             $.ajax({
             type: 'POST',
-            url: "/events/default/ajax_find_events/",
+            url: "/events/default/ajax_find_events_by_type/",
             data: 'type=' + id,
             success: function (data) {
 
                 $(".events-conrent__box").append(data);
             }
         });
+        });
+    });
+
+    $(document).on('change','#date_search_event_from',function(){
+        $(".events-conrent__box").html('');
+        var from = $(this).val();
+        var to = $('#date_search_event_to').val();
+        $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_find_event_by_date/",
+            data: 'from=' + from + '&to=' + to,
+            success: function (data) {
+                $(".events-conrent__box").append(data);
+            }
         });
     });
     
