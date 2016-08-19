@@ -2,34 +2,76 @@
 
 namespace frontend\modules\events\controllers;
 
-use yii\web\Controller;
-use \common\models\db\Events;
-use \common\models\db\EventTypes;
-use common\models\db\City;
 use Yii;
+use common\models\db\Events;
+use common\models\db\EventTypes;
+use common\models\EventsSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
+
 /**
- * Default controller for the `events` module
+ * DefaultController implements the CRUD actions for Events model.
  */
 class DefaultController extends Controller
 {
     /**
-     * Renders the index view for the module
-     * @return string
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all Events models.
+     * @return mixed
      */
     public function actionIndex()
     {
-        $events = Events::find()
+        $searchModel = new EventsSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Events::find()
                 ->leftJoin('City','`City`.`ID` = `events`.`city`')
                 ->with('city')
-                ->asArray()
-                ->all();
+                ->asArray(),
+            'pagination' => [
+                'pageSize' => 8,
+            ]
+        ]);
         $types = EventTypes::find()->all();
-        return $this->render('index',[
-            'events' => $events,
-            'types' => $types
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'types' => $types,
         ]);
     }
-    
+
+    /**
+     * Displays a single Events model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Events model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Events();
@@ -40,13 +82,9 @@ class DefaultController extends Controller
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post())&& $model->save(false)) {
-            //\Yii::trace('model saved');
-            //return "<pre>".var_dump($model->save())."</pre>";
-            return $this->redirect(['index']);
-        } 
-        else 
-        {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
             $typesList = EventTypes::find()->asArray()->all();
             return $this->render('create', [
                 'model' => $model,
@@ -55,101 +93,52 @@ class DefaultController extends Controller
             ]);
         }
     }
-    public function actionView($id)
+
+    /**
+     * Updates an existing Events model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
     {
-        return $this->render('view', [
-            'model' => Events::findOne(['id'=>$id]),
-        ]);
-    }
-    
-    public function actionAjax_get_events()
-    {
-        $query = Events::find();
+        $model = $this->findModel($id);
 
-        $eventsCount = $query->count();
-
-        $events = $query
-            ->offset($_POST['page'] * 8)
-            ->limit(8)
-            ->all();
-
-        return $this->renderAjax('ajaxEvents',
-            [
-                'events' => $events,
-                'eventsCount' => $eventsCount,
-                'page' => $_POST['page'],
-                'limit' => 8,
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
             ]);
-    }
-    
-    public function actionAjax_find_event_by_word()
-    {
-        $word = $_POST['word'];
-        $model = Events::find()
-        ->leftJoin('City','`events`.`city` = `City`.`ID`')
-        ->leftJoin('event_organizers','`event_organizers`.`event_id` = `events`.`id`')
-        ->leftJoin('clubs','`event_organizers`.`club_id` = `clubs`.`id`')
-        ->leftJoin('user','`event_organizers`.`user_id` = `user`.`id`')
-        ->orWhere(['or',"`City`.`Name`='$word'","`events`.`name`='$word'","`clubs`.`name`='$word'","`user`.`road_nickname`='$word'"]);
-        $eventsCount = $model->count();
-        $model = $model->limit(8)->all();
-        return $this->renderAjax('ajaxEvents',
-            [
-                'events' => $model,
-                'eventsCount' => $eventsCount,
-                'page' => 1,
-                'limit' => 8,
-            ]);
-
-    }
-
-    public function actionAjax_find_event_by_date()
-    {
-        $first = $_POST['from'];
-        $second = $_POST['to'];
-        if(!empty($first) && !empty($second))
-        {
-            $first = \DateTime::createFromFormat('j.m.Y',$_POST['from'])->getTimestamp();
-            $second = \DateTime::createFromFormat('j.m.Y',$_POST['to'])->getTimestamp();
-            $model = Events::find()->where("`dt_start` BETWEEN $first AND $second");
         }
-        elseif (!empty($first))
-        {
-            $first = \DateTime::createFromFormat('j.m.Y',$_POST['from'])->getTimestamp();
-            $model = Events::find()->where("`dt_start` > $first");
-        }
-        elseif(!empty($second))
-        {
-            $second = \DateTime::createFromFormat('j.m.Y',$_POST['to'])->getTimestamp();
-            $model = Events::find()->where("`dt_start` < $second");
-        }
-        else
-            $model = "";
-        $eventsCount = $model->count();
-        $model = $model->limit(8)->all();
-        return $this->renderAjax('ajaxEvents',
-            [
-                'events' => $model,
-                'eventsCount' => $eventsCount,
-                'page' => 1,
-                'limit' => 8,
-            ]);
-
     }
-    
-    public function actionAjax_find_events()
+
+    /**
+     * Deletes an existing Events model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
     {
-        $type = $_POST['type'];
-        $events = Events::find()
-                ->where(['type' => $type]);
-        $eventsCount = $events->count();
-        $events = $events->limit(8)->all();
-        return $this->renderAjax('ajaxEvents',
-                [
-                'events' => $events,
-                'eventsCount' => $eventsCount,
-                'page' => 1,
-                'limit' => 8,
-            ]);
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Events model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Events the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Events::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

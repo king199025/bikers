@@ -2,22 +2,20 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Events */
 
-$this->title = 'Create Events';
+$this->title = 'Update Events: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Events', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="events-create">
+<div class="events-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'typesList' => $typesList,
-        'cityList' => $cityList
     ]) ?>
 
 </div>
