@@ -38,15 +38,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new EventsSearch();
-        $dataProvider = new ActiveDataProvider([
-            'query' => Events::find()
-                ->leftJoin('City','`City`.`ID` = `events`.`city`')
-                ->with('city')
-                ->asArray(),
-            'pagination' => [
-                'pageSize' => 8,
-            ]
-        ]);
+        //\common\classes\Debug::prn($searchModel);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $types = EventTypes::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,

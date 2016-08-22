@@ -12,6 +12,13 @@ use common\models\db\Events;
  */
 class EventsSearch extends Events
 {
+    public $word;
+    public $dt_from;
+    public $dt_to;
+    public $cities;
+    public $is_near;
+    public $radius;
+    public $region;
     /**
      * @inheritdoc
      */
@@ -51,13 +58,23 @@ class EventsSearch extends Events
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 8,
+            ]
         ]);
 
         $this->load($params);
-
-        if (!$this->validate()) {
+        
+        if ( empty($params)) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
+            $query->with('city')
+              ->asArray();
+            return $dataProvider;
+        }
+        if(!$this->validate())
+        {
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -76,11 +93,16 @@ class EventsSearch extends Events
             'tags' => $this->tags,
         ]);
         */
-        $query->orFilterWhere(['like',"`City`.`Name`",$word)
-              ->orFilterWhere('like',"`events`.`name`",$word)
-              ->orFilterWhere('like',"`clubs`.`name`",$word)
-              ->orFilterWhere('like',"`user`.`road_nickname`",$word);
 
+        $query->orFilterWhere(['like',"`City`.`Name`",$this->word])
+              ->orFilterWhere(['like',"`events`.`name`",$this->word])
+              ->orFilterWhere(['like',"`clubs`.`name`",$this->word])
+              ->orFilterWhere(['like',"`user`.`road_nickname`",$this->word])
+              ->andFilterWhere(['between','`events`.`dt_start`',$this->dt_from,$this->dt_to])
+              ->with('city')
+              ->asArray();
+        //\common\classes\Debug::prn($dataProvider);
+        //die;
         return $dataProvider;
     }
 }

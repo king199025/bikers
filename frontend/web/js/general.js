@@ -62,7 +62,23 @@ jQuery(document).ready(function ($) {
         var myDate = $(this).val();
         myDate = myDate.split(".");
         var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
-        $('#club_created').val(new Date(newDate).getTime());
+        $('#club_created').val(new Date(newDate).getTime()/1000);
+    });
+
+    $('#events_search_date_from').change(function () {
+
+        var myDate = $(this).val();
+        myDate = myDate.split(".");
+        var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
+        $('#event_dt_from').val(new Date(newDate).getTime()/1000);
+    });
+
+    $('#events_search_date_to').change(function () {
+
+        var myDate = $(this).val();
+        myDate = myDate.split(".");
+        var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
+        $('#event_dt_to').val(new Date(newDate).getTime()/1000);
     });
 
     $(document).on('change','#event_search_city',function(){
@@ -111,13 +127,13 @@ jQuery(document).ready(function ($) {
         var myDate = $(this).val();
         myDate = myDate.split(".");
         var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
-        $('#event_start').val(new Date(newDate).getTime());
+        $('#event_start').val(new Date(newDate).getTime()/1000);
     });
     $('#dt_end_event').change(function(){
         var myDate = $(this).val();
         myDate = myDate.split(".");
         var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
-        $('#event_end').val(new Date(newDate).getTime());
+        $('#event_end').val(new Date(newDate).getTime()/1000);
     });
     
     $(document).on('change','.clubs-category',function(){

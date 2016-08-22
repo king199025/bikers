@@ -6,4 +6,4 @@
 	<!-- close .events-conrent__item_thumb -->
 	<a href="#" class="events-conrent__item_title"><?=$model['name']?></a>
 	<span class="events-conrent__item_date"><?=date('j F',$model['dt_start'])?></span>
-    <a href="#" class="button button_orange events-conrent__item_price"><?=$model['city'][0]['Name']?>, 50RUS</a>
+    <a href="#" class="button button_orange events-conrent__item_price"><?=$model['city'][0]['Name']?></a>
