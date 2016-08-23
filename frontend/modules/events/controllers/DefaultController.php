@@ -4,6 +4,8 @@ namespace frontend\modules\events\controllers;
 
 use Yii;
 use common\models\db\Events;
+use common\models\db\City;
+use common\models\db\Region;
 use common\models\db\EventTypes;
 use common\models\EventsSearch;
 use yii\web\Controller;
@@ -41,10 +43,12 @@ class DefaultController extends Controller
         //\common\classes\Debug::prn($searchModel);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $types = EventTypes::find()->all();
+        $regions = Region::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'types' => $types,
+            'regions' => $regions
         ]);
     }
 

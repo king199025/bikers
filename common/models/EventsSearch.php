@@ -19,6 +19,8 @@ class EventsSearch extends Events
     public $is_near;
     public $radius;
     public $region;
+    public $my_lon;
+    public $my_lat;
     /**
      * @inheritdoc
      */
@@ -27,6 +29,7 @@ class EventsSearch extends Events
         return [
             [['dt_from', 'dt_to', 'radius', 'is_near'], 'integer'],
             [['word', 'cities', 'region'], 'string'],
+            [['my_lon','my_lat'],'number']
         ];
     }
 
@@ -99,10 +102,22 @@ class EventsSearch extends Events
               ->orFilterWhere(['like',"`clubs`.`name`",$this->word])
               ->orFilterWhere(['like',"`user`.`road_nickname`",$this->word])
               ->andFilterWhere(['between','`events`.`dt_start`',$this->dt_from,$this->dt_to])
+              //->andFilterWhere($this->radius.' >= '.$this->distance($this->my_lat,$this->my_lon,))
               ->with('city')
               ->asArray();
         //\common\classes\Debug::prn($dataProvider);
         //die;
         return $dataProvider;
+    }
+
+    private function distance($lat1,$lng1,$lat2,$lng2)
+    {
+        // Convert degrees to radians.
+        $lat1=deg2rad($lat1);
+        $lng1=deg2rad($lng1);
+        $lat2=deg2rad($lat2);
+        $lng2=deg2rad($lng2);
+
+        return round( 6378137 * acos( cos( $lat1 ) * cos( $lat2 ) * cos( $lng1 - $lng2 ) + sin( $lat1 ) * sin( $lat2 ) ) );
     }
 }

@@ -278,7 +278,7 @@ jQuery(document).ready(function ($) {
         routTravel();
     });
 
-    $(document).change('#autocomplete_city_name_start', function () {
+    $(document).on('change','#autocomplete_city_name_start', function () {
         $.ajax({
             type: 'POST',
             url: "/travels/default/ajax_find_travels/",

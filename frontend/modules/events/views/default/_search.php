@@ -66,8 +66,9 @@ use common\classes\Debug;
     <?= $form->field($model, 'is_near')
         ->checkbox([
             'class' => 'events-conrent__form_inp events-conrent__form_inp_sm',
+            'label' => null,
             ])
-        ->label('Ближайшие'); ?>
+        ->label(false); ?>
 
     <?= $form->field($model, 'radius')
         ->textInput([
@@ -76,11 +77,19 @@ use common\classes\Debug;
             ])
         ->label(false); ?>
 
-    <?= $form->field($model, 'region')
-        ->textInput([
+    <?= $form->field($model, 'region')->widget(\yii\jui\AutoComplete::className(),[
+        'options' => [
+            'class' => 'events-conrent__form_inp events-conrent__form_inp_sm',
+            'placeholder' => 'Регион',
+        ],
+        'clientOptions' => [
+            'source' => $regions,
+        ],
+    ])
+        /*->textInput([
             'class' => 'events-conrent__form_inp events-conrent__form_inp_sm',
             'placeholder' => 'Регион'
-            ])
+            ])*/
         ->label(false); ?>
 
     <div class="form-group">

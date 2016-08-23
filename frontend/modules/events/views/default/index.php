@@ -77,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				<?= $this->render('_search', [
 				        'model' => $searchModel,
+						'regions' => $regions
 				    ]) ?>
 
 				    <!-- open .events-conrent__sidebar__box -->
