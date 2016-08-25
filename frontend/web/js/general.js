@@ -294,7 +294,19 @@ jQuery(document).ready(function ($) {
             }
         });
     })
-    $(document).change('#autocomplete_city_name_end', function () {
+    $(document).on('click','#is_near_event',function () {
+        if(this.checked)
+        {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                $('#event_my_lat').val(latitude);
+                $('#event_my_lon').val(longitude);
+
+            });
+        }
+    });
+    $(document).on('change','#autocomplete_city_name_end', function () {
 
     })
 

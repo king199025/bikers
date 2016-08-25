@@ -13,17 +13,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="event__content">
   <div class="container">
     <div class="event__content_place">
-      <h2 class="date-event">Дата начала: <span> 12 февраля 2016</span> </h2>
-      <h2 class="date-event">Дата окончания: <span> 14 февраля 2016</span> </h2>
-      <p class="about-place">Место проведения: <span>Россия / Тульская область / Тула</span><a href="#" class="kilometers">3000 км</a></p>
-      <p class="about-place">Вид мероприятия: <span>зимний мотофестиваль</span></p>
-      <p class="about-place">Организаторы:  <span>Мммммммммм</span></p>
-      <p class="link-site">Сайт: <a href="">www.dalnak.com</a></p>
-      <a class="soc-link" href=""><span class="icon-soc-link vk-icon"></span>new.vk.com/peso4nica_art </a>
-      <a class="soc-link" href=""><span class="icon-soc-link fb-icon"></span>new.vk.com/peso4nica_art </a>
-      <a class="soc-link" href=""><span class="icon-soc-link ok-icon"></span>new.vk.com/peso4nica_art </a>
+      <h2 class="date-event">Дата начала: <span><?=date('d.m.Y',$model->dt_start)?></span> </h2>
+      <h2 class="date-event">Дата окончания: <span><?if($model->dt_end){echo date('d.m.Y.',$model->dt_end);}?></span> </h2>
+      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?=$city?></span><a href="#" class="kilometers">3000 км</a></p>
+      <p class="about-place">Вид мероприятия: <span><?=$model->type?></span></p>
+      <p class="about-place">Организаторы:  <span><?=$model->organizer?></span></p>
+      <p class="link-site">Сайт: <a href="<?=$model->site_url?>"><?=$model->site_url?></a></p>
+      <a class="soc-link" href="<?=$model->vk_url?>"><span class="icon-soc-link vk-icon"></span><?=$model->vk_url?> </a>
+      <a class="soc-link" href="<?=$model->fb_url?>"><span class="icon-soc-link fb-icon"></span><?=$model->fb_url?> </a>
+      <a class="soc-link" href="<?=$model->ok_url?>"><span class="icon-soc-link ok-icon"></span><?=$model->ok_url?> </a>
       <div class="event-button">
-        <a href="#" class="button button_gray ">Едет: 15</a>
+        <a href="#" class="button button_gray ">Едет: <?=$participants?></a>
         <a href="#" class="button button_dark event-button-bookmarks">В закладки</a>
         <a href="#" class="button button_orange event-button-went">Я поеду</a>
       </div>

@@ -6,13 +6,18 @@ use common\classes\Debug;
 /* @var $this yii\web\View */
 /* @var $model common\models\EventsSearch */
 /* @var $form yii\widgets\ActiveForm */
+
+//Debug::prn($regions);
+//die;
+
 ?>
 <!-- open .events-conrent__sidebar__box -->
 <div class="events-conrent__sidebar__box">    
 
 <!-- close .events-conrent__sidebar__box -->
 <div class="events-conrent__sidebar_control">
-        <a id="reset_event_search" href="#">Сбросить поиск</a>
+        <a id="reset_event_search" href="<?=\yii\helpers\Url::to('')?>">Сбросить поиск</a>
+        <a href="<?=\yii\helpers\Url::to('/events/default/create')?>">Добавить слет</a>
     </div>
 
     <?php $form = ActiveForm::begin([
@@ -65,9 +70,16 @@ use common\classes\Debug;
 
     <?= $form->field($model, 'is_near')
         ->checkbox([
+            'id' => 'is_near_event',
             'class' => 'events-conrent__form_inp events-conrent__form_inp_sm',
             'label' => null,
             ])
+        ->label(false); ?>
+    <?= $form->field($model, 'my_lon')
+        ->hiddenInput(['id' => 'event_my_lon'])
+        ->label(false); ?>
+    <?= $form->field($model, 'my_lat')
+        ->hiddenInput(['id' => 'event_my_lat'])
         ->label(false); ?>
 
     <?= $form->field($model, 'radius')

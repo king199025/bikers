@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php endforeach;?>
         <div class="add-button">
-            <a href="#" class="button button_gray add">Добавить</a>
+            <a href="<?=\yii\helpers\Url::to('\clubs\default\create')?>" class="button button_gray add">Добавить</a>
         </div>
         <div class="motoclub-search">
             <input type="text" name="navigation__search_box " class="navigation__search_box motoclub-search-input" placeholder="Страна, город, название">

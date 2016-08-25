@@ -2,12 +2,15 @@
 
 namespace frontend\modules\events\controllers;
 
+use common\classes\Debug;
+use common\models\User;
 use Yii;
 use common\models\db\Events;
 use common\models\db\City;
 use common\models\db\Region;
 use common\models\db\EventTypes;
 use common\models\EventsSearch;
+use common\models\db\EventsUser;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,7 +46,9 @@ class DefaultController extends Controller
         //\common\classes\Debug::prn($searchModel);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $types = EventTypes::find()->all();
-        $regions = Region::find()->all();
+        $regions = Region::find()->select([ 'Name as label','ID as value'])
+            ->asArray()
+            ->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -59,8 +64,15 @@ class DefaultController extends Controller
      */
     public function actionView($id)
     {
+        $participants = User::find()
+            ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
+            ->where(['`events_user`.`events_id`' => $id])
+            ->count();
+        $city = City::find()->where('`City`.`ID`=`events`.`city`')->one();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'participants' => $participants,
+            'city' => $city
         ]);
     }
 
@@ -103,10 +115,32 @@ class DefaultController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else
+        {
             return $this->render('update', [
                 'model' => $model,
             ]);
+        }
+    }
+
+    public function actionCopy($id)
+    {
+        $model = $this->findModel($id);
+
+        $new_model = new Events();
+        $data = $model->attributes;
+        $data['id'] = null;
+        $new_model->attributes = $data;
+        if($new_model->save(false))
+        {
+            return $this->redirect(['view', 'id' => $new_model->id]);
+        }
+        else
+        {
+            Debug::prn($new_model);
+            die;
+            return $this->redirect('index');
         }
     }
 

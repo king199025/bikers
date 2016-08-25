@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
-<?php// \common\classes\Debug::prn($model);?>
+<!--?php// \common\classes\Debug::prn($model);?-->
 
 <div class="row">
     <div class="col-md-3">
