@@ -6,4 +6,4 @@
 	<!-- close .events-conrent__item_thumb -->
 	<a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="events-conrent__item_title"><?=$model['name']?></a>
 	<span class="events-conrent__item_date"><?=date('j F',$model['dt_start'])?></span>
-    <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="button button_orange events-conrent__item_price"><?=$model['city'][0]['Name']?></a>
+    <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="button button_orange events-conrent__item_price"><?=$model['city']['Name']?></a>

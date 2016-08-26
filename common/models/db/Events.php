@@ -95,6 +95,10 @@ class Events extends \yii\db\ActiveRecord
     
     public function getCity()
     {
-        return $this->hasMany(City::className(), ['ID' => 'city']);
+        return $this->hasOne(City::className(), ['ID' => 'city']);
+    }
+    public function getType()
+    {
+        return $this->hasOne(EventTypes::className(),['id'=>'type']);
     }
 }

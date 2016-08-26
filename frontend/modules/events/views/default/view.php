@@ -6,25 +6,28 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Events */
 
-$this->title = $model->name;
+$this->title = $model['name'];
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятия', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+//\common\classes\Debug::prn($model->organizer);
+//die;
 ?>
 <section class="event__content">
   <div class="container">
     <div class="event__content_place">
-      <h2 class="date-event">Дата начала: <span><?=date('d.m.Y',$model->dt_start)?></span> </h2>
-      <h2 class="date-event">Дата окончания: <span><?if($model->dt_end){echo date('d.m.Y.',$model->dt_end);}?></span> </h2>
-      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?=$city?></span><a href="#" class="kilometers">3000 км</a></p>
-      <p class="about-place">Вид мероприятия: <span><?=$model->type?></span></p>
-      <p class="about-place">Организаторы:  <span><?=$model->organizer?></span></p>
-      <p class="link-site">Сайт: <a href="<?=$model->site_url?>"><?=$model->site_url?></a></p>
-      <a class="soc-link" href="<?=$model->vk_url?>"><span class="icon-soc-link vk-icon"></span><?=$model->vk_url?> </a>
-      <a class="soc-link" href="<?=$model->fb_url?>"><span class="icon-soc-link fb-icon"></span><?=$model->fb_url?> </a>
-      <a class="soc-link" href="<?=$model->ok_url?>"><span class="icon-soc-link ok-icon"></span><?=$model->ok_url?> </a>
+      <h2 class="date-event">Дата начала: <span><?=date('d.m.Y',$model['dt_start'])?></span> </h2>
+      <h2 class="date-event">Дата окончания: <span><?if($model['dt_end']){echo date('d.m.Y.',$model['dt_end']);}?></span> </h2>
+      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?=$model['city']['Name']?></span><a href="#" class="kilometers">3000 км</a></p>
+      <p class="about-place">Вид мероприятия: <span><?=$model['type']['name']?></span></p>
+      <p class="about-place">Организаторы:  <span><?php foreach($model['organizer'] as $item) echo $item['club']['name']?></span></p>
+      <p class="link-site">Сайт: <a href="<?=$model['site_url']?>"><?=$model['site_url']?></a></p>
+      <a class="soc-link" href="<?=$model['vk_url']?>"><span class="icon-soc-link vk-icon"></span><?=$model['vk_url']?> </a>
+      <a class="soc-link" href="<?=$model['fb_url']?>"><span class="icon-soc-link fb-icon"></span><?=$model['fb_url']?> </a>
+      <a class="soc-link" href="<?=$model['ok_url']?>"><span class="icon-soc-link ok-icon"></span><?=$model['ok_url']?> </a>
       <div class="event-button">
         <a href="#" class="button button_gray ">Едет: <?=$participants?></a>
-        <a href="#" class="button button_dark event-button-bookmarks">В закладки</a>
+        <button id="add_event_to_bookmarks" class="button button_dark event-button-bookmarks">В закладки</button>
         <a href="#" class="button button_orange event-button-went">Я поеду</a>
       </div>
             <div class="gallery">

@@ -80,15 +80,14 @@ jQuery(document).ready(function ($) {
         var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
         $('#event_dt_to').val(new Date(newDate).getTime()/1000);
     });
-
-    $(document).on('change','#event_search_city',function(){
+    
+    $('#add_event_to_bookmarks').click(function () {
         $.ajax({
             type: 'POST',
-            url: "/events/default/ajax_find_event_by_word/",
-            data: 'word=' + $(this).val(),
+            url: "/events/default/ajax_add_bookmark/",
+            data: 'event=' + 0,
             success: function (data) {
-                //console.log(data);
-                $(".events-conrent__box").html(data);
+                    alert(data);
             },
             error: function (data) {
                 console.log(data);
@@ -96,6 +95,7 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
 
     $('#saveInfo').on('click', function (e) {
 

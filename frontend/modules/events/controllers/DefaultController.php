@@ -3,6 +3,9 @@
 namespace frontend\modules\events\controllers;
 
 use common\classes\Debug;
+use common\models\db\Bookmarks;
+use common\models\db\Clubs;
+use common\models\db\EventOrganizers;
 use common\models\User;
 use Yii;
 use common\models\db\Events;
@@ -68,11 +71,16 @@ class DefaultController extends Controller
             ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
             ->where(['`events_user`.`events_id`' => $id])
             ->count();
-        $city = City::find()->where('`City`.`ID`=`events`.`city`')->one();
+        $model = Events::find($id)->with('city','type')->asArray()->one();
+        $model['organizer'] = EventOrganizers::find(['event_id'=>$id])
+            //->leftJoin('`clubs`','`clubs`.`id`=`event_organizers`.`club_id`')
+            ->with('club')
+            ->asArray()
+            ->all();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
             'participants' => $participants,
-            'city' => $city
+            //'city' => $city
         ]);
     }
 
@@ -84,21 +92,28 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new Events();
+        $org = new EventOrganizers();
+        $org->event_id = $model->id;
+        $org->club_id = Yii::$app->request->post('event_organizer');
         $cityList = City::find()->select([ 'name as label','id as value'])
                 ->asArray()
                 ->all();
+        $clubsList = Clubs::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false) && $org->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $typesList = EventTypes::find()->asArray()->all();
             return $this->render('create', [
                 'model' => $model,
                 'typesList' => $typesList,
-                'cityList' => $cityList
+                'cityList' => $cityList,
+                'clubsList' => $clubsList
             ]);
         }
     }
@@ -112,14 +127,28 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $org = new EventOrganizers();
+        $org->event_id = $model->id;
+        $org->club_id = Yii::$app->request->post('auto_complete_event_organizer');
+        $cityList = City::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
+        $clubsList = Clubs::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+        if ($model->load(Yii::$app->request->post()) && $model->save(false) && $org->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
-        }
-        else
-        {
-            return $this->render('update', [
+        } else {
+            $typesList = EventTypes::find()->asArray()->all();
+            return $this->render('create', [
                 'model' => $model,
+                'typesList' => $typesList,
+                'cityList' => $cityList,
+                'clubsList' => $clubsList
             ]);
         }
     }
@@ -142,6 +171,21 @@ class DefaultController extends Controller
             die;
             return $this->redirect('index');
         }
+    }
+
+    public function actionAjax_add_bookmark()
+    {
+        $id = Yii::$app->request->post('event');
+        $model = new Bookmarks();
+        $model->event = $id;
+        $model->user = Yii::$app->getUser()->id;
+        if($model->save())
+        {
+            return 'OK';
+        }
+        else
+            return 'ERROR';
+
     }
 
     /**

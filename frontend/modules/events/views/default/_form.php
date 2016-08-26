@@ -15,39 +15,54 @@ use yii\helpers\Url;
 $to_list = ArrayHelper::map($typesList,'id','name');
 ?>
 
-<div class="create">
+<section class="garage-form">
+    <div class="container">
+        <h2 class="garage-form-title">Мероприятие</h2>
+        <div class="garage-form__add-baik">
+            <h2 class="garage-form-title">Добавление нового мероприятия</h2>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options'=>['class'=>'garage-form__add-baik_form']]); ?>
 
-        <?= $form->field($model, 'name') ?>
+        <?= $form->field($model, 'name')->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Название'])->label(false) ?>
         <?=DatePicker::widget([
             'language' => 'ru',
             'id' => 'dt_start_event',
-            'dateFormat' => 'dd.MM.yyyy'
+            'dateFormat' => 'dd.MM.yyyy',
+            'options'=> [
+                'class'=>'garage-form__add-baik_form_input',
+                'placeholder'=>'Дата начала'
+            ]
         ]) ?>
         <?= $form->field($model,'dt_start')->hiddenInput(['id'=>'event_start'])->label(false) ?>
         
         <?= DatePicker::widget([
             'language' => 'ru',
             'id' => 'dt_end_event',
-            'dateFormat' => 'dd.MM.yyyy'
+            'dateFormat' => 'dd.MM.yyyy',
+            'options'=> [
+                'class'=>'garage-form__add-baik_form_input',
+                'placeholder'=>'Дата окончания'
+            ]
         ]) ?>
         <?= $form->field($model,'dt_start')->hiddenInput(['id'=>'event_end'])->label(false) ?>
         
-        <?= $form->field($model, 'type')->dropDownList($to_list)
+        <?= $form->field($model, 'type')->dropDownList($to_list,['class'=>'garage-form__add-baik_form_input','placeholder'=>'Тип события'])->label(false)
                    
                     ?>
+    <div class="garage-form__add-baik_form_input">
         <?= $form->field($model, 'editorTags')->widget(TagEditor::className(),[
             'tagEditorOptions' => [
                 'autocomplete' => [
                     'source' => Url::toRoute(['tag/suggest'])
                 ]
-            ]
-        ]) ?>
+            ],
+
+        ])->label(false) ?>
+        </div>
         <?=
             AutoComplete::widget([
         'options' => [
-            /*'class' => '',*/
+            'class' => 'garage-form__add-baik_form_input',
             'placeholder' => 'Город',
             'id' => 'auto_complete_event_city',
         ],
@@ -69,7 +84,7 @@ $to_list = ArrayHelper::map($typesList,'id','name');
             AutoComplete::widget([
                 'name'=>'auto_complete_event_city_near',
         'options' => [
-            /*'class' => '',*/
+            'class' => 'garage-form__add-baik_form_input',
             'placeholder' => 'Город',
             'id' => 'auto_complete_event_city_near',
         ],
@@ -88,21 +103,87 @@ $to_list = ArrayHelper::map($typesList,'id','name');
     
         <?= $form->field($model, 'city_near')->hiddenInput(['id'=>'event_city_near'])->label(false) ?>
         
-        <?= $form->field($model, 'organizer') ?>
-        <?= $form->field($model, 'lon') ?>
-        <?= $form->field($model, 'lat') ?>
-        <?= $form->field($model, 'site_url') ?>
-        <?= $form->field($model, 'vk_url') ?>
-        <?= $form->field($model, 'ok_url') ?>
-        <?= $form->field($model, 'fb_url') ?>
-        <?= $form->field($model, 'other_link1') ?>
-        <?= $form->field($model, 'other_link2') ?>
-        <?= $form->field($model, 'other_link3') ?>
-        <?= $form->field($model, 'afisha') ?>
-    
+        <?= AutoComplete::widget([
+            'name'=>'auto_complete_event_organizer',
+            'options' => [
+                'class' => 'garage-form__add-baik_form_input',
+                'placeholder' => 'Организатор',
+                'id' => 'auto_complete_event_organizer',
+            ],
+            'clientOptions' => [
+                'source' => $clubsList,
+                'minLength' => '3',
+                'autoFill' => true,
+                'select' => new JsExpression("function( event, ui ) {
+        $('#auto_complete_event_organizer').val(ui.item.label);
+        $('#event_organizer').val(ui.item.value).change();
+        return false;
+            }")
+            ],
+        ]); ?>
+    <?=Html::hiddenInput('event_organizer',null,['id'=>'event_organizer'])?>
+        <?= $form->field($model, 'lon')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Долгота'])
+            ->label(false)
+        ?>
+        <?= $form->field($model, 'lat')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Широта'])
+            ->label(false) ?>
+        <?= $form->field($model, 'site_url')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Адрес сайта'])
+            ->label(false) ?>
+        <?= $form->field($model, 'vk_url')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Ссылка vk'])
+            ->label(false)?>
+        <?= $form->field($model, 'ok_url')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Ссылка на одноклассники'])
+            ->label(false) ?>
+        <?= $form->field($model, 'fb_url')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Ссылка на facebook'])
+            ->label(false)?>
+        <?= $form->field($model, 'other_link1')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(1):'])
+            ->label(false)?>
+        <?= $form->field($model, 'other_link2')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(2):'])
+            ->label(false)?>
+        <?= $form->field($model, 'other_link3')
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3):'])
+            ->label(false)?>
+    <div class="block-add-file">
+        <?= $form->field($model, 'afisha')->widget(\kartik\file\FileInput::className(),[
+            'name' => 'file[]',
+            'id' => 'afisha',
+            'attribute' => 'attachment_1',
+            'value' => '/media/img/1.png',
+            'options' => [
+                'multiple' => false,
+                'showCaption' => false,
+                'showUpload' => false,
+                'uploadAsync'=> false,
+            ],
+            'pluginOptions' => [
+                'showPreview' => false,
+                'showCaption' => false,
+                'showRemove' => false,
+                'showCancel' =>false,
+                'browseLabel' =>  'Добавить фото',
+                'browseClass'=> 'file_upload',
+                'uploadUrl' => Url::to(['events/events/upload_file']),
+                'language' => "ru",
+                'uploadAsync'=> false,
+                'showUpload' => false,
+                'dropZoneEnabled' => false,
+                /*'initialPreviewShowDelete' => true,*/
+                'overwriteInitial' => false,
+            ],
+        ])->label('Добавить афишу') ?>
+    </div>
         <div class="form-group">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Создать', ['class' => 'garage-form__add-baik_form_knopka']) ?>
         </div>
     <?php ActiveForm::end(); ?>
 
-</div><!-- create -->
+        </div>
+    </div>
+</section>
