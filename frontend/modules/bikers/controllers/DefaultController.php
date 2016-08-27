@@ -2,6 +2,8 @@
 
 namespace frontend\modules\bikers\controllers;
 
+use common\classes\Debug;
+use common\models\db\Events;
 use common\models\db\Garage;
 use common\models\db\Profile;
 use common\models\User;
@@ -24,6 +26,12 @@ class DefaultController extends Controller
     }
     public function actionView($id)
     {
+        $events = Events::find()
+            ->leftJoin('`events_user`','`events_user`.`events_id` = `events`.`id`')
+            ->where(['`events_user`.`user_id`' => $id])
+            ->all();
+        Debug::prn($events);
+        die;
         $profile = Profile::findOne(['user_id' => $id]);
         return $this->render('view',[
             'model' => $this->findModel($id),

@@ -85,9 +85,23 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: "/events/default/ajax_add_bookmark/",
-            data: 'event=' + 0,
+            data: 'event=' + $(this).attr('data-event'),
             success: function (data) {
                     alert(data);
+            },
+            error: function (data) {
+                console.log(data);
+                //$( "#travels__travel" ).append( data  );
+            }
+        });
+    });
+    $('#add_participant').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_add_participant/",
+            data: 'event=' + $(this).attr('data-event'),
+            success: function (data) {
+                alert(data);
             },
             error: function (data) {
                 console.log(data);

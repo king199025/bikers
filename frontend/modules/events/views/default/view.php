@@ -27,37 +27,37 @@ $this->params['breadcrumbs'][] = $this->title;
       <a class="soc-link" href="<?=$model['ok_url']?>"><span class="icon-soc-link ok-icon"></span><?=$model['ok_url']?> </a>
       <div class="event-button">
         <a href="#" class="button button_gray ">Едет: <?=$participants?></a>
-        <button id="add_event_to_bookmarks" class="button button_dark event-button-bookmarks">В закладки</button>
-        <a href="#" class="button button_orange event-button-went">Я поеду</a>
+        <button id="add_event_to_bookmarks" data-event="<?=$model['id']?>" class="button button_dark event-button-bookmarks">В закладки</button>
+        <button id="add_participant" data-event="<?=$model['id']?>" class="button button_orange event-button-went">Я поеду</button>
       </div>
             <div class="gallery">
                 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm6.staticflickr.com/5612/15344856989_449794889d_b.jpg" title="Morning Twilight (Jose Hamra Images)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm8.staticflickr.com/7289/16207238089_0124105172_b.jpg" title="(Eric Goncalves (cathing up again!))">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm9.staticflickr.com/8568/16388772452_f4d77a92c7_b.jpg" title="Arctic Paradise (Tom Draxler)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm8.staticflickr.com/7308/15783866983_27160395b9_b.jpg" title="Rodeo Dusk (_JonathanMitchellPhotography_)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm8.staticflickr.com/7308/15783866983_27160395b9_b.jpg" title="Rodeo Dusk (_JonathanMitchellPhotography_)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm8.staticflickr.com/7308/15783866983_27160395b9_b.jpg" title="Rodeo Dusk (_JonathanMitchellPhotography_)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm8.staticflickr.com/7308/15783866983_27160395b9_b.jpg" title="Rodeo Dusk (_JonathanMitchellPhotography_)">
-<img src="img/photo-pic.png" alt="">
+<img src="/frontend/web/img/photo-pic.png" alt="">
 </a>
 
 <a href="" target="_blank" class="gallery-item all-photos">Все фото</a>
             </div>
     </div>
     <div class="event__content_promo-pic">
-      <img src="img/promo-pic.png" alt="">
+      <img src="/frontend/web/img/promo-pic.png" alt="">
     </div>
   </div>
 </section>
@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </span>
         </div>
         <div class="program__event_promo-pic">
-            <img src="img/program-promo-pic.png" alt="">
+            <img src="/frontend/web/img/program-promo-pic.png" alt="">
         </div>
     </div>
 </section>
@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
     </div>
     <div class="event__content_promo-pic">
-      <img src="img/promo-pic-old.png" alt="">
+      <img src="/frontend/web/img/promo-pic-old.png" alt="">
     </div>
   </div>
 </section>
@@ -183,7 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </span>
         </div>
         <div class="program__event_promo-pic">
-            <img src="img/program-promo-pic-old.png" alt="">
+            <img src="/frontend/web/img/program-promo-pic-old.png" alt="">
         </div>
     </div>
 </section>

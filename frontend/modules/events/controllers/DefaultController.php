@@ -188,6 +188,21 @@ class DefaultController extends Controller
 
     }
 
+    public function actionAjax_add_participant()
+    {
+        $id = Yii::$app->request->post('event');
+        $model = new EventsUser();
+        $model->events = $id;
+        $model->user = Yii::$app->getUser()->id;
+        if($model->save())
+        {
+            return 'OK';
+        }
+        else
+            return 'ERROR';
+
+    }
+
     /**
      * Deletes an existing Events model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

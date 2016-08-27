@@ -19,7 +19,7 @@
             </div>
             <div class="clearfix"></div>
             <h3 class="garage-add-bike">Мой гараж</h3>
-            <a href="#" class="garage-add-bike-button button button_orange">Добавить байк</a>
+            <a href="<?=\yii\helpers\Url::to('/garage/garage/create')?>" class="garage-add-bike-button button button_orange">Добавить байк</a>
 
 
 
@@ -102,8 +102,8 @@
                 </div>
             </div>
             <div class="events-control">
-                <a href="#" class="button button_orange">Заяка на мотоклуб</a>
-                <a href="#" class="button button_orange add_dalnak">Добавить дальняк</a>
+                <a href="#" class="button button_orange"><?=\yii\helpers\Url::to('/clubs/default/create')?></a>
+                <a href="#" class="button button_orange add_dalnak"><?=\yii\helpers\Url::to('/travels/default/create')?></a>
             </div>
         </div>
         <div class="pa-little pa_buttons">
