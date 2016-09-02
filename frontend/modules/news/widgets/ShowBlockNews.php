@@ -9,6 +9,7 @@
 namespace frontend\modules\news\widgets;
 
 
+use common\models\db\Events;
 use common\models\db\News;
 use yii\base\Widget;
 
@@ -16,6 +17,7 @@ class ShowBlockNews extends Widget
 {
     public function run(){
         $news = News::find()->orderBy('dt_add')->limit(4)->all();
-        return $this->render('news', ['news' => $news]);
+        $events = Events::find()->orderBy(['dt_start' => SORT_DESC])->limit(5)->all();
+        return $this->render('news', ['news' => $news,'events'=>$events]);
     }
 }

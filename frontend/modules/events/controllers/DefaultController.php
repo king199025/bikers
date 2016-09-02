@@ -161,16 +161,19 @@ class DefaultController extends Controller
             'js' => []
         ];
 
-
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()))
+        {
             if($org->club_id)
                 $org->save(false);
 
-            $model->afisha = UploadedFile::getInstance($model,'afisha');
-            $model->afisha->saveAs('media/upload/'. $model->afisha->baseName . '.' . $model->afisha->extension);
-            $model->afisha = $model->afisha->baseName . '.' . $model->afisha->extension;
-            $model->save(false);
+            if( $model->afisha)
+            {
+                $model->afisha = UploadedFile::getInstance($model, 'afisha');
+                $model->afisha->saveAs('media/upload/' . $model->afisha->baseName . '.' . $model->afisha->extension);
+                $model->afisha = $model->afisha->baseName . '.' . $model->afisha->extension;
 
+            }
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $typesList = EventTypes::find()->asArray()->all();

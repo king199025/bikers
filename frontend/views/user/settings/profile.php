@@ -22,49 +22,56 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
+<section class="settings-account">
+    <div class="container">
+        <div class="settings-mnu">
+            <h3>Настройки Профиля</h3>
+            <div class="settings-mnu__items button button_orange" >ПРОФИЛЬ</div>
+            <a class="settings-mnu__items" href="<?=\yii\helpers\Url::to('account')?>">АККАУНТ</a>
+        </div>
+        <div class="settings-account-form">
+            <h4>Настройки профиля</h4>
+            <?php $form = \yii\widgets\ActiveForm::begin([
+                'id' => 'profile-form',
+                #'options' => ['class' => ''],
+                'enableAjaxValidation'   => true,
+                'enableClientValidation' => false,
+                'validateOnBlur'         => false,
+            ]); ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <?= $this->render('_menu') ?>
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <?= Html::encode($this->title) ?>
-            </div>
-            <div class="panel-body">
-                <?php $form = \yii\widgets\ActiveForm::begin([
-                    'id' => 'profile-form',
-                    'options' => ['class' => 'form-horizontal'],
-                    'fieldConfig' => [
-                        'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-sm-offset-3 col-lg-9\">{error}\n{hint}</div>",
-                        'labelOptions' => ['class' => 'col-lg-3 control-label'],
-                    ],
-                    'enableAjaxValidation'   => true,
-                    'enableClientValidation' => false,
-                    'validateOnBlur'         => false,
-                ]); ?>
+            <?= $form->field($model, 'name')
+                ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Имя'])
+                ->label(false) ?>
 
-                <?= $form->field($model, 'name') ?>
+            <?= $form->field($model, 'public_email')
+                ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Публичный email'])
+                ->label(false) ?>
 
-                <?= $form->field($model, 'public_email') ?>
+            <?= $form->field($model, 'website')
+                ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Вебсайт'])
+                ->label(false) ?>
 
-                <?= $form->field($model, 'website') ?>
+            <?= $form->field($model, 'location')
+                ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Местоположение'])
+                ->label(false) ?>
 
-                <?= $form->field($model, 'location') ?>
+            <?= $form->field($model, 'gravatar_email')
+                ->hint(\yii\helpers\Html::a(Yii::t('user', 'Change your avatar at Gravatar.com'), 'http://gravatar.com'))
+                ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Gravatar email'])
+                ->label(false) ?>
 
-                <?= $form->field($model, 'gravatar_email')->hint(\yii\helpers\Html::a(Yii::t('user', 'Change your avatar at Gravatar.com'), 'http://gravatar.com')) ?>
+            <?= $form->field($model, 'bio')
+                ->textarea(['class'=>'settings-profile-form_item-textarea','placeholder'=>'О себе'])
+                ->label(false)?>
 
-                <?= $form->field($model, 'bio')->textarea() ?>
-
-                <div class="form-group">
-                    <div class="col-lg-offset-3 col-lg-9">
-                        <?= \yii\helpers\Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success']) ?><br>
-                    </div>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-9">
+                    <?= \yii\helpers\Html::submitButton(Yii::t('user', 'Сохранить'), ['class' => 'button button_orange subm']) ?><br>
                 </div>
-
-                <?php \yii\widgets\ActiveForm::end(); ?>
             </div>
+
+            <?php \yii\widgets\ActiveForm::end(); ?>
         </div>
     </div>
-</div>
+
+</section>

@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <h2 class="program__event-title">ПРОГРАММА</h2>
         <div class="program__event_about">
-            <span class="mini-about-block">
+            <!--span class="mini-about-block">
                 <p class="program__event_about-text">Главное соревнование- СКАЙОРИНГ (только колясычи с человеком обутым в лыжи)</p>
                 <p class="program__event_about-text">Традиционные соревнования- ДРАГРЕЙСИНГ, КОЛЬЦЕВАЯ ГОНКА ПО ГЛАДИ ОЗЕРА, ЦАРЬ ГОРЫ</p>
             </span>
@@ -104,7 +104,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="program__event_about-text">Процеров Артем( Темыч RAMCC) +7-926-036-80-13</p>
                 <p class="program__event_about-text">Александр Уткин ( Чукча RAMCC) +7-920-770-66-77</p>
                 <p class="program__event_about-text">Дмитрий Балаев (Deamon RAMCC) +7-925-792-01-81</p>
-            </span>
+            </span-->
+            <?=$model['program']?>
         </div>
         <div class="program__event_promo-pic">
             <img src="/frontend/web/img/program-promo-pic.png" alt="">
@@ -150,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <h2 class="program__event-title">ПРОГРАММА</h2>
         <div class="program__event_about">
-            <span class="mini-about-block">
+            <!--span class="mini-about-block">
                 <p class="program__event_about-text">Главное соревнование- СКАЙОРИНГ (только колясычи с человеком обутым в лыжи)</p>
                 <p class="program__event_about-text">Традиционные соревнования- ДРАГРЕЙСИНГ, КОЛЬЦЕВАЯ ГОНКА ПО ГЛАДИ ОЗЕРА, ЦАРЬ ГОРЫ</p>
             </span>
@@ -182,7 +183,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="program__event_about-text">Процеров Артем( Темыч RAMCC) +7-926-036-80-13</p>
                 <p class="program__event_about-text">Александр Уткин ( Чукча RAMCC) +7-920-770-66-77</p>
                 <p class="program__event_about-text">Дмитрий Балаев (Deamon RAMCC) +7-925-792-01-81</p>
-            </span>
+            </span-->
+            <?=$old['program']?>
         </div>
         <div class="program__event_promo-pic">
             <img src="/frontend/web/img/program-promo-pic-old.png" alt="">
@@ -190,9 +192,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </section>
 <section class="old-event">
-    <div class="container">
-        <h2 class="old-event-title">2014     Зимний мотофестиваль Самовар-Треффен</h2>
-    </div>
+
 <a href="#" class="button button_border">ЗАГРУЗИТЬ ЕЩЕ +</a>
 </section>
 <? endif; ?>

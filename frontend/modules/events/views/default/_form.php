@@ -143,14 +143,19 @@ $to_list = ArrayHelper::map($typesList,'id','name');
             ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Ссылка на facebook'])
             ->label(false)?>
         <?= $form->field($model, 'other_link1')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(1):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(1)'])
             ->label(false)?>
         <?= $form->field($model, 'other_link2')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(2):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(2)'])
             ->label(false)?>
         <?= $form->field($model, 'other_link3')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3)'])
             ->label(false)?>
+
+        <?= $form->field($model, 'program')
+            ->textarea(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Программа мероприятия'])
+            ->label(false)?>
+
     <div class="block-add-file">
         <?= $form->field($model, 'afisha')->fileInput()->label('Добавить афишу') ?>
     </div>
