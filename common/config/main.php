@@ -54,7 +54,7 @@ return [
             'cost' => 12,
             'admins' => ['admin'],
             'mailer' => [
-                'sender' => 'no-reply@дальняк.рф', // or ['no-reply@myhost.com' => 'Sender name']
+                'sender' => 'admin@admin.ru', // or ['no-reply@myhost.com' => 'Sender name']
                 'welcomeSubject' => ' ',
                 'confirmationSubject' => 'Confirmation subject',
                 'reconfirmationSubject' => 'Email change subject',

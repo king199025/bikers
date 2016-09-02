@@ -42,20 +42,20 @@ class RegUserController extends RegistrationController
         $this->trigger(self::EVENT_BEFORE_REGISTER, $event);
 
         $this->performAjaxValidation($model);
-
+//Debug::prn($_POST);
         if ($model->load(Yii::$app->request->post()) /*&& $model->register()*/) {
-            $model->floor = 1;
-            $model->register();
-            \common\classes\Debug::prn($_POST);
+            //$model->floor = 1;
 
-            /*if(!empty($_POST['day']) && !empty($_POST['month']) && !empty($_POST['year'])){
+
+
+            if(!empty($_POST['day']) && !empty($_POST['month']) && !empty($_POST['year'])){
                 $data = $_POST['day'].'.'.$_POST['month'].'.'.$_POST['year'];
                 $data = strtotime($data);
                 $model->birthday = $data;
-                $model->register();
-            }*/
 
+            }
 
+            $model->register();
 
 
 

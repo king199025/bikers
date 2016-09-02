@@ -23,6 +23,10 @@ class User extends \dektrium\user\models\User
         $scenarios['update'][]   = 'floor';
         $scenarios['register'][] = 'floor';
 
+        $scenarios['create'][]   = 'birthdayLength';
+        $scenarios['update'][]   = 'birthdayLength';
+        $scenarios['register'][] = 'birthdayLength';
+
 
 
         return $scenarios;

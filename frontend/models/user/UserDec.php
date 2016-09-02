@@ -22,6 +22,14 @@ class UserDec extends User
         $scenarios['create'][]   = 'road_nickname';
         $scenarios['update'][]   = 'road_nickname';
         $scenarios['register'][] = 'road_nickname';
+
+        $scenarios['create'][]   = 'floor';
+        $scenarios['update'][]   = 'floor';
+        $scenarios['register'][] = 'floor';
+
+        $scenarios['create'][]   = 'birthday';
+        $scenarios['update'][]   = 'birthday';
+        $scenarios['register'][] = 'birthday';
         return $scenarios;
     }
 
@@ -31,6 +39,8 @@ class UserDec extends User
         // add some rules
         /*$rules['road_nicknameRequired'] = ['road_nickname', 'required'];*/
         $rules['road_nicknameLength']   = ['road_nickname', 'string'];
+        $rules['floor']   = ['floor', 'integer'];
+        $rules['birthday']   = ['birthday', 'integer'];
 
         return $rules;
     }
