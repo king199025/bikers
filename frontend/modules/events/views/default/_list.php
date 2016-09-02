@@ -1,6 +1,6 @@
 	<!-- open .events-conrent__item_thumb -->
 	<a href="#" class="events-conrent__item_thumb">
-                                        <img src="/frontend/web/img/placeholder.png" alt="" />
+                                        <img src="<?=$model['afisha'] ? '/frontend/web/media/upload/'.$model['afisha'] :'/frontend/web/img/placeholder.png' ?>" alt="" />
 		<span class="events-conrent__item_distance"><strong>2800</strong>км</span>
 	</a>
 	<!-- close .events-conrent__item_thumb -->

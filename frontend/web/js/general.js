@@ -95,6 +95,25 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    $(document).on('click','#add_travel_to_bookmarks',function () {
+        $.ajax({
+            type: 'POST',
+            url: "/travels/default/ajax_add_bookmark/",
+            data: 'travel=' + $(this).attr('data-travel'),
+            success: function (data) {
+                alert(data);
+            },
+            error: function (data) {
+                console.log(data);
+                //$( "#travels__travel" ).append( data  );
+            }
+        });
+    });
+
+    $('#dt_start_event').change(function () {
+        $('#dt_end_event').val($(this).val());
+    });
     $('#add_participant').click(function () {
         $.ajax({
             type: 'POST',
@@ -118,6 +137,7 @@ jQuery(document).ready(function ($) {
         //return false;
 
     });
+
 
 
     $(document).on('click', '#more-news', function () {

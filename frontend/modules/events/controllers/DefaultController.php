@@ -18,6 +18,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController implements the CRUD actions for Events model.
@@ -71,15 +72,31 @@ class DefaultController extends Controller
             ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
             ->where(['`events_user`.`events_id`' => $id])
             ->count();
-        $model = Events::find($id)->with('city','type')->asArray()->one();
-        $model['organizer'] = EventOrganizers::find(['event_id'=>$id])
+        $model = Events::find()->where(['id'=>$id])->with('city','type')->asArray()->one();
+        $old = Events::find()->where(['name'=>$model['name']])->with('city','type')->orderBy('dt_end')->asArray()->one();
+        $old['organizer'] = EventOrganizers::find()
+            ->where(['event_id'=>$old['id']])
             //->leftJoin('`clubs`','`clubs`.`id`=`event_organizers`.`club_id`')
             ->with('club')
             ->asArray()
             ->all();
+        $model['organizer'] = EventOrganizers::find()
+            ->where(['event_id'=>$id])
+            //->leftJoin('`clubs`','`clubs`.`id`=`event_organizers`.`club_id`')
+            ->with('club')
+            ->asArray()
+            ->all();
+
+        $old_participants = User::find()
+            ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
+            ->where(['`events_user`.`events_id`' => $old['id']])
+            ->count();
+
         return $this->render('view', [
             'model' => $model,
             'participants' => $participants,
+            'old' =>$old,
+            'old_participants' => $old_participants
             //'city' => $city
         ]);
     }
@@ -92,9 +109,6 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new Events();
-        $org = new EventOrganizers();
-        $org->event_id = $model->id;
-        $org->club_id = Yii::$app->request->post('event_organizer');
         $cityList = City::find()->select([ 'name as label','id as value'])
                 ->asArray()
                 ->all();
@@ -105,7 +119,13 @@ class DefaultController extends Controller
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post()) && $model->save(false) && $org->save(false)) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            if(Yii::$app->request->post('event_organizer')) {
+                $org = new EventOrganizers();
+                $org->event_id = $model->id;
+                $org->club_id = Yii::$app->request->post('event_organizer');
+                $org->save(false);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $typesList = EventTypes::find()->asArray()->all();
@@ -140,7 +160,17 @@ class DefaultController extends Controller
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post()) && $model->save(false) && $org->save(false)) {
+
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($org->club_id)
+                $org->save(false);
+
+            $model->afisha = UploadedFile::getInstance($model,'afisha');
+            $model->afisha->saveAs('media/upload/'. $model->afisha->baseName . '.' . $model->afisha->extension);
+            $model->afisha = $model->afisha->baseName . '.' . $model->afisha->extension;
+            $model->save(false);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $typesList = EventTypes::find()->asArray()->all();
@@ -161,6 +191,8 @@ class DefaultController extends Controller
         $data = $model->attributes;
         $data['id'] = null;
         $new_model->attributes = $data;
+        $new_model->dt_start = strtotime('+1 year',$new_model->dt_start);
+        $new_model->dt_end = strtotime('+1 year',$new_model->dt_end);
         if($new_model->save(false))
         {
             return $this->redirect(['view', 'id' => $new_model->id]);
@@ -192,8 +224,8 @@ class DefaultController extends Controller
     {
         $id = Yii::$app->request->post('event');
         $model = new EventsUser();
-        $model->events = $id;
-        $model->user = Yii::$app->getUser()->id;
+        $model->events_id = $id;
+        $model->user_id = Yii::$app->getUser()->id;
         if($model->save())
         {
             return 'OK';

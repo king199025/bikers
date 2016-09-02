@@ -21,7 +21,8 @@ $to_list = ArrayHelper::map($typesList,'id','name');
         <div class="garage-form__add-baik">
             <h2 class="garage-form-title">Добавление нового мероприятия</h2>
 
-    <?php $form = ActiveForm::begin(['options'=>['class'=>'garage-form__add-baik_form']]); ?>
+    <?php $form = ActiveForm::begin(['options'=>['class'=>'garage-form__add-baik_form',
+                                    'enctype'=>'multipart/form-data']]); ?>
 
         <?= $form->field($model, 'name')->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Название'])->label(false) ?>
         <?=DatePicker::widget([
@@ -151,36 +152,10 @@ $to_list = ArrayHelper::map($typesList,'id','name');
             ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3):'])
             ->label(false)?>
     <div class="block-add-file">
-        <?= $form->field($model, 'afisha')->widget(\kartik\file\FileInput::className(),[
-            'name' => 'file[]',
-            'id' => 'afisha',
-            'attribute' => 'attachment_1',
-            'value' => '/media/img/1.png',
-            'options' => [
-                'multiple' => false,
-                'showCaption' => false,
-                'showUpload' => false,
-                'uploadAsync'=> false,
-            ],
-            'pluginOptions' => [
-                'showPreview' => false,
-                'showCaption' => false,
-                'showRemove' => false,
-                'showCancel' =>false,
-                'browseLabel' =>  'Добавить фото',
-                'browseClass'=> 'file_upload',
-                'uploadUrl' => Url::to(['events/events/upload_file']),
-                'language' => "ru",
-                'uploadAsync'=> false,
-                'showUpload' => false,
-                'dropZoneEnabled' => false,
-                /*'initialPreviewShowDelete' => true,*/
-                'overwriteInitial' => false,
-            ],
-        ])->label('Добавить афишу') ?>
+        <?= $form->field($model, 'afisha')->fileInput()->label('Добавить афишу') ?>
     </div>
         <div class="form-group">
-            <?= Html::submitButton('Создать', ['class' => 'garage-form__add-baik_form_knopka']) ?>
+            <?= Html::submitButton('Создать', ['class' => 'garage-form__add-baik_form_knopka','id' => 'createEventButton']) ?>
         </div>
     <?php ActiveForm::end(); ?>
 

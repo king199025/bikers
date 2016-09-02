@@ -20,9 +20,15 @@ return [
                 ],
             ],
         ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\models\User',
+            //'enableAutoLogin' => true,
+        ],
     ],
     'modules' => [
         'rbac' => 'dektrium\rbac\RbacConsoleModule',
+
     ],
     'params' => $params,
 ];

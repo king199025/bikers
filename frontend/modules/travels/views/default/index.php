@@ -106,9 +106,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="travels__right-column">
             <div id="travels__map"></div>
             <div id="travels__travel">
-                
+
+
             </div>
 
         </div>
+
 
 </section>

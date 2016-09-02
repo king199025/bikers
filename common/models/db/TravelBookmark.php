@@ -6,23 +6,23 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model class for table "bookmarks".
+ * This is the model class for table "travel_bookmark".
  *
  * @property integer $id
  * @property integer $user
- * @property integer $event
+ * @property integer $travel
  *
- * @property Events $event0
  * @property User $user0
+ * @property Travel $travel0
  */
-class Bookmarks extends \yii\db\ActiveRecord
+class TravelBookmark extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'bookmarks';
+        return 'travel_bookmark';
     }
 
     /**
@@ -31,9 +31,9 @@ class Bookmarks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user', 'event'], 'integer'],
-            [['event'], 'exist', 'skipOnError' => true, 'targetClass' => Events::className(), 'targetAttribute' => ['event' => 'id']],
+            [['user', 'travel'], 'integer'],
             [['user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user' => 'id']],
+            [['travel'], 'exist', 'skipOnError' => true, 'targetClass' => Travel::className(), 'targetAttribute' => ['travel' => 'id']],
         ];
     }
 
@@ -45,16 +45,8 @@ class Bookmarks extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user' => 'User',
-            'event' => 'Event',
+            'travel' => 'Travel',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEvent0()
-    {
-        return $this->hasOne(Events::className(), ['id' => 'event']);
     }
 
     /**
@@ -63,5 +55,13 @@ class Bookmarks extends \yii\db\ActiveRecord
     public function getUser0()
     {
         return $this->hasOne(User::className(), ['id' => 'user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTravel0()
+    {
+        return $this->hasOne(Travel::className(), ['id' => 'travel']);
     }
 }

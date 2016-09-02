@@ -10,7 +10,7 @@ $this->title = $model['name'];
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятия', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-//\common\classes\Debug::prn($model->organizer);
+//\common\classes\Debug::prn($old);
 //die;
 ?>
 <section class="event__content">
@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href="#" class="button button_gray ">Едет: <?=$participants?></a>
         <button id="add_event_to_bookmarks" data-event="<?=$model['id']?>" class="button button_dark event-button-bookmarks">В закладки</button>
         <button id="add_participant" data-event="<?=$model['id']?>" class="button button_orange event-button-went">Я поеду</button>
+        <a href="<?=\yii\helpers\Url::to(['/events/default/copy','id'=>$model['id']])?>" id="copy_event" data-event="<?=$model['id']?>" class="button button_orange event-button-went">Сделать копию</a>
       </div>
             <div class="gallery">
                 <a class="fancybox-thumb gallery-item" rel="fancybox-thumb" href="http://farm6.staticflickr.com/5612/15344856989_449794889d_b.jpg" title="Morning Twilight (Jose Hamra Images)">
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
     </div>
     <div class="event__content_promo-pic">
-      <img src="/frontend/web/img/promo-pic.png" alt="">
+      <img src="<?=$model['afisha'] ? '/frontend/web/media/upload/'.$model['afisha'] :'/frontend/web/img/promo-pic.png'?>" alt="">
     </div>
   </div>
 </section>
@@ -110,29 +111,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </section>
+<? if($old['id'] != $model['id']):?>
 <section class="old-event">
     <div class="container">
-        <h2 class="old-event-title">2015     Зимний мотофестиваль Самовар-Треффен</h2>
+        <h2 class="old-event-title"><?=date('Y',$old['dt_start'])?>    <?=$old['name']?></h2>
     </div>
 </section>
 <section class="event__content">
   <div class="container">
     <div class="event__content_place">
-      <h2 class="date-event">Дата начала: <span> 12 февраля 2016</span> </h2>
-      <h2 class="date-event">Дата окончания: <span> 14 февраля 2016</span> </h2>
-      <p class="about-place">Место проведения: <span>Россия / Тульская область / Тула</span><a href="#" class="kilometers old-kilometers">3000 км</a></p>
-      <p class="about-place">Вид мероприятия: <span>зимний мотофестиваль</span></p>
-      <p class="about-place">Организаторы:  <span>Мммммммммм</span></p>
-      <p class="link-site">Сайт: <a href="">www.dalnak.com</a></p>
-      <a class="soc-link" href=""><span class="icon-soc-link vk-icon-old"></span>new.vk.com/peso4nica_art </a>
-      <a class="soc-link" href=""><span class="icon-soc-link fb-icon-old"></span>new.vk.com/peso4nica_art </a>
-      <a class="soc-link" href=""><span class="icon-soc-link ok-icon-old"></span>new.vk.com/peso4nica_art </a>
+      <h2 class="date-event">Дата начала: <span> <?=date('d.m.Y.',$old['dt_start'])?></span> </h2>
+      <h2 class="date-event">Дата окончания: <span> <?if($old['dt_end']){echo date('d.m.Y.',$old['dt_end']);}?></span> </h2>
+      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?=$old['city']['Name']?></span><a href="#" class="kilometers old-kilometers">3000 км</a></p>
+      <p class="about-place">Вид мероприятия: <span><?=$old['type']['name']?></span></p>
+      <p class="about-place">Организаторы:  <span><?php foreach($old['organizer'] as $item) echo $item['club']['name']?></span></p>
+      <p class="link-site">Сайт: <a href="<?=$old['site_url']?>"><?=$old['site_url']?></a></p>
+      <a class="soc-link" href="<?=$old['vk_url']?>"><span class="icon-soc-link vk-icon-old"></span><?=$old['vk_url']?> </a>
+      <a class="soc-link" href="<?=$old['fb_url']?>"><span class="icon-soc-link fb-icon-old"></span><?=$old['fb_url']?> </a>
+      <a class="soc-link" href="<?=$old['ok_url']?>"><span class="icon-soc-link ok-icon-old"></span><?=$old['ok_url']?> </a>
       <div class="event-button">
-        <a href="#" class="button button_gray ">Поехало: 1500</a>
+        <a href="#" class="button button_gray ">Поехало: <?=$old_participants?></a>
       </div>
     </div>
     <div class="event__content_promo-pic">
-      <img src="/frontend/web/img/promo-pic-old.png" alt="">
+      <img src="<?=$old['afisha'] ? '/frontend/web/media/upload/'.$old['afisha'] :'/frontend/web/img/promo-pic-old.png'?>" alt="">
     </div>
   </div>
 </section>
@@ -193,3 +195,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 <a href="#" class="button button_border">ЗАГРУЗИТЬ ЕЩЕ +</a>
 </section>
+<? endif; ?>

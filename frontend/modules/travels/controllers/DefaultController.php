@@ -5,6 +5,7 @@ namespace frontend\modules\travels\controllers;
 use common\classes\Debug;
 use common\models\db\City;
 use common\models\db\Travel;
+use common\models\db\TravelBookmark;
 use common\models\db\TravelRoutes;
 use kartik\select2\Select2;
 use Yii;
@@ -174,6 +175,21 @@ class DefaultController extends Controller
             $out['results'] = ['id' => $id, 'text' => City::find()->where(['id' => $id])->one()->name];
         }
         return $out;
+    }
+
+    public function actionAjax_add_bookmark()
+    {
+        $id = Yii::$app->request->post('travel');
+        $model = new TravelBookmark();
+        $model->travel = $id;
+        $model->user = Yii::$app->getUser()->id;
+        if($model->save())
+        {
+            return 'OK';
+        }
+        else
+            return 'ERROR';
+
     }
 
     public function actionAjax_get_city_info(){

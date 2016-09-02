@@ -12,3 +12,4 @@
 <?php endforeach; ?>
     <input type="hidden" id="travel-city_start" value="<?=$travel->city_start?>">
     <input type="hidden" id="travel-city_end" value="<?=$travel->city_end?>">
+<button id="add_travel_to_bookmarks" data-travel="<?=$travel->id?>" class="button button_orange button_travels">В закладки</button>

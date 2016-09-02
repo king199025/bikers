@@ -23,7 +23,7 @@ use sjaakp\taggable\TaggableBehavior;
  * @property string $other_link1
  * @property string $other_link2
  * @property string $other_link3
- * @property string $afisha
+ * @property file $afisha
  * @property integer $type
  * @property integer $organizer
  * @property integer $tags
@@ -60,7 +60,7 @@ class Events extends \yii\db\ActiveRecord
             [['lon', 'lat'], 'number'],
             [['name'], 'string', 'max' => 256],
             [['site_url', 'vk_url', 'ok_url', 'fb_url', 'other_link1', 'other_link2', 'other_link3'], 'string', 'max' => 64],
-            [['afisha'], 'string', 'max' => 512],
+            [['afisha'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, gif'],
             [['editorTags'], 'safe'],
         ];
     }

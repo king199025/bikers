@@ -73,7 +73,8 @@ class EventsSearch extends Events
         if ( empty($params)) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
-            $query->with('city')
+            $query->where(['>=','`events`.`dt_end`',time()])
+              ->with('city')
               ->asArray();
             return $dataProvider;
         }
@@ -117,7 +118,8 @@ class EventsSearch extends Events
               ->orFilterWhere(['like',"`clubs`.`name`",$this->word])
               ->orFilterWhere(['like',"`user`.`road_nickname`",$this->word])
               ->andFilterWhere(['between','`events`.`dt_start`',$this->dt_from,$this->dt_to])
-              ->andWhere(['IN',"`events`.`id`",$t]);
+              ->andWhere(['IN',"`events`.`id`",$t])
+              ->where(['>=','`events`.`dt_end`',time()]);
               //->with('city')
               //->asArray();
         //\common\classes\Debug::prn($dataProvider);

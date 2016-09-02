@@ -117,7 +117,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <option value="11">Ноябрь</option>
             <option value="12">Декабрь</option>
         </select>
-        <input class="year" type="number" name="year" >
+        <select class="year" type="number" name="year" >
+            <option value="-1"></option>
+            <?php for($i=1901;$i<date('Y');$i++): ?>
+                <option value="<?=$i?>"><?=$i?></option>
+            <?php endfor ?>
+        </select>
 
 
         <?= $form->field($model, 'floor')->radioList([1 => 'мужской', 0 => 'женский'])?>
