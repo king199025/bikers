@@ -31,7 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 					<span class="travels__form_row">
 						<!--<label for="datapicker">Дата выезда</label>
 						<input type="text" id="datapicker" class="travels__form_datepicker datepicker-inner" >-->
-						<?= $form->field($model, 'dt_start')->textInput(['id' =>'datapicker' ,'class' => 'travels__form_datepicker datepicker-inner'])?>
+						<?= $form->field($model, 'dt_start')
+							->textInput(['id' =>'datapicker' ,'class' => 'travels__form_datepicker datepicker-inner'])
+							->label('Дата старта')?>
 
 
 					</span>

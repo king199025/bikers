@@ -6,7 +6,7 @@
     <div class="container">
         <div class="pa pa_personal">
 
-            <h3 class="name_edit" >Байкер <a href="#" class="edit">редактриовать</a></h3>
+            <h3 class="name_edit" >Байкер <a href="<?=\yii\helpers\Url::to('/user/settings/profile')?>" class="edit">редактировать</a></h3>
             <div class="photo-container">
                 <img class="photo" src="<?=$model->profile->gravatar_id ? 'http://gravatar.com/avatar/'.$model->profile->gravatar_id : '/frontend/web/app/img/biker-avatar.png'?>" alt="фото">
             </div>

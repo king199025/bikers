@@ -26,45 +26,52 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!--?php// \common\classes\Debug::prn($model);?-->
 
-<div class="row">
-    <div class="col-md-3">
-        <?= $this->render('_menu') ?>
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <?= Html::encode($this->title) ?>
-            </div>
-            <div class="panel-body">
-                <?php $form = ActiveForm::begin([
-                    'id'          => 'account-form',
-                    'options'     => ['class' => 'form-horizontal'],
-                    'fieldConfig' => [
-                        'template'     => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-sm-offset-3 col-lg-9\">{error}\n{hint}</div>",
-                        'labelOptions' => ['class' => 'col-lg-3 control-label'],
-                    ],
-                    'enableAjaxValidation'   => true,
-                    'enableClientValidation' => false,
-                ]); ?>
-                <?= $form->field($model, 'road_nickname')->textInput() ?>
-                <?= $form->field($model, 'email') ?>
+<section class="settings-account">
+    <div class="container">
+        <div class="settings-mnu">
+            <h3>Настройки Аккаунта</h3>
+            <a class="settings-mnu__items" href="<?=\yii\helpers\Url::to('profile')?>">ПРОФИЛЬ</a>
+            <div class="settings-mnu__items button button_orange" >АККАУНТ</div>
+        </div>
+        <div class="settings-account-form">
+            <h4>Настройки аккаунта</h4>
+            <?php $form = ActiveForm::begin([
+            'id'          => 'account-form',
+           # 'options'     => [''],
+        'enableAjaxValidation'   => true,
+        'enableClientValidation' => false,
+        ]); ?>
+        <?= $form->field($model, 'road_nickname')
+            ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Дорожное прозвище'])
+            ->label(false)?>
+        <?= $form->field($model, 'email')
+            ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Email'])
+            ->label(false)?>
 
-                <?= $form->field($model, 'username') ?>
+        <?= $form->field($model, 'username')
+            ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Имя пользовтаеля'])
+            ->label(false)?>
 
-                <?= $form->field($model, 'new_password')->passwordInput() ?>
+        <?= $form->field($model, 'new_password')
+            ->passwordInput(['class'=>'settings-account-form_item','placeholder'=>'Новый пароль'])
+            ->label(false)?>
 
-                <hr />
+        <hr />
 
-                <?= $form->field($model, 'current_password')->passwordInput() ?>
+        <?= $form->field($model, 'current_password')
+            ->passwordInput(['class'=>'settings-account-form_item','placeholder'=>'Текущий пароль'])
+            ->label(false)?>
 
-                <div class="form-group">
-                    <div class="col-lg-offset-3 col-lg-9">
-                        <?= Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success']) ?><br>
-                    </div>
-                </div>
-
-                <?php ActiveForm::end(); ?>
+        <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-9">
+                <?= Html::submitButton(Yii::t('user', 'Сохранить'), ['class' => 'button button_orange subm']) ?><br>
             </div>
         </div>
+
+        <?php ActiveForm::end(); ?>
+
+            </form-->
+        </div>
     </div>
-</div>
+
+</section>

@@ -4,21 +4,21 @@
     <div class="container">
         <!-- open .header__logo -->
         <div class="header__logo">
-            <a href="/">
-                <img src="/img/logo.png" alt="" />
+            <a href="#">
+                <img src="/frontend/web/img/logo.png" alt="" />
             </a>
         </div>
         <!-- close .header__logo -->
         <!-- open .header__controls -->
         <div class="header__controls">
             <?php if(Yii::$app->user->isGuest):?>
-            <a href="#" class="myBtn button button_gray header__controls_signin">Вход</a>
-            <a href="<?=\yii\helpers\Url::to('/register')?>" class="button button_dark header__controls_signup">Зарегистрироваться</a>
+                <a href="#" class="myBtn button button_gray header__controls_signin">Вход</a>
+                <a href="<?=\yii\helpers\Url::to('/register')?>" class="button button_dark header__controls_signup">Зарегистрироваться</a>
             <?php else: ?>
-                <?= \yii\helpers\Html::a('Выйти', \yii\helpers\Url::to(['/user/security/logout']), ['data-method' => 'POST','class'=>'myBtn button button_gray header__controls_signin']) ?>
-                <a href="<?=\yii\helpers\Url::to(['/bikers/default/view','id'=>\Yii::$app->user->id])?>" class="button button_dark header__controls_signup">Личный кабинет</a>
+                <?= \yii\helpers\Html::a( '<span class="pa_bg_exit"></span>Выйти', \yii\helpers\Url::to(['/user/security/logout']), ['data-method' => 'POST','class'=>'personal_area pa_exit']) ?>
+                <a href="<?=\yii\helpers\Url::to(['/bikers/default/view','id'=>\Yii::$app->user->id])?>" class="personal_area pa_personal-area"><span class="pa_bg_personal-area"></span>Личный кабинет</a>
+                <a href="<?=\yii\helpers\Url::to('/events/default/create')?>" class="button button_orange header__controls_add">+ Добавить мероприятие</a>
             <?php endif;?>
-            <a href="<?=\yii\helpers\Url::to('/events/default/create')?>" class="button button_orange header__controls_add">+ Добавить мероприятие</a>
         </div>
         <!-- close .header__controls -->
     </div>
@@ -36,10 +36,10 @@
         <!-- open .navigation__menu -->
         <ul class="navigation__menu">
             <li><a href="/">Главная</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('\events\default')?>">Мотокалендарь</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('\bikers\default')?>">Байкеры</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('\clubs\default')?>">Мотоклубы</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('\travels\default')?>">Путешествия</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/bikers/default')?>">Байкеры</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/clubs/default')?>">Мотоклубы</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/travels/default')?>">Путешествия</a></li>
             <li><a href="#">О нас</a></li>
             <li><a href="#">Обратная связь</a></li>
         </ul>

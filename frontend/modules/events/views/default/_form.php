@@ -143,17 +143,66 @@ $to_list = ArrayHelper::map($typesList,'id','name');
             ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Ссылка на facebook'])
             ->label(false)?>
         <?= $form->field($model, 'other_link1')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(1):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(1)'])
             ->label(false)?>
         <?= $form->field($model, 'other_link2')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(2):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(2)'])
             ->label(false)?>
         <?= $form->field($model, 'other_link3')
-            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3):'])
+            ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Другая ссылка(3)'])
             ->label(false)?>
+
+        <?= $form->field($model, 'program')
+            ->textarea(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Программа мероприятия'])
+            ->label(false)?>
+
     <div class="block-add-file">
         <?= $form->field($model, 'afisha')->fileInput()->label('Добавить афишу') ?>
     </div>
+            <?php
+            if(!$model->isNewRecord)
+            {
+                $preview = [];
+                $previewConfig = [];
+
+                foreach($img as $i){
+                    $preview[] = "<img src='/$i->img' class='file-preview-image'>";
+                    $previewConfig[] = [
+                        'caption' => '',
+                        'url' => '/garage/garage/delete_file?id=' . $i->id
+                    ];
+                }
+
+
+
+
+                echo '<label class="control-label">Добавить фото</label>';
+                echo \kartik\file\FileInput::widget([
+                    'name' => 'file[]',
+                    'id' => 'input-5',
+                    'attribute' => 'attachment_1',
+                    'value' => '/media/img/1.png',
+                    'options' => [
+                        'multiple' => true,
+                        'showCaption' => false,
+                        'showUpload' => false,
+                        'uploadAsync'=> false,
+                    ],
+                    'pluginOptions' => [
+                        'uploadUrl' => Url::to(['/events/default/upload_file']),
+                        'language' => "ru",
+                        'previewClass' => 'hasEdit',
+                        'uploadAsync'=> false,
+                        'showUpload' => false,
+                        'dropZoneEnabled' => false,
+                        /*'initialPreviewShowDelete' => true,*/
+                        'overwriteInitial' => false,
+                        'initialPreview' => $preview,
+                        'initialPreviewConfig' => $previewConfig
+                    ],
+                ]);
+            }
+            ?>
         <div class="form-group">
             <?= Html::submitButton('Создать', ['class' => 'garage-form__add-baik_form_knopka','id' => 'createEventButton']) ?>
         </div>

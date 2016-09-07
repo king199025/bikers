@@ -137,6 +137,17 @@ jQuery(document).ready(function ($) {
         //return false;
 
     });
+    $('#createEventButton').on('click', function (e) {
+
+        console.log('test');
+        $('#input-5').fileinput('upload');
+        //return false;
+
+    });
+    $(document).on('click','.motocalendar__list_item',function () {
+        var id = $(this).attr('data-event');
+
+    })
 
 
 

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <a href="<?= \yii\helpers\Url::to(['/clubs/default/view', 'id' => $item->id]) ?>" class="motoclub-content-promo-pic">
                         <img src="/<?= $item->promo ?>" alt="">
                     </a>
-                    <a href="<?= \yii\helpers\Url::to(['/clubs/default/view', 'id' => $item->id]) ?>" class="button button_orange events-conrent__item_price"><?= $item->name ?>, 66RUS</a>
+                    <a href="<?= \yii\helpers\Url::to(['/clubs/default/view', 'id' => $item->id]) ?>" class="button button_orange events-conrent__item_price"><?= $item->name ?></a>
                 </div>
             <?php endforeach; ?>
         </div>
