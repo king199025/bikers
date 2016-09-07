@@ -6,6 +6,7 @@ use common\classes\Debug;
 use common\models\db\Bookmarks;
 use common\models\db\Clubs;
 use common\models\db\EventOrganizers;
+use common\models\db\ImgEvent;
 use common\models\User;
 use Yii;
 use common\models\db\Events;
@@ -133,7 +134,8 @@ class DefaultController extends Controller
                 'model' => $model,
                 'typesList' => $typesList,
                 'cityList' => $cityList,
-                'clubsList' => $clubsList
+                'clubsList' => $clubsList,
+                'img' => null
             ]);
         }
     }
@@ -174,16 +176,25 @@ class DefaultController extends Controller
 
             }
             $model->save(false);
+            ImgEvent::updateAll(['event_id' => $model->id], ['event_id' => 99999]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $typesList = EventTypes::find()->asArray()->all();
+            $img = ImgEvent::find()->where(['event_id' => $model->id])->all();
             return $this->render('create', [
                 'model' => $model,
                 'typesList' => $typesList,
                 'cityList' => $cityList,
-                'clubsList' => $clubsList
+                'clubsList' => $clubsList,
+                'img' => $img
             ]);
         }
+    }
+
+    public function actionAjax_get_event($id)
+    {
+        $model = Events::find()->where(['id'=>$id])->with('city')->asArray()->one();
+        return $this->renderAjax('@frontend/modules/events/widgets/views/single_event',['item'=>$model]);
     }
 
     public function actionCopy($id)
@@ -265,5 +276,40 @@ class DefaultController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionUpload_file()
+    {
+
+        //Debug::prn($_FILES);
+        if (!file_exists('media/users/' . Yii::$app->user->id)) {
+            mkdir('media/users/' . Yii::$app->user->id . '/');
+        }
+        if (!file_exists('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'))) {
+            mkdir('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'));
+        }
+        $dir = 'media/users/' . Yii::$app->user->id . '/' . date('Y-m-d') . '/';
+        $i = 0;
+
+        if (!empty($_FILES['file']['name'][0])) {
+            ImgEvent::deleteAll(['event_id' => 99999]);
+            foreach ($_FILES['file']['name'] as $file) {
+
+                move_uploaded_file($_FILES['file']['tmp_name'][$i], $dir . $file);
+                $img = new ImgEvent();
+                $img->event_id = 99999;
+                $img->img = $dir . $file;
+
+                if($img->save())
+                    echo 'OK';
+                else echo 'ERROR';
+                $i++;
+            }
+        }
+        echo 1;
+    }
+    public function actionDelete_file(){
+        ImgEvent::deleteAll(['id' => $_GET['id']]);
+        echo 1;
     }
 }
