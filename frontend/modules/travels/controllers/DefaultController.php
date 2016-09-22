@@ -4,6 +4,7 @@ namespace frontend\modules\travels\controllers;
 
 use common\classes\Debug;
 use common\models\db\City;
+use common\models\db\Garage;
 use common\models\db\Travel;
 use common\models\db\TravelBookmark;
 use common\models\db\TravelRoutes;
@@ -29,14 +30,15 @@ class DefaultController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['index', 'ajax_get_city_info', 'ajax_add_field', 'ajax_get_travel', 'ajax_find_travels', 'search_travel'],
                         'allow' => true,
+                        'roles' => ['?','@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create','ajax_add_bookmark'],
                         'roles' => ['@'],
                     ],
-                    /*[
-                        'allow' => true,
-                        'actions' => ['search','view'],
-                        'roles' => ['?'],
-                    ],*/
                 ],
             ],
         ];
@@ -51,7 +53,7 @@ class DefaultController extends Controller
     {
 
         //Debug::prn($model);
-        $travels = Travel::find()->where("user_id = ".Yii::$app->user->id)
+        $travels = Travel::find()
                 ->asArray()
                 ->all();
         $cityList = City::find()->select([ 'name as label','id as value'])
@@ -71,15 +73,18 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
-        $cityList = City::find()->select([ 'name as label','id as value'])
-                ->asArray()
-                ->all();
+
 
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
         ];
 
+
+
+        $cityList = City::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
         $model = new Travel();
 
         if ($model->load(Yii::$app->request->post()) ) {
@@ -98,27 +103,26 @@ class DefaultController extends Controller
                         Debug::prn($temp);
                 }
             }
-            else
-                Debug::prn($model->save(false));
-            
-            
-            //echo 'OK';
-            $travels = Travel::find()->where("user_id = ".Yii::$app->user->id)
-                    ->asArray()
-                    ->all();
+
+            //$travels = Travel::find()->asArray()->all();
             
             
             
-            return $this->render('index', [
-                'travels'=>$travels,
-                'cityList' => $cityList,
-                ]);
+            return $this->redirect('index');
         } 
         else {
-            return $this->render('create', [
-                'model' => $model,
-                'cityList' => $cityList,
-            ]);
+            $motoUser = Garage::find()->where(['user_id' => Yii::$app->user->id])->count();
+           if($motoUser == 0){
+                return $this->render('error');
+           }else{
+               return $this->render('create', [
+                   'model' => $model,
+                   'cityList' => $cityList,
+               ]);
+           }
+
+
+
         }
     }
     
@@ -157,6 +161,26 @@ class DefaultController extends Controller
                 'cityList' => $cityList,
                 ]);
     }
+
+    public function actionSearch_travel(){
+        Debug::prn($_POST);
+
+        $travels = Travel::find()
+            ->andFilterWhere(['LIKE', 'dt_start' , $_POST['date']])
+            ->andFilterWhere(['city_start' => $_POST['city_start']])
+            ->andFilterWhere(['city_end' => $_POST['city_end']])
+            ->asArray()
+            ->all();
+
+        $cityList = City::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
+        return $this->renderPartial('travels_list', [
+            'travels'=>$travels,
+            'cityList' => $cityList,
+        ]);
+    }
+
 
     public function actionCitylist($q = null, $id = null) {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

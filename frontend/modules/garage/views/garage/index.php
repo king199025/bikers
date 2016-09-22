@@ -7,55 +7,45 @@ use yii\grid\GridView;
 /* @var $searchModel frontend\modules\garage\models\GarageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Garages';
+$this->title = 'Мой гараж';
+$this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/user/settings/user_profile']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="garage-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<section class="garage-form">
+    <div class="container">
+        <h2 class="garage-form-title">Мой гараж</h2>
+        <div class="garage-form__add-baik">
+            <h2 class="garage-form-title">Добавление нового байка</h2>
+            <?= $this->render('_form',['model' => $model, 'mark' => $mark]); ?>
+        </div>
+        <div class="garage-form__in-garage">
+            <h2 class="garage-form-title">Уже в гараже</h2>
 
-    <p>
-        <?= Html::a('Create Garage', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            <?php foreach($userMoto as $item):?>
+                <div class="garage-form__in-garage_items">
+                    <div class="moto-photo">
+                        <img src="/<?= $item['img_moto'][0]->img; ?>" alt="moto">
+                    </div>
+                    <div class="bike-info">
 
+                        <p class="make">Марка <span><?= $item['car_mark']->name;?></span></p>
+                        <p class="model">Модель <span><?= $item['car_model']->name;?></span></p>
+                        <p class="power-engine">Мощность двигателя <span><?= $item->volume; ?></span></p>
+                        <p class="active-bike">
+                            <span>
+                                <?= ($item->used == 1) ? 'Байк действующий' : 'Бывший мотоцикл' ?>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="pa-little pa_buttons">
+            <a href="#" class="pa_button button button_gray">Настройки оповещений</a>
+            <a href="#" class="pa_button button button_gray">Сообщения</a>
+            <a href="#" class="pa_button button button_gray">Мои закладки</a>
+        </div>
+    </div>
+</section>
 
-            [
-                'label' => 'mark_id',
-                'format' => 'text',
-                'value' => function($model){
-
-                    return \common\models\db\CarMark::findOne(['id_car_mark' => $model->mark_id])->name;
-                }
-            ],
-
-            [
-                'label' => 'model_id',
-                'format' => 'text',
-                'value' => function($model){
-
-                    return \common\models\db\CarModel::findOne(['id_car_model' => $model->model_id])->name;
-                }
-            ],
-
-             'year',
-             'volume',
-
-            [
-                'label' => 'used',
-                'format' => 'text',
-                'value' => function($model){
-                    return ($model->used == 0) ? 'Бывший мотоцикл' : 'Действующий мотоцикл';
-                }
-            ],
-
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-</div>

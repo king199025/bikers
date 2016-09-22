@@ -2,6 +2,7 @@
 
 namespace common\models\db;
 
+
 use Yii;
 use sjaakp\taggable\TaggableBehavior;
 
@@ -28,6 +29,7 @@ use sjaakp\taggable\TaggableBehavior;
  * @property integer $organizer
  * @property integer $tags
  * @property string $program
+ * @property integer $user_id
  */
 class Events extends \yii\db\ActiveRecord
 {
@@ -40,7 +42,7 @@ class Events extends \yii\db\ActiveRecord
     }
     
     
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             'taggable' => [
                 'class' => TaggableBehavior::className(),
@@ -48,7 +50,7 @@ class Events extends \yii\db\ActiveRecord
                 'junctionTable' => 'events_tags'
             ]
         ];
-    }
+    }*/
 
     /**
      * @inheritdoc
@@ -56,13 +58,13 @@ class Events extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'dt_start', 'type', 'tags'], 'required'],
-            [['city', 'city_near', 'dt_start', 'dt_end', 'type', 'organizer', 'tags'], 'integer'],
+            [['name', 'dt_start', 'type'], 'required'],
+            [['city', 'city_near', 'dt_start', 'dt_end', 'type', 'organizer', 'tags', 'user_id'], 'integer'],
             [['lon', 'lat'], 'number'],
             [['name'], 'string', 'max' => 256],
             [['site_url', 'vk_url', 'ok_url', 'fb_url', 'other_link1', 'other_link2', 'other_link3'], 'string', 'max' => 64],
             [['afisha'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
-            [['editorTags'], 'safe'],
+
             [['program'],'string','max' => 5000]
         ];
     }
@@ -101,6 +103,10 @@ class Events extends \yii\db\ActiveRecord
         return $this->hasOne(City::className(), ['ID' => 'city']);
     }
     public function getType()
+    {
+        return $this->hasOne(EventTypes::className(),['id'=>'type']);
+    }
+    public function gettype_events()
     {
         return $this->hasOne(EventTypes::className(),['id'=>'type']);
     }

@@ -22,7 +22,11 @@ class AppAsset extends AssetBundle
         'css/jquery.datetimepicker.css',
         'css/libs.min.css',
         'css/style.min.css',
+        'css/owl.carousel.css',
+        'css/owl.transitions.css',
         'css/style.css',
+        'css/general.css'
+
     ];
     public $js = [
         /*'js/jquery-2.1.3.min.js',*/
@@ -32,8 +36,10 @@ class AppAsset extends AssetBundle
         'js/jquery.datetimepicker.full.min.js',
         'js/jquery.fancybox.js',
         'js/jquery.fancybox.pack.js',
+        'js/owl.carousel.js',
         'js/script.min.js',
         'js/script.js',
+        'js/searchEvents.js',
         'js/general.js',
 
     ];

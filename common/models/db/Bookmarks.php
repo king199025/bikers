@@ -64,4 +64,12 @@ class Bookmarks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getevents()
+    {
+        return $this->hasOne(Events::className(), ['id' => 'event']);
+    }
 }

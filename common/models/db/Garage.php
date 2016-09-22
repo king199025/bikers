@@ -81,4 +81,11 @@ class Garage extends \yii\db\ActiveRecord {
         return $this->hasOne(CarModel::className(), ['id_car_model' => 'model_id']);
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getimg_moto() {
+        return $this->hasMany(ImgMoto::className(), ['garage_id' => 'id']);
+    }
 }

@@ -38,6 +38,7 @@ return [
             'controllerMap' => [
                 'registration' => '\frontend\controllers\user\RegUserController',
                 'recovery' => '\frontend\controllers\user\RecoveryController',
+                'settings' => '\frontend\controllers\user\SettingsController',
             ],
             'modelMap' => [
                 'RegistrationForm' => '\frontend\models\user\RegUserForm',

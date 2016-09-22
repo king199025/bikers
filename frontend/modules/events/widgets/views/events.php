@@ -17,7 +17,7 @@
                 <div class="events__box">
                     <?php foreach($events as $item): ?>
                     <a href="<?=\yii\helpers\Url::to(['/events/default/view','id'=>$item['id']])?>" class="events__item">
-                        <img src="<?=$item['afisha'] ? '/frontend/web/media/upload/'.$item['afisha'] :'/frontend/web/img/placeholder.png' ?>" alt="" class="events__item_thumb" />
+                        <img src="<?=$item['afisha']; ?>" alt="" class="events__item_thumb" />
                         <span class="events__item_desc"><?=$item['name']?></span>
                     </a>
                     <?php endforeach; ?>

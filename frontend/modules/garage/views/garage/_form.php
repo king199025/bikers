@@ -11,12 +11,9 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $mark common\models\db\CarMark */
 ?>
-<section class="garage-form">
-    <div class="container">
-        <h2 class="garage-form-title">Мой гараж</h2>
-        <div class="garage-form__add-baik">
-            <h2 class="garage-form-title">Добавление нового байка</h2>
+
             <?php $form = ActiveForm::begin([
+                'action' => Url::to(['create']),
                 'options' => [
                     'enctype'=>'multipart/form-data',
                     'class'=>'garage-form__add-baik_form'
@@ -98,12 +95,12 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'year')->textInput([
                 'class' => 'garage-form__add-baik_form_input',
-                'placeholder' => 'мощность двигателя'
+                'placeholder' => 'год выпуска'
             ])->label(false) ?>
 
             <?= $form->field($model, 'volume')->textInput([
                 'class' => 'garage-form__add-baik_form_input',
-                'placeholder' => 'год выпуска'
+                'placeholder' => 'мощность двигателя'
             ])->label(false) ?>
 
             <?php
@@ -162,7 +159,7 @@ use yii\widgets\ActiveForm;
                 <span class="item_title"><em>Бывший мотоцикл</em></span>
             </label>
         </div>
-        <?= $form->field($model, 'used')->radioList([
+        <?/*= $form->field($model, 'used')->radioList([
             '0' => 'Бывший мотоцикл',
             '1' => 'Действующий мотоцикл'
         ],[
@@ -177,7 +174,7 @@ use yii\widgets\ActiveForm;
                         </div>';
                 return $res;
             }
-        ])->label(false) ?>
+        ])->label(false) */?>
 
                 <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => 'garage-form__add-baik_form_knopka', 'id' => 'saveInfo']) ?>
 
@@ -210,5 +207,4 @@ use yii\widgets\ActiveForm;
                 </div>
                 <button class="garage-form__add-baik_form_knopka">Сохранить</button>
             </form-->
-        </div>
-</section>
+

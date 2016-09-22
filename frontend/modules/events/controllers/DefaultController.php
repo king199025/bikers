@@ -15,6 +15,9 @@ use common\models\db\Region;
 use common\models\db\EventTypes;
 use common\models\EventsSearch;
 use common\models\db\EventsUser;
+use yii\db\Connection;
+use yii\db\Query;
+use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,18 +50,111 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EventsSearch();
-        //\common\classes\Debug::prn($searchModel);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+
         $types = EventTypes::find()->all();
         $regions = Region::find()->select([ 'Name as label','ID as value'])
             ->asArray()
             ->all();
+
+        $events = Events::find()
+            //->where(['>=','dt_start', time()])
+            ->andWhere(['!=', 'status', 0])
+            ->andWhere(['!=', 'status', 2])
+            ->orderBy('dt_start ASC')
+            ->all();
+
+
+        $db = new Connection(Yii::$app->db);
+        $eventsMonth = $db->createCommand('SELECT MONTH( FROM_UNIXTIME( dt_start ) ) AS month , COUNT( * ) FROM events WHERE status != 0 AND status != 2  GROUP BY MONTH( FROM_UNIXTIME( dt_start ) )')->queryAll();
+
+        $arr =
+            [
+                  [
+                      'name' => 'Январь',
+                      'month' => 1,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Февраль',
+                      'month' => 2,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Март',
+                      'month' => 3,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Апрель',
+                      'month' => 4,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Май',
+                      'month' => 5,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Июнь',
+                      'month' => 6,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Июль',
+                      'month' => 7,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Август',
+                      'month' => 8,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Сентябрь',
+                      'month' => 9,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Октябрь',
+                      'month' => 10,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Ноябрь',
+                      'month' => 11,
+                      'count' => 0
+                  ],
+                  [
+                      'name' => 'Декабрь',
+                      'month' => 12,
+                      'count' => 0
+                  ],
+            ];
+
+        foreach ($arr as $key=>$item) {
+            foreach($eventsMonth as $v){
+                if($item['month'] == $v['month']){
+                    $arr[$key]['count'] = $v['COUNT( * )'];
+                }
+            }
+        }
+
+        $cityList = City::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            /*'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,*/
             'types' => $types,
-            'regions' => $regions
+            'regions' => $regions,
+            'events' => $events,
+            'eventMonth' => $arr,
+            'cityList' => $cityList,
         ]);
     }
 
@@ -69,11 +165,25 @@ class DefaultController extends Controller
      */
     public function actionView($id)
     {
-        $participants = User::find()
-            ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
-            ->where(['`events_user`.`events_id`' => $id])
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+        $event = Events::find()
+            //->leftJoin(['event_types', '`event_types`.`id` = `events`.`type`'])
+            ->where(['`events`.`id`' => $id])
+            ->with('type_events')
+            ->one();
+
+        $old = Events::find()->where(['name'=>$event['name']])->with('city','type')->orderBy('dt_end')->asArray()->one();
+
+       // Debug::prn($event);
+
+
+        $participants = EventsUser::find()
+            ->where(['events_id' => $id])
             ->count();
-        $model = Events::find()->where(['id'=>$id])->with('city','type')->asArray()->one();
+       /* $model = Events::find()->where(['id'=>$id])->with('city','type')->asArray()->one();
         $old = Events::find()->where(['name'=>$model['name']])->with('city','type')->orderBy('dt_end')->asArray()->one();
         $old['organizer'] = EventOrganizers::find()
             ->where(['event_id'=>$old['id']])
@@ -91,13 +201,15 @@ class DefaultController extends Controller
         $old_participants = User::find()
             ->leftJoin('`events_user`','`events_user`.`user_id` = `user`.`id`')
             ->where(['`events_user`.`events_id`' => $old['id']])
-            ->count();
+            ->count();*/
 
         return $this->render('view', [
-            'model' => $model,
+            'event' => $event,
             'participants' => $participants,
+            /*'model' => $model,
+
             'old' =>$old,
-            'old_participants' => $old_participants
+            'old_participants' => $old_participants*/
             //'city' => $city
         ]);
     }
@@ -110,26 +222,51 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new Events();
-        $cityList = City::find()->select([ 'name as label','id as value'])
+        $cityList = City::find()->select(['name as label','id as value'])
                 ->asArray()
                 ->all();
-        $clubsList = Clubs::find()->select([ 'name as label','id as value'])
+        $clubsList = Clubs::find()->select(['name as label','id as value'])
             ->asArray()
             ->all();
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
         ];
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        if ($model->load(Yii::$app->request->post()) /*&& $model->save()*/) {
+
+            //Debug::prn($_FILES);
+            if(isset($_FILES['Events']['name'])){
+                if (!file_exists('media/users/' . Yii::$app->user->id)) {
+                    mkdir('media/users/' . Yii::$app->user->id . '/');
+                }
+                if (!file_exists('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'))) {
+                    mkdir('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'));
+                }
+                $dir = 'media/users/' . Yii::$app->user->id . '/' . date('Y-m-d') . '/';
+
+                $extension = strtolower(substr(strrchr($_FILES['Events']['name']['afisha'], '.'), 1));
+
+                Image::thumbnail($_FILES['Events']['tmp_name']['afisha'], 600, 800, $mode = \Imagine\Image\ManipulatorInterface::THUMBNAIL_OUTBOUND)
+                    ->save($dir . $_FILES['Events']['name']['afisha'], ['quality' => 100]);
+
+                $model->afisha = '/' . $dir . $_FILES['Events']['name']['afisha'];
+            }
+
+            $model->save();
+
             if(Yii::$app->request->post('event_organizer')) {
                 $org = new EventOrganizers();
                 $org->event_id = $model->id;
                 $org->club_id = Yii::$app->request->post('event_organizer');
-                $org->save(false);
+                $org->save();
             }
+
+
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $typesList = EventTypes::find()->asArray()->all();
+            $typesList = EventTypes::find()->all();
+            //Debug::prn($typesList);
             return $this->render('create', [
                 'model' => $model,
                 'typesList' => $typesList,
@@ -312,4 +449,77 @@ class DefaultController extends Controller
         ImgEvent::deleteAll(['id' => $_GET['id']]);
         echo 1;
     }
+
+
+    public function actionAjax_get_events()
+    {
+        $event = Events::find()->where(['id' => $_POST['id']])->one();
+        return $this->renderPartial('ajax-event-home', ['events' => $event]);
+    }
+
+
+    public function actionEvent_search(){
+        $idType = [];
+        $dt_start = '';
+        $dt_end = '';
+        $city = '';
+
+        if(!empty($_POST['type'])){
+            $idType = explode(',', $_POST['type']);
+            array_splice($idType, -1);
+        }
+
+        if(!empty($_POST['dt_start'])){
+            $dt_start = strtotime($_POST['dt_start']);
+        }
+        if(!empty($_POST['dt_end'])){
+            $dt_end = strtotime($_POST['dt_end']);
+        }
+
+        if(!empty($_POST['idCity'])){
+            $city = $_POST['idCity'];
+        }
+        //Debug::prn($city);
+        $events = Events::find()
+            ->andWhere(['!=', 'status', 0])
+            ->andWhere(['!=', 'status', 2])
+            ->andFilterWhere(['type' => $idType])
+            ->andFilterWhere(['>=', 'dt_start', $dt_start])
+            ->andFilterWhere(['<=', 'dt_end', $dt_end])
+            ->andFilterWhere(['city' => $city])
+            ->orderBy('dt_start ASC')
+        //Debug::prn($events->createCommand()->rawSql);
+            ->all();
+
+        //Debug::prn($events);
+        return $this->renderPartial('event-search',
+            [
+                'events' => $events,
+            ]
+        );
+    }
+
+    public function actionEvent_search_month(){
+//Debug::prn($_POST);
+        $query = Events::find();
+        if($_POST['id'] == 'all'){
+            $events = $query->all();
+        }else{
+            $events = $query->where(['MONTH(FROM_UNIXTIME(dt_start))' => $_POST['id']])
+                ->andWhere(['!=', 'status', 0])
+                ->andWhere(['!=', 'status', 2])
+                ->all();
+        }
+
+
+
+
+        return $this->renderPartial('event-search',
+            [
+                'events' => $events,
+
+            ]
+        );
+    }
+
 }

@@ -21,7 +21,8 @@
         "kartik-v/yii2-widget-fileinput": "@dev",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "sjaakp/yii2-taggable": "*"
+        "sjaakp/yii2-taggable": "*",
+        "yiisoft/yii2-imagine": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

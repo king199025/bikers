@@ -12,10 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <div class="travels__left-column">
             <form action="" class="travels__form">
-                <a href="/travels/default/create" class="button button_orange button_travels">+ Добавить дальняк</a>
+                <?php if(!Yii::$app->user->isGuest):?>
+                    <a href="/travels/default/create" class="button button_orange button_travels">+ Добавить дальняк</a>
+                <?php endif;?>
                 <span class="travels__form_row">
                     <label for="datapicker">Дата выезда</label>
-                    <input type="text" id="datapicker" class="travels__form_datepicker datepicker-inner" >
+                    <input type="text" id="datapicker" class="travels__form_datepicker datepicker-inner tarvel_search" >
 
                 </span>
                 <div class="select-whence">

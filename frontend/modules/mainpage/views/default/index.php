@@ -159,10 +159,7 @@
     <?php \frontend\modules\events\widgets\ShowBlockEvents::begin();
     \frontend\modules\events\widgets\ShowBlockEvents::end();?>
 
-<?php
-\frontend\modules\events\widgets\ShowFindEvents::begin();
-\frontend\modules\events\widgets\ShowFindEvents::end();
-?>
+<?= \frontend\modules\events\widgets\ShowHomeEvents::widget(); ?>
 
     <!-- open .statistics -->
     <section class="statistics">

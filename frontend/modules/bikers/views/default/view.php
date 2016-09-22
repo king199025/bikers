@@ -5,7 +5,6 @@
 <section class="pa_section">
     <div class="container">
         <div class="pa pa_personal">
-
             <h3 class="name_edit" >Байкер <a href="<?=\yii\helpers\Url::to('/user/settings/profile')?>" class="edit">редактировать</a></h3>
             <div class="photo-container">
                 <img class="photo" src="<?=$model->profile->gravatar_id ? 'http://gravatar.com/avatar/'.$model->profile->gravatar_id : '/frontend/web/app/img/biker-avatar.png'?>" alt="фото">
@@ -19,10 +18,6 @@
             <div class="clearfix"></div>
             <h3 class="garage-add-bike">Мой гараж</h3>
             <a href="<?=\yii\helpers\Url::to('/garage/garage/create')?>" class="garage-add-bike-button button button_orange">Добавить байк</a>
-            <?php \frontend\modules\garage\widgets\UserMoto::begin(); ?>
-            <?php \frontend\modules\garage\widgets\UserMoto::end(); ?>
-
-
         </div>
         <div class="pa pa_events">
             <div class="border">

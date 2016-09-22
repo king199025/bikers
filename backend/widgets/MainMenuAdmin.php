@@ -25,11 +25,13 @@ class MainMenuAdmin extends Widget
                         'active' => Yii::$app->controller->module->id == 'news',
                     ],
                     [
-                        'label' => 'Доска',
+                        'label' => 'Мероприятия',
                         'items' => [
                             [
-                                'label' => '123',
-                                'url' => '#'
+                                'label' => 'Мероприятия',
+                                'url' => Url::to(['/events']),
+                                'template' => '<a href="{url}"><i class="fa fa-users"></i> <span>{label}</span></a>',
+                                'active' => Yii::$app->controller->module->id == 'events',
                             ],
                             [
                                 'label' => '345',

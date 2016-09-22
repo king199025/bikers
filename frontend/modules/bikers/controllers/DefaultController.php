@@ -25,14 +25,59 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];
+
+        $query = User::find();
+
+        $usersCount = $query->count();
+
+        $users = $query
+            ->limit(12)
+            ->all();
+
+        $page = 1;
+
+
+        return $this->render('index',
+            [
+                'model' => $users,
+                'usersCount' => $usersCount,
+                'page' => $page,
+                'limit' => 12,
+            ]);
+
+
+        /*$users = User::find()
             ->with('profile')
             ->limit(12)
             ->all();
         return $this->render('index',[
             'model' => $users,
-        ]);
+        ]);*/
     }
+
+    public function actionAjax_get_bikers(){
+        $query = User::find();
+
+        $usersCount = $query->count();
+
+        $users = $query
+            ->offset($_POST['page'] * 12)
+            ->limit(3)
+            ->all();
+
+        return $this->renderPartial('ajax_bikers',
+            [
+                'model' => $users,
+                'usersCount' => $usersCount,
+                'page' => $_POST['page'],
+                'limit' => 12,
+            ]);
+    }
+
     public function actionView($id)
     {
         $events = Events::find()

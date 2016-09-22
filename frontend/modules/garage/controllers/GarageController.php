@@ -5,10 +5,12 @@ namespace frontend\modules\garage\controllers;
 use common\classes\Debug;
 use common\models\db\CarMark;
 use common\models\db\CarModel;
+use common\models\db\Events;
 use common\models\db\ImgMoto;
 use Yii;
 use frontend\modules\garage\models\Garage;
 use frontend\modules\garage\models\GarageSearch;
+use yii\base\Event;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -55,12 +57,27 @@ class GarageController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new GarageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        /*\Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+            'css' => [],
+            'js' => []
+        ];*/
 
+        $mark = CarMark::find()->where(['id_car_type' => 20])->orderBy('name')->all();
+        $model = new Garage();
+
+        $userMoto = Garage::find()
+            ->leftJoin('img_moto', '`img_moto`.`garage_id` = `garage`.`id`')
+            ->leftJoin('car_mark', '`car_mark`.`id_car_mark` = `garage`.`mark_id`')
+            ->leftJoin('car_model', '`car_model`.`id_car_model` = `garage`.`model_id`')
+            ->where(['`garage`.`user_id`' => Yii::$app->user->id])
+            ->with('img_moto', 'car_mark', 'car_model')
+            ->all();
+
+//Debug::prn($userMoto);
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'mark' => $mark,
+            'model' => $model,
+            'userMoto' => $userMoto,
         ]);
     }
 
@@ -84,15 +101,15 @@ class GarageController extends Controller
     public function actionCreate()
     {
         $model = new Garage();
-        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
+        /*\Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
-        ];
+        ];*/
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             ImgMoto::updateAll(['garage_id' => $model->id], ['garage_id' => 99999, 'user_id' => Yii::$app->user->id]);
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
 
             $mark = CarMark::find()->where(['id_car_type' => 20])->orderBy('name')->all();

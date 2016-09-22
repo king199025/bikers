@@ -127,28 +127,91 @@ $(document).ready(function() {
       event.preventDefault();
       $('.hide-map').slideToggle();
     });
+    $('.show-allbikers').click(function(event) {
+      event.preventDefault();
+      $('.bikers-all-dop').slideToggle();
+    });
 });
 $(document).ready(function () {
-
-    var modal = $('.myModal');
-    var btn = $('.myBtn');
-    var span = $('.close')[0];
-    //console.log(modal);
-
-// When the user clicks on the button, open the modal
-   $('.myBtn').click(function() {
-        modal.show();
+//
+//     var modal = $('.myModal');
+//     var btn = $('.myBtn');
+//     var span = $('.close')[0];
+//     //console.log(modal);
+//
+// // When the user clicks on the button, open the modal
+//    $('.myBtn').click(function() {
+//         modal.show();
+//        $('.overlay').show();
+// });
+//
+// // When the user clicks on <span> (x), close the modal
+//     $('.close').click(function() {
+//         modal.hide();
+// });
+//
+// // When the user clicks anywhere outside of the modal, close it
+//     window.onclick = function(event) {
+//      if (event.target == modal) {
+//            modal.hide();
+//     }
+// }
+    $('.myBtn').click( function(event){ // лoвим клик пo ссылки с id="go"
+        event.preventDefault(); // выключaем стaндaртную рoль элементa
+        $('.overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+            function(){ // пoсле выпoлнения предъидущей aнимaции
+                $('.myModal')
+                    .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+                    .animate({opacity: 1, top: '30%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+            });
+    });
+    $('.overlay').click( function(){ // лoвим клик пo крестику или пoдлoжке
+        $('.myModal')
+            .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+                function(){ // пoсле aнимaции
+                    $(this).css('display', 'none'); // делaем ему display: none;
+                    $('.overlay').fadeOut(400); // скрывaем пoдлoжку
+                }
+            );
+    });
 });
 
-// When the user clicks on <span> (x), close the modal
-    $('.close').click(function() {
-        modal.hide();
-});
+jQuery(document).ready(function($) {
 
-// When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-     if (event.target == modal) {
-           modal.hide();
+  $(".owl-bike").owlCarousel({
+    loop: true,
+    margin: 40,
+    nav : true,
+    navText: true,
+    navigation:true,
+    /*navigationText: true,*/
+    pagination : true,
+    items: 1,
+    autoplay: true,
+    dots: false,
+    singleItem:false,
+    responsiveClass:true,
+    responsive: {
+      0: {
+        items: 1,
+        nav: true,
+      },
+      600: {
+        items: 1,
+        nav: true,
+      },
+      1000: {
+        items: 1,
+        nav: true,
+        loop: true,
+      },
+      1200: {
+        items: 1,
+        nav: true,
+        loop: true,
+
+      }
     }
-}
-});
+
+  });
+  });

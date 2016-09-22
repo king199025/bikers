@@ -16,6 +16,9 @@ return [
         'news' => [
             'class' => 'backend\modules\news\News',
         ],
+        'events' => [
+            'class' => 'backend\modules\events\Events',
+        ],
     ],
     'components' => [
         /*'user' => [
@@ -42,6 +45,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'news' => 'news/news',
+                'events' => 'events/events',
             ]
         ],
         'mailer' => [

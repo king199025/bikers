@@ -27,4 +27,19 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('click', '.select_status', function(){
+        var eventId = $(this).data('id'),
+            status = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: "/secure/events/events/edit_status",
+            data: 'eventId=' + eventId + '&status=' + status,
+            success: function (data) {
+
+            }
+        });
+
+    });
+
 });

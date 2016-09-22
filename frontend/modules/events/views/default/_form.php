@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -23,19 +24,22 @@ $to_list = ArrayHelper::map($typesList,'id','name');
 
     <?php $form = ActiveForm::begin(['options'=>['class'=>'garage-form__add-baik_form',
                                     'enctype'=>'multipart/form-data']]); ?>
-
-        <?= $form->field($model, 'name')->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Название'])->label(false) ?>
-        <?=DatePicker::widget([
+        <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false); ?>
+        <?= $form->field($model, 'name')->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Название']) ?>
+         <?= '<label class="control-label">Дата начала</label>'?>
+            <?=DatePicker::widget([
             'language' => 'ru',
             'id' => 'dt_start_event',
             'dateFormat' => 'dd.MM.yyyy',
             'options'=> [
                 'class'=>'garage-form__add-baik_form_input',
-                'placeholder'=>'Дата начала'
+                'placeholder'=>'Дата начала',
+
             ]
         ]) ?>
         <?= $form->field($model,'dt_start')->hiddenInput(['id'=>'event_start'])->label(false) ?>
-        
+
+            <?= '<label class="control-label">Дата окончания</label>'?>
         <?= DatePicker::widget([
             'language' => 'ru',
             'id' => 'dt_end_event',
@@ -45,21 +49,36 @@ $to_list = ArrayHelper::map($typesList,'id','name');
                 'placeholder'=>'Дата окончания'
             ]
         ]) ?>
-        <?= $form->field($model,'dt_start')->hiddenInput(['id'=>'event_end'])->label(false) ?>
+        <?= $form->field($model,'dt_end')->hiddenInput(['id'=>'event_end'])->label(false) ?>
         
-        <?= $form->field($model, 'type')->dropDownList($to_list,['class'=>'garage-form__add-baik_form_input','placeholder'=>'Тип события'])->label(false)
+        <?= $form->field($model, 'type')->dropDownList(ArrayHelper::map($typesList, 'id', 'name'),
+            ['class'=>'garage-form__add-baik_form_input','prompt'=>'Выберите тип события'])
                    
                     ?>
-    <div class="garage-form__add-baik_form_input">
-        <?= $form->field($model, 'editorTags')->widget(TagEditor::className(),[
+
+        <?/*= $form->field($model, 'editorTags')->widget(TagEditor::className(),[
             'tagEditorOptions' => [
                 'autocomplete' => [
                     'source' => Url::toRoute(['tag/suggest'])
                 ]
             ],
 
-        ])->label(false) ?>
-        </div>
+        ])->label(false) */?>
+
+        <?php echo '<label class="">Теги</label>';
+        echo Select2::widget([
+        'name' => 'tags',
+        'value' => '', // initial value
+        'data' => [],
+        'options' => ['placeholder' => 'Введите теги...', 'multiple' => true],
+        'pluginOptions' => [
+        'tags' => true,
+        'maximumInputLength' => 10
+        ],
+        ]);
+        ?>
+
+
         <?=
             AutoComplete::widget([
         'options' => [
@@ -209,5 +228,5 @@ $to_list = ArrayHelper::map($typesList,'id','name');
     <?php ActiveForm::end(); ?>
 
         </div>
-    </div>
+
 </section>

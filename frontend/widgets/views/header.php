@@ -16,7 +16,7 @@
                 <a href="<?=\yii\helpers\Url::to('/register')?>" class="button button_dark header__controls_signup">Зарегистрироваться</a>
             <?php else: ?>
                 <?= \yii\helpers\Html::a( '<span class="pa_bg_exit"></span>Выйти', \yii\helpers\Url::to(['/user/security/logout']), ['data-method' => 'POST','class'=>'personal_area pa_exit']) ?>
-                <a href="<?=\yii\helpers\Url::to(['/bikers/default/view','id'=>\Yii::$app->user->id])?>" class="personal_area pa_personal-area"><span class="pa_bg_personal-area"></span>Личный кабинет</a>
+                <a href="<?=\yii\helpers\Url::to(['/user/settings/user_profile'])?>" class="personal_area pa_personal-area"><span class="pa_bg_personal-area"></span>Личный кабинет</a>
                 <a href="<?=\yii\helpers\Url::to('/events/default/create')?>" class="button button_orange header__controls_add">+ Добавить мероприятие</a>
             <?php endif;?>
         </div>

@@ -73,4 +73,5 @@ class UserDec extends User
 
         return $success;
     }
+
 }

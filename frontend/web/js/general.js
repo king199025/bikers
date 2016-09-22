@@ -94,6 +94,7 @@ jQuery(document).ready(function ($) {
                 //$( "#travels__travel" ).append( data  );
             }
         });
+        return false;
     });
 
     $(document).on('click','#add_travel_to_bookmarks',function () {
@@ -109,7 +110,11 @@ jQuery(document).ready(function ($) {
                 //$( "#travels__travel" ).append( data  );
             }
         });
+        return false;
     });
+
+
+
 
     $('#dt_start_event').change(function () {
         $('#dt_end_event').val($(this).val());
@@ -145,9 +150,18 @@ jQuery(document).ready(function ($) {
 
     });
     $(document).on('click','.motocalendar__list_item',function () {
-        var id = $(this).attr('data-event');
-
-    })
+        var id = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: "/events/default/ajax_get_events/",
+            data: 'id=' + id,
+            success: function (data) {
+                //console.log(data);
+                $(".motocalendar__event").html(data);
+            }
+        });
+        return false;
+    });
 
 
 
@@ -167,12 +181,29 @@ jQuery(document).ready(function ($) {
         });
         return false;
     });
+
+    $(document).on('click', '#more-bikers', function () {
+        var page = parseInt($(this).attr('data-count'), 10);
+        var csrf = $(this).attr('data-csrf');
+        // $(this).remove();
+        $(this).attr('data-count', page + 1);
+        $.ajax({
+            type: 'POST',
+            url: "/bikers/default/ajax_get_bikers/",
+            data: 'page=' + page + '&_csrf=' + csrf,
+            success: function (data) {
+                $(".bikers-all").append(data);
+            }
+        });
+        return false;
+    });
     
     $('#dt_start_event').change(function(){
         var myDate = $(this).val();
         myDate = myDate.split(".");
         var newDate = myDate[1] + "/" + myDate[0] + "/" + myDate[2];
         $('#event_start').val(new Date(newDate).getTime()/1000);
+        $('#event_end').val(new Date(newDate).getTime()/1000);
     });
     $('#dt_end_event').change(function(){
         var myDate = $(this).val();
@@ -213,22 +244,21 @@ jQuery(document).ready(function ($) {
         });
     });
     
-    $(document).on('change','.events-category_input',function(){
-        $(".events-conrent__box").html('');
-        $('.events-category_input:checked').each(function(){
-            var id = $(this).attr('name').slice(-1);
-            console.log(id);
-            $.ajax({
-            type: 'POST',
-            url: "/events/default/ajax_find_events_by_type/",
-            data: 'type=' + id,
-            success: function (data) {
+    /*$(document).on('change','.events-category_input',function(){
 
-                $(".events-conrent__box").append(data);
+        $('.events-category_input:checked').each(function(){
+            var id = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: "/events/default/ajax_find_events_by_type/",
+                data: 'type=' + id,
+                success: function (data) {
+
+                    $(".events-conrent__box").html(data);
             }
         });
         });
-    });
+    });*/
 
     $(document).on('change','#date_search_event_from',function(){
         $(".events-conrent__box").html('');
@@ -324,21 +354,9 @@ jQuery(document).ready(function ($) {
     });
 
     $(document).on('change','#autocomplete_city_name_start', function () {
-        $.ajax({
-            type: 'POST',
-            url: "/travels/default/ajax_find_travels/",
-            data: {'city_start': $('#travel-citystart').val(),
-                'city_end': $('#travel-cityend').val(),
-                'date': $('#datapicker').val()},
-            success: function (data) {
-                //console.log(data);
-                $(".travels__road").html(data);
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    })
+
+    });
+
     $(document).on('click','#is_near_event',function () {
         if(this.checked)
         {
@@ -351,9 +369,15 @@ jQuery(document).ready(function ($) {
             });
         }
     });
-    $(document).on('change','#autocomplete_city_name_end', function () {
-
-    })
+    $(document).on('change','#travel-cityend', function () {
+        searchTravel();
+    });
+    $(document).on('change','#travel-citystart', function () {
+        searchTravel();
+    });
+    $(document).on('change','.tarvel_search', function () {
+        searchTravel();
+    });
 
     $(document).on('change', '#auto_complete_city_name_end', function () {
         routTravel();
@@ -373,7 +397,25 @@ jQuery(document).ready(function ($) {
         $('.selectUserMoto').hide();
     });
 
+    $("#profile-avatar").change(function(){
+        readURL(this);
+    });
+
+
 });
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 //Получение точек маршрута путишествия
 function routTravel() {
     var idstart = $('#travel-city_start').val();
@@ -441,5 +483,23 @@ function routinitTravel(arr) {
         });
         // добавляем маршрут на карту
         travels__map.geoObjects.add(route);
+    });
+}
+
+
+function searchTravel(){
+    $.ajax({
+        type: 'POST',
+        url: "/travels/default/search_travel/",
+        data: {'city_start': $('#travel-citystart').val(),
+            'city_end': $('#travel-cityend').val(),
+            'date': $('#datapicker').val()},
+        success: function (data) {
+            //console.log(data);
+            $(".travels__road").html(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
     });
 }

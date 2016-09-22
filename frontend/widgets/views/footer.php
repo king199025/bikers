@@ -37,6 +37,7 @@
     <?= \frontend\widgets\Login::widget(); ?>
 
 </div>
+<div class="overlay"></div>
 <!-- open .footer__rules -->
 <nav class="footer__rules">
     <!-- open .container -->

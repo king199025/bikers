@@ -43,6 +43,7 @@ return [
                 'login' => '/user/security/login',
                 'register'=> 'user/registration/register',
                 'forgot' => '/user/recovery/request',
+                'resend' => '/user/registration/resend',
 
                 'news' => 'news/default',
                 'news/<slug>' => '/news/default/views',

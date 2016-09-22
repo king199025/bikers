@@ -39,26 +39,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 'validateOnBlur'         => false,
             ]); ?>
 
-            <?= $form->field($model, 'name')
+            <?/*= $form->field($model, 'name')
                 ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Имя'])
-                ->label(false) ?>
+                ->label(false) */?>
 
-            <?= $form->field($model, 'public_email')
+            <?/*= $form->field($model, 'public_email')
                 ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Публичный email'])
-                ->label(false) ?>
+                ->label(false) */?>
 
-            <?= $form->field($model, 'website')
+            <?/*= $form->field($model, 'website')
                 ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Вебсайт'])
-                ->label(false) ?>
+                ->label(false) */?>
 
             <?= $form->field($model, 'location')
                 ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Местоположение'])
                 ->label(false) ?>
 
-            <?= $form->field($model, 'gravatar_email')
+           <!-- --><?/*= $form->field($model, 'gravatar_email')
                 ->hint(\yii\helpers\Html::a(Yii::t('user', 'Change your avatar at Gravatar.com'), 'http://gravatar.com'))
                 ->textInput(['class'=>'settings-account-form_item','placeholder'=>'Gravatar email'])
-                ->label(false) ?>
+                ->label(false) */?>
+
+            <div class="avataPrifile">
+
+                <?php
+                if(empty($model->avatar)){
+                    echo $form->field($model, 'avatar', [
+                        'template' => '{label}<div class="selectAvatar">
+                                    <img id="blah" src="/img/default_avatar_male.jpg" alt="" width="160px">
+                                    <span>Нажмите для выбора</span>{input}</div>'
+                    ])->label('Загрузить аватар с компютера')->fileInput();
+                }
+                else{
+                    echo $form->field($model, 'avatar', [
+                        'template' => '{label}<div class="selectAvatar">
+                                    <img id="blah" src="'. $model->avatar .'" alt="" width="160px">
+                                    <span>Нажмите для выбора</span>{input}</div>'
+                    ])->label('Загрузить аватар с компютера')->fileInput();
+                }
+                ?>
+
+            </div>
+
 
             <?= $form->field($model, 'bio')
                 ->textarea(['class'=>'settings-profile-form_item-textarea','placeholder'=>'О себе'])
