@@ -33,10 +33,29 @@ class MainMenuAdmin extends Widget
                                 'template' => '<a href="{url}"><i class="fa fa-users"></i> <span>{label}</span></a>',
                                 'active' => Yii::$app->controller->module->id == 'events',
                             ],
-                            [
+                            /*[
                                 'label' => '345',
                                 'url' => '#',
+                            ],*/
+                        ],
+                        'options' => [
+                            'class' => 'treeview',
+                        ],
+                        'template' => '<a href="#"><i class="fa fa-dashboard"></i> <span>{label}</span> <i class="fa fa-angle-left pull-right"></i></a>',
+                    ],
+                    [
+                        'label' => 'Мотоклубы',
+                        'items' => [
+                            [
+                                'label' => 'Мотоклубы',
+                                'url' => Url::to(['/clubs/clubs']),
+                                'template' => '<a href="{url}"><i class="fa fa-users"></i> <span>{label}</span></a>',
+                                'active' => Yii::$app->controller->module->id == 'events',
                             ],
+                            /*[
+                                'label' => '345',
+                                'url' => '#',
+                            ],*/
                         ],
                         'options' => [
                             'class' => 'treeview',

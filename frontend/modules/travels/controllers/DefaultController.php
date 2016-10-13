@@ -12,6 +12,7 @@ use kartik\select2\Select2;
 use Yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\JsExpression;
 
@@ -92,7 +93,22 @@ class DefaultController extends Controller
             $date = time();
             $model->dt_add = $date;
             $model->dt_update = $date;
-            
+            if(isset($_FILES['Travel']['name'])){
+                if (!file_exists('media/users/' . Yii::$app->user->id)) {
+                    mkdir('media/users/' . Yii::$app->user->id . '/');
+                }
+                if (!file_exists('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'))) {
+                    mkdir('media/users/' . Yii::$app->user->id . '/' . date('Y-m-d'));
+                }
+                $dir = 'media/users/' . Yii::$app->user->id . '/' . date('Y-m-d') . '/';
+
+                $extension = strtolower(substr(strrchr($_FILES['Events']['name']['afisha'], '.'), 1));
+
+                Image::thumbnail($_FILES['Travel']['tmp_name']['icon'], 600, 800, $mode = \Imagine\Image\ManipulatorInterface::THUMBNAIL_OUTBOUND)
+                    ->save($dir . $_FILES['Travel']['name']['icon'], ['quality' => 100]);
+
+                $model->icon = '/' . $dir . $_FILES['Travel']['name']['icon'];
+            }
             
             if(isset($_POST['dotCity'])&& $model->save(false))
             {

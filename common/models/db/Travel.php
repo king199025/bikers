@@ -19,6 +19,10 @@ use Yii;
  * @property integer $moto_id
  * @property integer $user_id
  * @property integer $status
+ * @property string $icon
+ * @property integer $distance
+ *
+ * @property TravelBookmark[] $travelBookmarks
  */
 class Travel extends \yii\db\ActiveRecord
 {
@@ -36,10 +40,10 @@ class Travel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'city_start', 'city_end', 'dt_start', 'slug', 'dt_add', 'dt_update', 'moto_id', 'user_id', 'status'], 'required'],
-            [['city_start', 'city_end', 'dt_add', 'dt_update', 'moto_id', 'user_id', 'status'], 'integer'],
+            [['name', 'city_start', 'city_end', 'dt_start', 'slug', 'dt_add', 'dt_update', 'moto_id', 'user_id', 'status', 'icon', 'distance'], 'required'],
+            [['city_start', 'city_end', 'dt_add', 'dt_update', 'moto_id', 'user_id', 'status', 'distance'], 'integer'],
             [['description'], 'string'],
-            [['name', 'slug'], 'string', 'max' => 255],
+            [['name', 'slug', 'icon'], 'string', 'max' => 255],
             [['dt_start'], 'string', 'max' => 20],
         ];
     }
@@ -62,6 +66,16 @@ class Travel extends \yii\db\ActiveRecord
             'moto_id' => 'Moto ID',
             'user_id' => 'User ID',
             'status' => 'Status',
+            'icon' => 'Icon',
+            'distance' => 'Distance',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTravelBookmarks()
+    {
+        return $this->hasMany(TravelBookmark::className(), ['travel' => 'id']);
     }
 }

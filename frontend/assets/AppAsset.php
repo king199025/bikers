@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/style.min.css',
         'css/owl.carousel.css',
         'css/owl.transitions.css',
+        'css/jquery.fancybox.css',
         'css/style.css',
         'css/general.css'
 
@@ -39,6 +40,8 @@ class AppAsset extends AssetBundle
         'js/owl.carousel.js',
         'js/script.min.js',
         'js/script.js',
+        'js/jquery.fancybox.js',
+        'js/jquery.fancybox.pack.js',
         'js/searchEvents.js',
         'js/general.js',
 

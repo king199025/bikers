@@ -19,6 +19,9 @@ return [
         'events' => [
             'class' => 'backend\modules\events\Events',
         ],
+        'clubs' => [
+            'class' => 'backend\modules\clubs\Clubs'
+        ],
     ],
     'components' => [
         /*'user' => [

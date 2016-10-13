@@ -14,7 +14,10 @@ use yii\base\Widget;
 class ShowBlockEvents extends Widget
 {
     public function run(){
-        $events = Events::find()->orderBy(['dt_start' => SORT_DESC])->limit(14)->all();
+        $events = Events::find()
+            ->andWhere(['!=', 'status', 0])
+            ->andWhere(['!=', 'status', 2])
+            ->orderBy(['dt_start' => SORT_DESC])->limit(12)->all();
         return $this->render('events', ['events'=>$events]);
     }
 }

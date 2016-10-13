@@ -109,11 +109,32 @@ $(document).ready(function() {
 			}
 		}
 	});
+	$(".fancybox-thumb-2").fancybox({
+		prevEffect	: 'none',
+		nextEffect	: 'none',
+		helpers	: {
+			title	: {
+				type: 'outside'
+			},
+			thumbs	: {
+				width	: 50,
+				height	: 50
+			}
+		}
+	});
 
 
-    $('.pokazat').click(function(event) {
+    $('.show-howitworks').click(function(event) {
       event.preventDefault();
-      $('.howitworks-hide').slideToggle();
+      $('.howitworks').slideToggle();
+    });
+    $('.show-motocalendare').click(function(event) {
+      event.preventDefault();
+      $('.motocalendar-main').slideToggle();
+    });
+    $('.show-news').click(function(event) {
+      event.preventDefault();
+      $('.news-on-main').slideToggle();
     });
     $('.pokazat-1').click(function(event) {
       event.preventDefault();
@@ -174,6 +195,10 @@ $(document).ready(function () {
                 }
             );
     });
+    // $('.js_headerAuto').click(function () {
+    //     event.preventDefault();
+    // })
+
 });
 
 jQuery(document).ready(function($) {
@@ -214,4 +239,33 @@ jQuery(document).ready(function($) {
     }
 
   });
+  });
+// open main page tabs top
+$('.page__tabs_target_first').click(function(event) {
+    $('.page__tabs_target_first').removeClass('page__tabs_first_active');
+    $(this).addClass('page__tabs_first_active');
+    event.preventDefault();
+    var target = $(this).data('tab');
+    $('.page__tabcontent_first').hide();
+    $("."+ target).show();
+  });
+// open main page tabs
+$('.page__tabs_target').click(function(event) {
+    $('.page__tabs_target').removeClass('page__tabs_active');
+    $(this).addClass('page__tabs_active');
+    event.preventDefault();
+    var target = ($(this).data('tab'));
+
+    $('.page__tabcontent').hide();
+    $("."+ target).show();
+  });
+// open kabinet page tabs
+$('.kabinet__tabs_target').click(function(event) {
+    $('.kabinet__tabs_target').removeClass('kabinet__tabs_active');
+    $(this).addClass('kabinet__tabs_active');
+    event.preventDefault();
+    var target = ($(this).data('tab'));
+
+    $('.kabinet__tabcontent').hide();
+    $("."+ target).show();
   });

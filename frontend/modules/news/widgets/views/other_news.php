@@ -1,5 +1,5 @@
 <?php
-common\classes\Debug::prn($news);
+///common\classes\Debug::prn($news);
 ?>
 <!-- open .news__other -->
 		<div class="news__other">

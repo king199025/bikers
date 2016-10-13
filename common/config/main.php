@@ -12,11 +12,18 @@ return [
             'access' => ['@', '?'],
             'disabledCommands' => ['netmount'],
             'roots' => [
-                [
+                'identificator_0' => [
                     'baseUrl' => '',
                     'basePath' => '@frontend/web',
                     'path' => 'media/upload',
                     'name' => 'Изображения',
+                ],
+
+                'identificator_1' => [
+                    'baseUrl'=>'',
+                    'basePath'=>'@frontend/web',
+                    'path' => 'media/users/' . Yii::$app->user->id . '/' ,
+                    'name' => 'Global',
                 ],
             ],
             'watermark' => [
@@ -36,7 +43,21 @@ return [
         'user' => [
             'class' => 'dektrium\user\Module',
             'controllerMap' => [
-                'registration' => '\frontend\controllers\user\RegUserController',
+                /*'registration' => '\frontend\controllers\user\RegUserController',*/
+                'registration' => [
+                    'class' => \frontend\controllers\user\RegUserController::className(),
+                    'on ' . \frontend\controllers\user\RegUserController::EVENT_AFTER_REGISTER  => function ($event) {
+                        /*$auth = Yii::$app->authManager;
+                        $role = $auth->getRole('admin');
+                        $user = \dektrium\user\models\User::findOne(['username' => $event->form->username]);
+                        $auth->assign($role, $user->id);*/
+                        $user = \dektrium\user\models\User::findOne(['username' => $event->form->username]);
+                        $warning = new \common\models\db\UserWarning();
+                        $warning->user_id = $user->id;
+                        $warning->save();
+
+                    }
+                ],
                 'recovery' => '\frontend\controllers\user\RecoveryController',
                 'settings' => '\frontend\controllers\user\SettingsController',
             ],

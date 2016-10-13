@@ -86,7 +86,19 @@ return [
         ],
         'events' => [
             'class' => 'frontend\modules\events\Events'
-        ]
+        ],
+        'moto_clubs' => [
+            'class' => 'frontend\modules\moto_clubs\MotoClubs',
+        ],
+        'user_album' => [
+            'class' => 'frontend\modules\user_album\UserAlbum',
+        ],
+        'user_photo' => [
+            'class' => 'frontend\modules\user_photo\UserPhoto',
+        ],
+        'user_post' => [
+            'class' => 'frontend\modules\user_post\UserPost',
+        ],
     ],
     'params' => $params,
 ];

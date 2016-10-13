@@ -120,13 +120,15 @@ $this->params['breadcrumbs'][] = $this->title;
 						</label>
 					</div>-->
 				</div>
+				<?= $form->field($model, 'distance')->textInput(['readonly' => true])?><span>км.</span>
+				<?= $form->field($model, 'icon')->fileInput()->label('Добавить афишу') ?>
 				<div class="road-name">
 					<!--label class="road-name-label" for="">Название дальняка</label-->
 					<!--input class="road-name-input" type="text" name="name" value=""-->
-                                        <?= $form->field($model, 'name')->textInput(['class'=>'road-name-input'])->label('Название дальняка',['class'=>'road-name-label']); ?>
+					<?= $form->field($model, 'name')->textInput(['class'=>'road-name-input'])->label('Название дальняка',['class'=>'road-name-label']); ?>
 				</div>
 				<div class="knopka-otpravit">
-                                        <?=  \yii\bootstrap\Html::submitButton('Сохранить дальняк',['class'=>'button button_orange save-dannie']) ?>
+					<?=  \yii\bootstrap\Html::submitButton('Сохранить дальняк',['class'=>'button button_orange save-dannie']) ?>
 					<!--button class="button button_orange save-dannie">Сохранить дальняк</button-->
 				</div>
                             <div class="selectUserMoto modal">

@@ -39,6 +39,33 @@ jQuery(document).ready(function ($) {
      });
      }*/
 
+//Оповещения
+
+    $(document).on('click', '.warning', function () {
+        var name = $(this).attr('name');
+        var val;
+        if($(this).prop('checked')) {
+            val = 1;
+        }
+        else{
+            val = 0;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "/user/settings/ajax_warning/",
+            data: 'name=' + name + '&val=' + val,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+    $('#saveInfo').on('click', function(event){
+        $('#input-5').fileinput('upload');
+
+        /*event.preventDefault();
+        return false;*/
+    });
 
     $(document).on('click', '.travelName', function () {
         $.ajax({
@@ -455,6 +482,8 @@ function routTravel() {
             //console.log(res);
 
             ymaps.ready(routinitTravel(res));
+            //ymaps.ready(myDistance());
+
 
             /*var arr = [];
              arr.push('Королев');
@@ -483,8 +512,19 @@ function routinitTravel(arr) {
         });
         // добавляем маршрут на карту
         travels__map.geoObjects.add(route);
+        var routeLength = route.getLength();
+        $('#travel-distance').val(Math.round(routeLength/1000));
     });
 }
+
+/*function myDistance(){
+
+    var router = new ymaps.Router(['Москва', 'Тула']);
+    var fullDistance = router.getDistance();
+
+
+    console.log(fullDistance);
+}*/
 
 
 function searchTravel(){

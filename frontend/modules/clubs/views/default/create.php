@@ -43,7 +43,7 @@ $to_list = ArrayHelper::map($types,'id','name');
     ?>
     <?= $form->field($model, 'type')->dropDownList($to_list,['class'=>'garage-form__add-baik_form_input'])->label(false); ?>
     <div class="block-add-file">
-    <?php 
+    <?php
         echo '<label class="">Добавить промо-картинку</label>';
         echo $form->field($model, 'promo')->widget(
             FileInput::className(),

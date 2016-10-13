@@ -4,7 +4,7 @@
     <div class="container">
         <!-- open .header__logo -->
         <div class="header__logo">
-            <a href="#">
+            <a href="/">
                 <img src="/frontend/web/img/logo.png" alt="" />
             </a>
         </div>
@@ -26,7 +26,9 @@
 
 </header>
 <!-- close .header -->
-<!-- open .navigation -->
+
+
+
 <nav class="navigation">
     <!-- open .container -->
     <div class="container">
@@ -34,14 +36,25 @@
         <a href="#" class="navigation__btn"><span></span></a>
         <!-- close .navigation__btn -->
         <!-- open .navigation__menu -->
-        <ul class="navigation__menu">
-            <li><a href="/">Главная</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('/bikers/default')?>">Байкеры</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('/clubs/default')?>">Мотоклубы</a></li>
-            <li><a href="<?=\yii\helpers\Url::to('/travels/default')?>">Путешествия</a></li>
-            <li><a href="#">О нас</a></li>
-            <li><a href="#">Обратная связь</a></li>
+        <ul class="navigation__menu_1">
+            <li>
+                <a href="/" title="Главная">Главная</a>
+                <ul>
+                    <li><a href="<?=\yii\helpers\Url::to('/news')?>">Новости</a></li>
+                    <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
+                    <li><a href="<?=\yii\helpers\Url::to('/bikers/default')?>">Байкеры</a></li>
+                    <li><a href="<?=\yii\helpers\Url::to('/moto_clubs/moto_clubs')?>">Мотоклубы</a></li>
+                    <li><a href="<?=\yii\helpers\Url::to('/travels/default')?>">Путешествия</a></li>
+                </ul>
+            </li>
+
+            <!-- <li><a href="#">Главная</a></li>
+            <li><a href="#">Мотокалендарь</a></li>
+            <li><a href="#">Байкеры</a></li>
+            <li><a href="#">Мотоклубы</a></li>
+            <li><a href="#">Путешествия</a></li> -->
+            <!-- <li><a href="#">О нас</a></li>
+            <li><a href="#">Обратная связь</a></li> -->
         </ul>
         <!-- close .navigation__menu -->
         <!-- open .navigation__search -->
@@ -52,6 +65,26 @@
             </a>
         </div>
         <!-- close .navigation__search -->
+        <!-- open .navigation__menu -->
+        <ul class="navigation__menu_2">
+            <!-- <li><a href="#">Главная</a></li>
+            <li><a href="#">Мотокалендарь</a></li>
+            <li><a href="#">Байкеры</a></li>
+            <li><a href="#">Мотоклубы</a></li>
+            <li><a href="#">Путешествия</a></li> -->
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Обратная связь</a></li>
+        </ul>
+        <!-- close .navigation__menu -->
+        <ul class="navigation__menu_mobile">
+            <li><a href="/">Главная</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/bikers/default')?>">Байкеры</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/clubs/default')?>">Мотоклубы</a></li>
+            <li><a href="<?=\yii\helpers\Url::to('/travels/default')?>">Путешествия</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Обратная связь</a></li>
+        </ul>
     </div>
     <!-- close .container -->
 

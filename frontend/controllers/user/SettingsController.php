@@ -10,10 +10,16 @@ namespace frontend\controllers\user;
 
 
 use common\classes\Debug;
+use common\models\db\AlbumPhotoUser;
 use common\models\db\Bookmarks;
 use common\models\db\Events;
 use common\models\db\EventsUser;
 use common\models\db\Garage;
+use common\models\db\MotoClubs;
+use common\models\db\Travel;
+use common\models\db\UserPhoto;
+use common\models\db\UserPost;
+use common\models\db\UserWarning;
 use dektrium\user\models\Profile;
 use frontend\models\user\UserDec;
 use Yii;
@@ -30,7 +36,7 @@ class SettingsController extends \dektrium\user\controllers\SettingsController
                 'rules' => [
                     [
                         'allow'   => true,
-                        'actions' => ['profile', 'account', 'networks', 'disconnect', 'delete', 'user_profile'],
+                        'actions' => ['profile', 'account', 'networks', 'disconnect', 'delete', 'user_profile', 'ajax_warning'],
                         'roles'   => ['@'],
                     ],
                     [
@@ -75,6 +81,16 @@ class SettingsController extends \dektrium\user\controllers\SettingsController
         //Debug::prn($userBookEvents);
 
         $eventsUser = Events::find()->where(['user_id' => $userInfo->id])->all();
+        $userTravel = Travel::find()->where(['user_id' => $userInfo->id])->all();
+        $motoclubUser = MotoClubs::find()->where(['user_id' => Yii::$app->user->id, 'status' => 1])->all();
+
+        $userAlbum = AlbumPhotoUser::find()->where(['user_id' => $userInfo->id])->all();
+
+        $userImg = UserPhoto::find()->where(['user_id' => $userInfo->id])->orderBy('RAND()')->limit(5)->all();
+
+        $userWarning = UserWarning::find()->where(['user_id' => $userInfo->id])->one();
+
+        $userPost = UserPost::find()->where(['user_id' => $userInfo->id])->all();
 
         return $this->render('user_profile',
             [
@@ -82,8 +98,20 @@ class SettingsController extends \dektrium\user\controllers\SettingsController
                 'userMoto' => $userMoto,
                 'eventsUser' => $eventsUser,
                 'userGoEvents' => $userGoEvents,
-                'userBookEvents' => $userBookEvents
+                'userBookEvents' => $userBookEvents,
+                'userTravel' => $userTravel,
+                'motoclubUser' => $motoclubUser,
+                'userAlbum' => $userAlbum,
+                'userImg' => $userImg,
+                'userWarning' => $userWarning,
+                'userPost' => $userPost,
             ]);
+    }
+
+    public function actionAjax_warning(){
+        $request = Yii::$app->request;
+        UserWarning::updateAll([$request->post('name') => $request->post('val')], ['user_id' => Yii::$app->user->id]);
+        /*Debug::prn(Yii::$app->request->post());*/
     }
 
     /**
