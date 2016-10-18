@@ -54,7 +54,7 @@ class DefaultController extends Controller
     {
 
         //Debug::prn($model);
-        $travels = Travel::find()
+        $travels = Travel::find()->where(['status' => 1])
                 ->asArray()
                 ->all();
         $cityList = City::find()->select([ 'name as label','id as value'])
@@ -179,7 +179,7 @@ class DefaultController extends Controller
     }
 
     public function actionSearch_travel(){
-        Debug::prn($_POST);
+        //Debug::prn($_POST);
 
         $travels = Travel::find()
             ->andFilterWhere(['LIKE', 'dt_start' , $_POST['date']])

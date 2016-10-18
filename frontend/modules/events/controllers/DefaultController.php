@@ -6,7 +6,9 @@ use common\classes\Debug;
 use common\models\db\Bookmarks;
 use common\models\db\Clubs;
 use common\models\db\EventOrganizers;
+use common\models\db\EventsTagsNew;
 use common\models\db\ImgEvent;
+use common\models\db\MotoClubs;
 use common\models\User;
 use Yii;
 use common\models\db\Events;
@@ -60,12 +62,27 @@ class DefaultController extends Controller
             ->asArray()
             ->all();
 
-        $events = Events::find()
-            //->where(['>=','dt_start', time()])
-            ->andWhere(['!=', 'status', 0])
-            ->andWhere(['!=', 'status', 2])
-            ->orderBy('dt_start ASC')
-            ->all();
+
+        if(Yii::$app->request->post()){
+            $request = Yii::$app->request;
+            $events = Events::find()
+                ->leftJoin('City', '`City`.`id` = `events`.`city`')
+                ->where(['`events`.`status`' => 1])
+                ->andFilterWhere(['LIKE', '`events`.`name`', $request->post('search_events')])
+                ->orFilterWhere(['LIKE', '`City`.`Name`', $request->post('search_events')])
+                ->all();
+        }
+        else{
+            $events = Events::find()
+                //->where(['>=','dt_start', time()])
+                ->andWhere(['!=', 'status', 0])
+                ->andWhere(['!=', 'status', 2])
+                ->orderBy('dt_start ASC')
+                ->all();
+        }
+
+
+
 
 
         $db = new Connection(Yii::$app->db);
@@ -225,9 +242,11 @@ class DefaultController extends Controller
         $cityList = City::find()->select(['name as label','id as value'])
                 ->asArray()
                 ->all();
-        $clubsList = Clubs::find()->select(['name as label','id as value'])
+        /*$clubsList = Clubs::find()->select(['name as label','id as value'])
             ->asArray()
-            ->all();
+            ->all();*/
+
+        $clubsList = MotoClubs::find()->where(['status' => 1])->all();
         \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = [
             'css' => [],
             'js' => []
@@ -255,10 +274,22 @@ class DefaultController extends Controller
             $model->save();
 
             if(Yii::$app->request->post('event_organizer')) {
-                $org = new EventOrganizers();
-                $org->event_id = $model->id;
-                $org->club_id = Yii::$app->request->post('event_organizer');
-                $org->save();
+                foreach (Yii::$app->request->post('event_organizer') as $item) {
+                    $org = new EventOrganizers();
+                    $org->event_id = $model->id;
+                    $org->club_id = $item;
+                    $org->save();
+                }
+
+            }
+            if(Yii::$app->request->post('tags')) {
+                foreach (Yii::$app->request->post('tags') as $item) {
+                    $tag = new EventsTagsNew();
+                    $tag->events_id = $model->id;
+                    $tag->tags = $item;
+                    $tag->save();
+                }
+
             }
 
 

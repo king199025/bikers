@@ -122,8 +122,20 @@ $to_list = ArrayHelper::map($typesList,'id','name');
         ?>
     
         <?= $form->field($model, 'city_near')->hiddenInput(['id'=>'event_city_near'])->label(false) ?>
-        
-        <?= AutoComplete::widget([
+
+            <?php echo '<label class="">Организаторы</label>';
+            echo Select2::widget([
+                'name' => 'event_organizer',
+                'value' => '', // initial value
+                'data' => ArrayHelper::map($clubsList, 'id', 'name_rus'),
+                'options' => ['placeholder' => 'Выберите организаторов...', 'multiple' => true],
+                'pluginOptions' => [
+                    'maximumInputLength' => 100
+                ],
+            ]);
+            ?>
+
+        <?/*= AutoComplete::widget([
             'name'=>'auto_complete_event_organizer',
             'options' => [
                 'class' => 'garage-form__add-baik_form_input',
@@ -140,12 +152,16 @@ $to_list = ArrayHelper::map($typesList,'id','name');
         return false;
             }")
             ],
-        ]); ?>
-    <?=Html::hiddenInput('event_organizer',null,['id'=>'event_organizer'])?>
+        ]); */?><!--
+    <?/*=Html::hiddenInput('event_organizer',null,['id'=>'event_organizer'])*/?>
+        -->
         <?= $form->field($model, 'lon')
             ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Долгота'])
             ->label(false)
         ?>
+
+
+
         <?= $form->field($model, 'lat')
             ->textInput(['class'=>'garage-form__add-baik_form_input','placeholder'=>'Широта'])
             ->label(false) ?>

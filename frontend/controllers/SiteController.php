@@ -1,6 +1,10 @@
 <?php
 namespace frontend\controllers;
 
+use common\classes\Debug;
+
+use common\models\db\Events;
+use common\models\db\Travel;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -209,5 +213,33 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+
+    //Общий поиск
+    public function actionSearch_all(){
+        $request = Yii::$app->request;
+        $events = Events::find()
+            ->where(['status' => 1])
+            ->andWhere(['LIKE', 'name', $request->post('search-all')])
+            ->all();
+
+        $travel = Travel::find()->where(['status' => 1])
+            ->andWhere(['LIKE', 'name', $request->post('search-all')])
+            ->all();
+
+        Debug::prn($events);
+    }
+
+    //поиск по мотокалендарю
+    public function actionSearch_events(){
+        $request = Yii::$app->request;
+        $events = Events::find()
+            ->leftJoin('City', '`City`.`id` = `events`.`city`')
+            ->where(['`events`.`status`' => 1])
+            ->andFilterWhere(['LIKE', '`events`.`name`', $request->post('search_events')])
+            ->orFilterWhere(['LIKE', '`City`.`Name`', $request->post('search_events')])
+            ->all();
+        Debug::prn($events);
     }
 }

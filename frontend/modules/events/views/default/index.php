@@ -266,7 +266,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<!-- open .events-conrent__item_thumb -->
 						<a href="<?=\yii\helpers\Url::to(['view','id'=>$item->id])?>" class="events-conrent__item_thumb">
 							<img src="<?= $item->afisha?>" alt="" />
-							<span class="events-conrent__item_distance"><strong>2800</strong>км</span>
+							<!--<span class="events-conrent__item_distance"><strong>2800</strong>км</span>-->
 						</a>
 						<!-- close .events-conrent__item_thumb -->
 						<a href="<?= \yii\helpers\Url::to(['view','id'=>$item->id])?>" class="events-conrent__item_title"><?= $item->name; ?></a>
