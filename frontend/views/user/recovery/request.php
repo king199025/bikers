@@ -21,26 +21,32 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::t('user', 'Recover your password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-123
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-            </div>
-            <div class="panel-body">
-                <?php $form = ActiveForm::begin([
-                    'id'                     => 'password-recovery-form',
-                    'enableAjaxValidation'   => true,
-                    'enableClientValidation' => false,
-                ]); ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary btn-block']) ?><br>
 
-                <?php ActiveForm::end(); ?>
-            </div>
+
+<section class="authorization">
+    <div class="container">
+        <div class=" password-recovery_form">
+            <h2>Для восстановления пароля заполните поле:</h2>
+           <!-- <form action="" class="authorization_form" novalidate  method="post">
+                <label for="">Email</label>
+                <input class="form_line__email" type="text" name="name" >
+                <button class="button button_orange">Продолжить</button>
+            </form>-->
+            <?php $form = ActiveForm::begin([
+                'id'                     => 'password-recovery-form',
+                'options' => ['class' => 'authorization_form'],
+                'enableAjaxValidation'   => true,
+                'enableClientValidation' => false,
+            ]); ?>
+
+            <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'class' => 'form_line__email']) ?>
+
+            <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'button button_orange']) ?><br>
+
+            <?php ActiveForm::end(); ?>
+
         </div>
     </div>
-</div>
+</section>

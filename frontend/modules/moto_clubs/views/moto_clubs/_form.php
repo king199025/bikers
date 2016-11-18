@@ -119,6 +119,41 @@ use yii\widgets\ActiveForm;
 
     <h2>Сотрудники мотоклуба</h2>
 
+    <div class="moto_clubs_people_wr">
+        <div class="moto_clubs_people">
+            <?= Html::label('Введите логин пользователя');?>
+            <?=
+            AutoComplete::widget([
+                'name'=>'auto_complete_user_moto_club',
+                'value' => '',
+                'options' => [
+                    'class' => 'garage-form__add-baik_form_input',
+                    'placeholder' => 'Имя пользователя',
+                    'id' => 'auto_complete_user_moto_club',
+                ],
+                'clientOptions' => [
+                    'source' => $user,
+                    'minLength' => '2',
+                    'autoFill' => true,
+                    'select' => new JsExpression("function( event, ui ) {
+                        $('#auto_complete_user_moto_club').val(ui.item.label);
+                        $('#user_id_people').val(ui.item.value);
+                        return false;
+                    }"
+                    )],
+            ]);
+            ?>
+
+            <?= Html::hiddenInput("moto_club_personal[1][user_id_club]", null, ['id' => 'user_id_people'])?>
+            <?= Html::label('Введите должность');?>
+            <?= Html::textInput('moto_club_personal[1][user_position]', '') ?>
+            <?= Html::label('Введите страницу пользователя в социальной сети');?>
+            <?= Html::textInput('moto_club_personal[1][user_link_vk]', '') ?>
+            <?= Html::label('Введите телефон пользователя');?>
+            <?= Html::textInput('moto_club_personal[1][user_phone]', '') ?>
+        </div>
+        <?= Html::button('Добавить сотрудника', ['id' => 'add_personal', 'class' => 'btn btn-success', 'data-count' => 1])?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Сохранить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'saveInfo']) ?>

@@ -2,6 +2,7 @@
 
 namespace common\models\db;
 
+use frontend\models\user\UserDec;
 use Yii;
 
 /**
@@ -55,4 +56,14 @@ class UserWarning extends \yii\db\ActiveRecord
             'bookmark_travel' => 'Bookmark Travel',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getuser()
+    {
+        return $this->hasOne(UserDec::className(), ['id' => 'user_id']);
+    }
+
+
 }

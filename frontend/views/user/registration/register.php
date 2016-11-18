@@ -67,8 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-        <label class="bday" for="">День рождения</label>
-        <select name="day" class="day">
+        <label class="bday" for="">Пол</label>
+        <!--<select name="day" class="day">
             <option value="-1"></option>
             <option value="01">1</option>
             <option value="02">2</option>
@@ -119,10 +119,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </select>
         <select class="year" type="number" name="year" >
             <option value="-1"></option>
-            <?php for($i=1901;$i<date('Y');$i++): ?>
-                <option value="<?=$i?>"><?=$i?></option>
-            <?php endfor ?>
-        </select>
+            <?php /*for($i=1901;$i<date('Y');$i++): */?>
+                <option value="<?/*=$i*/?>"><?/*=$i*/?></option>
+            <?php /*endfor */?>
+        </select>-->
 
 
         <?= $form->field($model, 'floor')->radioList([1 => 'мужской', 0 => 'женский'])?>
@@ -145,10 +145,17 @@ $this->params['breadcrumbs'][] = $this->title;
             </label>
         </div>-->
 
+        <div class="events-category__item veritification-date">
+            <input type="checkbox" name="events-category" id="events-category4" class="ruleRegister">
+            <label for="events-category4">
+                <span class="events-category__item_marker"></span>
+                <span class="events-category__item_title"><em>Мне есть 18</em></span>
+
+            </label>
+        </div>
 
 
-
-        <?= Html::submitButton(Yii::t('user', 'Sign up'), ['class' => 'regist-button']) ?>
+        <?= Html::submitButton(Yii::t('user', 'Sign up'), ['class' => 'regist-button', 'disabled' => 'disabled']) ?>
 
         <?php ActiveForm::end(); ?>
        <!-- <form action="" class="regist-form">

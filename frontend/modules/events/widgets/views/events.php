@@ -30,9 +30,9 @@
                     <!--<span class="events-conrent__item_distance"><strong>2800</strong>км</span>-->
                 </a>
                 <!-- close .events-conrent__item_thumb -->
-                <a href="#" class="events-conrent__item_title"><?=$item['name']?></a>
+                <a href="<?=\yii\helpers\Url::to(['/events/default/view','id'=>$item['id']])?>" class="events-conrent__item_title"><?=$item['name']?></a>
                 <span class="events-conrent__item_date"><?= \common\classes\DataHelper::rdate('d M', $item->dt_start); ?></span>
-                <a href="#" class="button button_orange events-conrent__item_price"><?= \common\classes\EventsFunction::get_city_event($item->city); ?></a>
+                <a href="<?=\yii\helpers\Url::to(['/events/default/view','id'=>$item['id']])?>" class="button button_orange events-conrent__item_price"><?= \common\classes\EventsFunction::get_city_event($item->city); ?></a>
             </div>
 
         <?php endforeach; ?>

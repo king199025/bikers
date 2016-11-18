@@ -14,12 +14,12 @@
             <!-- open .events-conrent__item -->
             <div class="events-conrent__item">
                 <!-- open .events-conrent__item_thumb -->
-                <a href="#" class="events-conrent__item_thumb">
+                <a href="<?= \yii\helpers\Url::to(['/travels/default/view', 'id' => $item->id])?>" class="events-conrent__item_thumb">
                     <img src="<?= $item->icon; ?>" alt="" />
                     <span class="events-conrent__item_distance"><strong><?= $item->distance; ?></strong>км</span>
                 </a>
                 <!-- close .events-conrent__item_thumb -->
-                <a href="" class="button button_orange events-conrent__item_price"><?= $item->dt_start; ?></a>
+                <a href="<?= \yii\helpers\Url::to(['/travels/default/view', 'id' => $item->id])?>" class="button button_orange events-conrent__item_price"><?= $item->dt_start; ?></a>
                 <span class="events-conrent__item_title travels-item_title"><?= \common\classes\EventsFunction::get_city_event($item->city_start);?> - <?= \common\classes\EventsFunction::get_city_event($item->city_end);?></span>
             </div>
             <!-- close .events-conrent__item -->

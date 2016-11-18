@@ -37,4 +37,21 @@ class EventsFunction
     public static function get_city_event($id){
         return City::find()->where(['id' => $id])->one()->Name;
     }
+
+
+    //Получение координат города
+    public static function getGps($id){
+        $city = City::find()->where(['id' => $id])->one();
+        return $city->Lon . 'N ' . $city->Lat . 'E';
+    }
+
+    public static function getGpsLat($id){
+        $city = City::find()->where(['id' => $id])->one()->Lat;
+        return $city;
+    }
+    public static function getGpsLon($id){
+        $city = City::find()->where(['id' => $id])->one()->Lon;
+        return $city;
+    }
+
 }

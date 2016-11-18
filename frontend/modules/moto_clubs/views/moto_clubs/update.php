@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->name_rus];
                 'type' => $type,
                 'cityList' => $cityList,
                 'img' => $img,
+                'user' => $user,
             ]) ?>
 
         </div>

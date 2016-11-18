@@ -2,6 +2,7 @@
 
 namespace backend\modules\events\controllers;
 
+use common\classes\Notification;
 use Yii;
 use backend\modules\events\models\Events;
 use backend\modules\events\models\EventsSearch;
@@ -123,6 +124,7 @@ class EventsController extends Controller
     }
 
     public function actionEdit_status(){
+        Notification::sendMailUser('new_events', 1);
         Events::updateAll(['status' => $_POST['status']], ['id' => $_POST['eventId']]);
     }
 }

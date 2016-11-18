@@ -2,17 +2,18 @@
 
 namespace common\models\db;
 
+use dektrium\user\models\User;
 use Yii;
 
 /**
  * This is the model class for table "moto_clubs_personal".
  *
  * @property integer $id
- * @property string $photo
+ * @property integer $user_id
+ * @property integer $club_id
  * @property string $position
- * @property string $link
+ * @property string $link_vk
  * @property string $phone
- * @property integer $miti_club_id
  */
 class MotoClubsPersonal extends \yii\db\ActiveRecord
 {
@@ -30,9 +31,9 @@ class MotoClubsPersonal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['position', 'miti_club_id'], 'required'],
-            [['miti_club_id'], 'integer'],
-            [['photo', 'position', 'link', 'phone'], 'string', 'max' => 255],
+            [['user_id', 'club_id', 'position', 'link_vk', 'phone'], 'required'],
+            [['user_id', 'club_id'], 'integer'],
+            [['position', 'link_vk', 'phone'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,11 +44,27 @@ class MotoClubsPersonal extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'photo' => 'Photo',
+            'user_id' => 'User ID',
+            'club_id' => 'Club ID',
             'position' => 'Position',
-            'link' => 'Link',
+            'link_vk' => 'Link Vk',
             'phone' => 'Phone',
-            'miti_club_id' => 'Miti Club ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getuser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getprofile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'user_id']);
     }
 }

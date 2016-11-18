@@ -2,6 +2,7 @@
 
 namespace backend\modules\news\controllers;
 
+use common\classes\Notification;
 use Yii;
 use backend\modules\news\models\News;
 use backend\modules\news\models\NewsSearch;
@@ -66,6 +67,7 @@ class NewsController extends Controller
         $model = new News();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Notification::sendMailUser('new_news', $model->id);
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [

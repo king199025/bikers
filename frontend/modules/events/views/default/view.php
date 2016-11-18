@@ -62,9 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
   </div>
 </section>
-<section class="event__maps">
+<section class="event__maps" id="event__maps">
+    <span id="latlon" lat="<?= \common\classes\EventsFunction::getGpsLat($event['city'])?>" lon="<?= \common\classes\EventsFunction::getGpsLon($event['city'])?>"></span>
   <div class="container">
-    <h2 class="gps-coordinate">ТОЧНЫЕ GPS-КООРДИНАТЫ: 55`21`34`N  37`142`43`E</h2>
+
+    <h2 class="gps-coordinate">ТОЧНЫЕ GPS-КООРДИНАТЫ: <?= \common\classes\EventsFunction::getGps($event['city'])?></h2>
     <div id="map"></div>
   </div>
 </section>
@@ -79,30 +81,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </section>
-<? if($old['id'] != $model['id']):?>
+<?/* if($old['id'] != $model['id']):*/?><!--
 <section class="old-event">
     <div class="container">
-        <h2 class="old-event-title"><?=date('Y',$old['dt_start'])?>    <?=$old['name']?></h2>
+        <h2 class="old-event-title"><?/*=date('Y',$old['dt_start'])*/?>    <?/*=$old['name']*/?></h2>
     </div>
 </section>
 <section class="event__content">
   <div class="container">
     <div class="event__content_place">
-      <h2 class="date-event">Дата начала: <span> <?=date('d.m.Y.',$old['dt_start'])?></span> </h2>
-      <h2 class="date-event">Дата окончания: <span> <?if($old['dt_end']){echo date('d.m.Y.',$old['dt_end']);}?></span> </h2>
-      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?=$old['city']['Name']?></span><a href="#" class="kilometers old-kilometers">3000 км</a></p>
-      <p class="about-place">Вид мероприятия: <span><?=$old['type']['name']?></span></p>
-      <p class="about-place">Организаторы:  <span><?php foreach($old['organizer'] as $item) echo $item['club']['name']?></span></p>
-      <p class="link-site">Сайт: <a href="<?=$old['site_url']?>"><?=$old['site_url']?></a></p>
-      <a class="soc-link" href="<?=$old['vk_url']?>"><span class="icon-soc-link vk-icon-old"></span><?=$old['vk_url']?> </a>
-      <a class="soc-link" href="<?=$old['fb_url']?>"><span class="icon-soc-link fb-icon-old"></span><?=$old['fb_url']?> </a>
-      <a class="soc-link" href="<?=$old['ok_url']?>"><span class="icon-soc-link ok-icon-old"></span><?=$old['ok_url']?> </a>
+      <h2 class="date-event">Дата начала: <span> <?/*=date('d.m.Y.',$old['dt_start'])*/?></span> </h2>
+      <h2 class="date-event">Дата окончания: <span> <?/*if($old['dt_end']){echo date('d.m.Y.',$old['dt_end']);}*/?></span> </h2>
+      <p class="about-place">Место проведения: <span>Россия / Тульская область / <?/*=$old['city']['Name']*/?></span><a href="#" class="kilometers old-kilometers">3000 км</a></p>
+      <p class="about-place">Вид мероприятия: <span><?/*=$old['type']['name']*/?></span></p>
+      <p class="about-place">Организаторы:  <span><?php /*foreach($old['organizer'] as $item) echo $item['club']['name']*/?></span></p>
+      <p class="link-site">Сайт: <a href="<?/*=$old['site_url']*/?>"><?/*=$old['site_url']*/?></a></p>
+      <a class="soc-link" href="<?/*=$old['vk_url']*/?>"><span class="icon-soc-link vk-icon-old"></span><?/*=$old['vk_url']*/?> </a>
+      <a class="soc-link" href="<?/*=$old['fb_url']*/?>"><span class="icon-soc-link fb-icon-old"></span><?/*=$old['fb_url']*/?> </a>
+      <a class="soc-link" href="<?/*=$old['ok_url']*/?>"><span class="icon-soc-link ok-icon-old"></span><?/*=$old['ok_url']*/?> </a>
       <div class="event-button">
-        <a href="#" class="button button_gray ">Поехало: <?=$old_participants?></a>
+        <a href="#" class="button button_gray ">Поехало: <?/*=$old_participants*/?></a>
       </div>
     </div>
     <div class="event__content_promo-pic">
-      <img src="<?=$old['afisha'] ? '/frontend/web/media/upload/'.$old['afisha'] :'/frontend/web/img/promo-pic-old.png'?>" alt="">
+      <img src="<?/*=$old['afisha'] ? '/frontend/web/media/upload/'.$old['afisha'] :'/frontend/web/img/promo-pic-old.png'*/?>" alt="">
     </div>
   </div>
 </section>
@@ -150,8 +152,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="program__event_about-text">Процеров Артем( Темыч RAMCC) +7-926-036-80-13</p>
                 <p class="program__event_about-text">Александр Уткин ( Чукча RAMCC) +7-920-770-66-77</p>
                 <p class="program__event_about-text">Дмитрий Балаев (Deamon RAMCC) +7-925-792-01-81</p>
-            </span-->
-            <?=$old['program']?>
+            </span
+            <?/*=$old['program']*/?>
         </div>
         <div class="program__event_promo-pic">
             <img src="/frontend/web/img/program-promo-pic-old.png" alt="">
@@ -162,4 +164,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <a href="#" class="button button_border">ЗАГРУЗИТЬ ЕЩЕ +</a>
 </section>
-<? endif; ?>
+--><?/* endif; */?>

@@ -36,9 +36,12 @@
         <a href="#" class="navigation__btn"><span></span></a>
         <!-- close .navigation__btn -->
         <!-- open .navigation__menu -->
+        <a href="#" class="main-button">Главная</a>
         <ul class="navigation__menu_1">
             <li>
-                <a href="/" title="Главная">Главная</a>
+
+                <a href="" title="Меню">Меню</a>
+                
                 <ul>
                     <li><a href="<?=\yii\helpers\Url::to('/news')?>">Новости</a></li>
                     <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
@@ -78,7 +81,9 @@
         </ul>
         <!-- close .navigation__menu -->
         <ul class="navigation__menu_mobile">
+            <li><a href="">Меню</a></li>
             <li><a href="/">Главная</a></li>
+
             <li><a href="<?=\yii\helpers\Url::to('/events/default')?>">Мотокалендарь</a></li>
             <li><a href="<?=\yii\helpers\Url::to('/bikers/default')?>">Байкеры</a></li>
             <li><a href="<?=\yii\helpers\Url::to('/clubs/default')?>">Мотоклубы</a></li>

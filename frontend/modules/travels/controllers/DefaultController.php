@@ -3,6 +3,7 @@
 namespace frontend\modules\travels\controllers;
 
 use common\classes\Debug;
+use common\classes\Notification;
 use common\models\db\City;
 use common\models\db\Garage;
 use common\models\db\Travel;
@@ -31,7 +32,7 @@ class DefaultController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'ajax_get_city_info', 'ajax_add_field', 'ajax_get_travel', 'ajax_find_travels', 'search_travel'],
+                        'actions' => ['index', 'ajax_get_city_info', 'ajax_add_field', 'ajax_get_travel', 'ajax_find_travels', 'search_travel', 'view'],
                         'allow' => true,
                         'roles' => ['?','@'],
                     ],
@@ -82,7 +83,7 @@ class DefaultController extends Controller
         ];
 
 
-
+        Notification::sendMailUser('new_travel', 1);
         $cityList = City::find()->select([ 'name as label','id as value'])
             ->asArray()
             ->all();
@@ -370,5 +371,45 @@ class DefaultController extends Controller
         //Debug::prn($datal);
 
         return $datal;
+    }
+
+    public function actionView($id){
+        $travels = Travel::find()->where(['status' => 1])
+            ->asArray()
+            ->all();
+        $cityList = City::find()->select([ 'name as label','id as value'])
+            ->asArray()
+            ->all();
+
+
+
+        $travel = Travel::find()->where('id = '.$id)
+            ->one();
+        $cityStart = City::find()
+            ->select('Name')
+            ->where('ID = '.$travel->city_start)
+            ->one();
+        $cityEnd = City::find()
+            ->select('Name')
+            ->where('ID = '.$travel->city_end)
+            ->one();
+        $moto = \frontend\modules\garage\models\Garage::find()
+            ->leftJoin('car_mark','`garage`.`mark_id` = `car_mark`.`id_car_mark`')
+            ->leftJoin('car_model','`garage`.`model_id` = `car_model`.`id_car_model`')
+            ->where(['`garage`.`id`'=>$travel->moto_id])
+            ->one();
+        $route = City::find()
+            ->leftJoin('travel_routes','`travel_routes`.`city_id` = `City`.`ID`')
+            ->where(['travel_id'=>$id])
+            ->all();
+        return $this->render('view', [
+            'travels'=>$travels,
+            'cityList' => $cityList,
+            'travel'=>$travel,
+            'moto'=>$moto,
+            'route'=>$route,
+            'cityStart'=>$cityStart,
+            'cityEnd'=>$cityEnd
+        ]);
     }
 }

@@ -8,12 +8,12 @@
         <nav class="title__tabs">
             <ul>
                 <li>
-                    <a href="#" class="page__tabs_target_first " data-tab="one_first">
+                    <a href="#" class="page__tabs_target_first page__tabs_first_active" data-tab="one_first">
                         <span>Новости</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="page__tabs_target_first page__tabs_first_active" data-tab="two_first">
+                    <a href="#" class="page__tabs_target_first " data-tab="two_first">
                         <span>Мотокалендарь</span>
                     </a>
                 </li>
@@ -142,7 +142,7 @@
             </div>
             <!-- close .route__text -->
             <!-- open .route__destination -->
-            <div class="route__destination">
+            <form class="route__destination">
                 <!-- open .route__destination_box -->
                 <div class="route__destination_box">
                     <span class="icon icon_marker icon_marker-blue"></span>
@@ -165,13 +165,16 @@
            </span>
                 </div>
                 <!-- close .route__destination_box -->
-            </div>
+
+                <div class="route__go">
+                    <button class="button button_orange"><span class="icon icon_road"></span>ПРОЛОЖИТЬ МАРШРУТ</button>
+                </div>
+
+
+            </form>
+
             <!-- close .route__destination -->
-            <!-- open .route__go -->
-            <div class="route__go">
-                <a href="#" class="button button_orange"><span class="icon icon_road"></span>ПРОЛОЖИТЬ МАРШРУТ</a>
-            </div>
-            <!-- close .route__go -->
+
 
         </div>
         <!-- close .route__wrap -->

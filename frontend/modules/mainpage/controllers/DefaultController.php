@@ -2,6 +2,7 @@
 
 namespace frontend\modules\mainpage\controllers;
 
+use common\classes\Notification;
 use yii\web\Controller;
 
 /**
@@ -19,6 +20,10 @@ class DefaultController extends Controller
             'css' => [],
             'js' => []
         ];
+
+
+
+
         return $this->render('index');
     }
 }

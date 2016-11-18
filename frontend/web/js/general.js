@@ -318,6 +318,9 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
+
+
+
     $(document).on('click', '#addPunkt', function () {
         var csrf = $('input[name="_csrf"]').val();
         $.ajax({
@@ -396,6 +399,15 @@ jQuery(document).ready(function ($) {
             });
         }
     });
+
+    $(document).on('click', '.ruleRegister', function () {
+        if ($(this).prop('checked')) {
+            $('.regist-button').prop('disabled', false);
+        } else {
+            $('.regist-button').prop('disabled', true);
+        }
+    });
+
     $(document).on('change','#travel-cityend', function () {
         searchTravel();
     });
@@ -419,7 +431,7 @@ jQuery(document).ready(function ($) {
     });
     $(document).on('click', '.saveMotoId', function () {
         var data = $('.events-category:checked').attr('id');
-        console.log(data);
+        //console.log(data);
         $('#travel-moto_id').val(data);
         $('.selectUserMoto').hide();
     });
@@ -427,6 +439,55 @@ jQuery(document).ready(function ($) {
     $("#profile-avatar").change(function(){
         readURL(this);
     });
+
+
+    $(document).on('click', '#add_personal', function(){
+        var count = $(this).attr('data-count');
+        console.log(count);
+        $('#add_personal').attr('data-count', parseInt(count)+1);
+        //$('<p>123</p>').insertBefore("#add_personal");
+        $.ajax({
+            type: 'POST',
+            url: "/moto_clubs/moto_clubs/ajax_add_personal/",
+            data: 'count=' + count,
+            success: function (data) {
+                $(data).insertBefore("#add_personal");
+                //$("#add_personal").prepend(123);
+            }
+        });
+    });
+
+
+    if(document.getElementById('travelView') != null){
+        //var travels__map;
+        ymaps.ready(function () {
+            if ($('#travels__map').length > 0) {
+                /*travels__map = new ymaps.Map("travels__map", {
+                    center: [59.94, 30.32],
+                    zoom: 12
+                });*/
+                routTravel();
+            };
+        });
+
+    }
+
+    if(document.getElementById('event__maps') != null){
+        //var travels__map;
+        /*ymaps.ready(function () {
+            if ($('#travels__map').length > 0) {
+                /!*travels__map = new ymaps.Map("travels__map", {
+                    center: [59.94, 30.32],
+                    zoom: 12
+                });*!/
+                routTravel();
+            };
+            });*/
+        var lat = $('#latlon').attr('lat');
+        var lon = $('#latlon').attr('lon');
+        addPlacemark(lat, lon);
+
+    }
 
 
 });
@@ -456,6 +517,7 @@ function routTravel() {
 
 
     var csrf = $('input[name="_csrf"]').val();
+    //console.log(csrf);
     $.ajax({
         type: 'POST',
         url: "/travels/default/ajax_get_city_info/",
@@ -496,7 +558,7 @@ function routTravel() {
 
 function routinitTravel(arr) {
     //console.log(arr);
-
+console.log(travels__map);
     travels__map.geoObjects.removeAll();
 
     ymaps.route(
@@ -542,4 +604,33 @@ function searchTravel(){
             console.log(data);
         }
     });
+}
+
+
+function addPlacemark(lat,lon){
+    ymaps.ready(function () {
+        if ($('#map').length > 0) {
+            map = new ymaps.Map("map", {
+                center: [lat, lon],
+                zoom: 6
+            });
+            myGeoObject = new ymaps.GeoObject({
+                // Описание геометрии.
+                geometry: {
+                    type: "Point",
+                    coordinates: [lat, lon],
+                    //center: [lat, lon],
+                },
+
+                // Свойства.
+                properties: {
+                    // Контент метки.
+                    //iconContent: 'Я тащусь',
+                    //hintContent: 'Ну давай уже тащи'
+                }
+            });
+            map.geoObjects.add(myGeoObject);
+        }
+    });
+
 }

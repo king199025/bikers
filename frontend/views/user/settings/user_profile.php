@@ -360,7 +360,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <p class="power-engine">Мощность двигателя <span><?= $item->volume?></span></p>
                                 <p class="active-bike">
                                 <span>
-                                    <?=($item == 1) ? 'Байк действующий' : 'Бывший мотоцикл' ?>
+                                    <?=($item['used'] == 1) ? 'Байк действующий' : 'Бывший мотоцикл' ?>
                                 </span>
                                 </p>
                             </div>
@@ -405,7 +405,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- close .events-conrent__item_thumb -->
                         <a href="" class="button button_orange events-conrent__item_price">21.06.2016</a>
                         <span class="events-conrent__item_title travels-item_title">Москва - Севастополь</span>
-                        <span class="events-conrent__item_edit">(<a href="">редактировать</a> / <a href="">удалить</a>)</span>
                     </div>
                     <!-- close .events-conrent__item -->
                 </div>
@@ -426,16 +425,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!-- open .events-conrent__box -->
                 <div class="events-conrent__box">
                     <!-- open .events-conrent__item -->
-                    <?php foreach($eventsUser as $item): ?>
+                    <?php foreach($eventsUser as $model): ?>
                         <div class="events-conrent__item">
                             <!-- open .events-conrent__item_thumb -->
                             <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="events-conrent__item_thumb">
-                                <img src="<?= $item->afisha?>" alt="" />
+                                <img src="<?= $model->afisha?>" alt="" />
                             </a>
                             <!-- close .events-conrent__item_thumb -->
-                            <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="events-conrent__item_title"><?= $item->name; ?></a>
-                            <span class="events-conrent__item_date"><?= \common\classes\DataHelper::rdate('d M', $item->dt_start); ?></span>
-                            <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="button button_orange events-conrent__item_price"><?= \common\classes\EventsFunction::get_city_event($item->city); ?></a>
+                            <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="events-conrent__item_title"><?= $model->name; ?></a>
+                            <span class="events-conrent__item_date"><?= \common\classes\DataHelper::rdate('d M', $model->dt_start); ?></span>
+                            <a href="<?=\yii\helpers\Url::to(['view','id'=>$model['id']])?>" class="button button_orange events-conrent__item_price"><?= \common\classes\EventsFunction::get_city_event($model->city); ?></a>
                             <span class="events-conrent__item_edit">(<a href="">редактировать</a> / <a href="">удалить</a>)</span>
                         </div>
                     <?php endforeach; ?>

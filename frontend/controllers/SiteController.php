@@ -4,7 +4,10 @@ namespace frontend\controllers;
 use common\classes\Debug;
 
 use common\models\db\Events;
+use common\models\db\MotoClubs;
+use common\models\db\News;
 use common\models\db\Travel;
+use common\models\db\UserPost;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -220,15 +223,41 @@ class SiteController extends Controller
     public function actionSearch_all(){
         $request = Yii::$app->request;
         $events = Events::find()
-            ->where(['status' => 1])
-            ->andWhere(['LIKE', 'name', $request->post('search-all')])
+            ->leftJoin('City', '`City`.`id` = `events`.`city`')
+            ->where(['`events`.`status`' => 1])
+            ->andFilterWhere(['LIKE', '`events`.`name`', $request->post('search_events')])
+            ->orFilterWhere(['LIKE', '`City`.`Name`', $request->post('search_events')])
             ->all();
 
         $travel = Travel::find()->where(['status' => 1])
             ->andWhere(['LIKE', 'name', $request->post('search-all')])
             ->all();
+        $news = News::find()
+            ->where(['LIKE', 'name', $request->post('search-all')])
+            ->orWhere(['LIKE', 'text', $request->post('search-all')])
+            ->all();
 
-        Debug::prn($events);
+        $motoclubs = MotoClubs::find()
+            ->where(['LIKE', 'name_rus', $request->post('search-all')])
+            ->orWhere(['LIKE', 'name_en', $request->post('search-all')])
+            ->orWhere(['LIKE', 'description', $request->post('search-all')])
+            ->all();
+
+        $userPosts = UserPost::find()
+            ->where(['LIKE', 'title', $request->post('search-all')])
+            ->orWhere(['LIKE', 'content', $request->post('search-all')])
+            ->all();
+
+        return $this->render('search_all',
+            [
+                'events' => $events,
+                'travel' => $travel,
+                'news' => $news,
+                'post' => $userPosts,
+                'motoclubs' => $motoclubs,
+            ]
+        );
+        //Debug::prn($travel);
     }
 
     //поиск по мотокалендарю
@@ -240,6 +269,8 @@ class SiteController extends Controller
             ->andFilterWhere(['LIKE', '`events`.`name`', $request->post('search_events')])
             ->orFilterWhere(['LIKE', '`City`.`Name`', $request->post('search_events')])
             ->all();
+
+
         Debug::prn($events);
     }
 }

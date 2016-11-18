@@ -215,46 +215,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 				<!-- close .events-conrent__sidebar__box -->
 				<!-- open .events-conrent__sidebar__box -->
-				<div class="events-conrent__sidebar__box">
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						Всего мероприятий: <a href="#">51</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						Самые ближайшие: <a href="#">52</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						Самые дальние: <a href="#">53</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						Самые ожидаемые: <a href="#">54</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						Самые старые: <a href="#">55</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<br />
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						В архиве мероприятий: <a href="#">56</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
-					<br />
-					<!-- open .events-conrent__sidebar__info -->
-					<p class="events-conrent__sidebar__info">
-						МОИ ИЗБРАННЫЕ: <a href="#">57</a>
-					</p>
-					<!-- close .events-conrent__sidebar__info -->
 
-				</div>
 				<!-- close .events-conrent__sidebar__box -->
 			</aside>
 			<!-- close .events-conrent__sidebar -->

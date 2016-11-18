@@ -4,8 +4,11 @@ namespace frontend\modules\moto_clubs\controllers;
 
 use common\classes\Debug;
 use common\models\db\City;
+use common\models\db\Events;
 use common\models\db\MotoClubsImg;
+use common\models\db\MotoClubsPersonal;
 use common\models\db\MotoClubsType;
+use dektrium\user\models\User;
 use dosamigos\transliterator\TransliteratorHelper;
 use Yii;
 use frontend\modules\moto_clubs\models\MotoClubs;
@@ -64,11 +67,26 @@ class Moto_clubsController extends Controller
         $queri = MotoClubsImg::find()->where(['moto_club_id' => $id]);
         $img = $queri->limit(7)->all();
         $imgCount = $queri->count();
-       // Debug::prn($img);
+        $personal = MotoClubsPersonal::find()
+            ->leftJoin('user', '`user`.`id` = `moto_clubs_personal`.`user_id`')
+            ->leftJoin('profile', '`profile`.`user_id` = `moto_clubs_personal`.`user_id`')
+            ->where(['`moto_clubs_personal`.`club_id`' => $id])
+            ->with('user', 'profile')
+            ->all();
+
+        $events = Events::find()
+            ->leftJoin('event_organizers', '`event_organizers`.`event_id` = `events`.`id`')
+            ->where(['`event_organizers`.`club_id`' => $id])
+            ->all();
+
+
+        //Debug::prn($events);
          return $this->render('view', [
             'model' => $this->findModel($id),
             'img' => $img,
             'imgCount' => $imgCount,
+             'personal' => $personal,
+             'events' => $events,
         ]);
     }
 
@@ -175,6 +193,23 @@ class Moto_clubsController extends Controller
                 $model->logo = '/' . $dir . $_FILES['MotoClubs']['name']['logo'];
             }
             $model->save();
+
+
+            if(!empty($_POST['moto_club_personal'])){
+                MotoClubsPersonal::deleteAll(['club_id' => $model->id]);
+                foreach ($_POST['moto_club_personal'] as $item) {
+                    $personal = new MotoClubsPersonal();
+                    $personal->club_id = $model->id;
+                    $personal->user_id = $item['user_id_club'];
+                    $personal->position = $item['user_position'];
+                    $personal->link_vk = $item['user_link_vk'];
+                    $personal->phone = $item['user_phone'];
+                    $personal->save();
+
+                }
+            }
+
+            //Debug::prn($_POST);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $type = MotoClubsType::find()->all();
@@ -182,12 +217,15 @@ class Moto_clubsController extends Controller
                 ->asArray()
                 ->all();
 
+            $user = User::find()->select(['username as label', 'id as value'])->where('username' != 'admin')->asArray()->all();
+
             $img = MotoClubsImg::find()->where(['moto_club_id' => $id])->all();
             return $this->render('update', [
                 'model' => $model,
                 'type' => $type,
                 'cityList' => $cityList,
                 'img' => $img,
+                'user' => $user,
             ]);
         }
     }
@@ -259,5 +297,14 @@ class Moto_clubsController extends Controller
         //Debug::prn(1);
 
         echo 1;
+    }
+
+    public function actionAjax_add_personal(){
+        $user = User::find()->select(['username as label', 'id as value'])->where('username' != 'admin')->asArray()->all();
+        return $this->renderAjax('add-personal',
+            [
+                'user' => $user,
+                'count' => $_POST['count']+1,
+            ]);
     }
 }

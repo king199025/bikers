@@ -1,30 +1,5 @@
 var map, map_old, mapblack, travels__map;
-ymaps.ready(function () {
-  if ($('#map').length > 0) {
-  map = new ymaps.Map("map", {
-          center: [59.94, 30.32],
-          zoom: 12
-      });
-  }
-  if ($('#map_old').length > 0) {
-  map_old = new ymaps.Map("map_old", {
-          center: [59.94, 30.32],
-          zoom: 12
-      });
-  }
-  if ($('#mapblack').length > 0) {
-  mapblack = new ymaps.Map("mapblack", {
-          center: [59.94, 30.32],
-          zoom: 12
-      });
-  }
-  if ($('#travels__map').length > 0) {
-  travels__map = new ymaps.Map("travels__map", {
-          center: [59.94, 30.32],
-          zoom: 12
-      });
-    }
-  });
+
 
   // var centerLatLng = new ymaps.Map(55.74929, 37.0720767);
   // var mapOptions = {
@@ -95,6 +70,33 @@ ymaps.ready(function () {
 // Ждем полной загрузки страницы, после этого запускаем initMap()
  //google.maps.event.addDomListener(window, "load", initMap);
 $(document).ready(function() {
+
+    ymaps.ready(function () {
+        /*if ($('#map').length > 0) {
+            map = new ymaps.Map("map", {
+                center: [59.94, 30.32],
+                zoom: 12
+            });
+        }*/
+        if ($('#map_old').length > 0) {
+            map_old = new ymaps.Map("map_old", {
+                center: [59.94, 30.32],
+                zoom: 12
+            });
+        }
+        if ($('#mapblack').length > 0) {
+            mapblack = new ymaps.Map("mapblack", {
+                center: [59.94, 30.32],
+                zoom: 12
+            });
+        }
+        if ($('#travels__map').length > 0) {
+            travels__map = new ymaps.Map("travels__map", {
+                center: [59.94, 30.32],
+                zoom: 12
+            });
+        }
+    });
   //initialize()
 	$(".fancybox-thumb").fancybox({
 		prevEffect	: 'none',
